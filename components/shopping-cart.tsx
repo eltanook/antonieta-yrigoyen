@@ -233,11 +233,11 @@ export function ShoppingCart({ items, onUpdateCart, trigger }: ShoppingCartProps
               </div>
 
               <div className="space-y-2">
-                <Button onClick={handleCheckout} className="w-full rounded-full" size="lg">
+                <Button variant="elegant" onClick={handleCheckout} className="w-full btn-shine" size="lg">
                   <FaWhatsapp className="h-4 w-4 mr-2" />
                   Finalizar por WhatsApp
                 </Button>
-                <Button variant="outline" onClick={clearCart} className="w-full rounded-full bg-transparent" size="sm">
+                <Button variant="outline" onClick={clearCart} className="w-full btn-float" size="default">
                   Vaciar Carrito
                 </Button>
               </div>

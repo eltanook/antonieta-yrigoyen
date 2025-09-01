@@ -77,20 +77,20 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
             }`}
           >
             <Button
-              size="sm"
-              variant="secondary"
+              size="default"
+              variant="elegant"
               onClick={handleAddToCart}
               disabled={!product.inStock}
-              className="rounded-full"
+              className="btn-shine"
             >
               <ShoppingCart className="h-4 w-4 mr-1" />
               Agregar
             </Button>
             <Button 
-              size="sm" 
-              variant="secondary" 
+              size="default" 
+              variant="outline-white" 
               asChild 
-              className="rounded-full"
+              className="btn-float"
             >
               <Link href={`/productos/${product.id}`}>
                 <Eye className="h-4 w-4 mr-1" />

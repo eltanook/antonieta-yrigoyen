@@ -16,15 +16,17 @@ import { Badge } from "@/components/ui/badge"
 import { ArrowRight, Sparkles, Heart, Star, Flower2, Leaf, Gift, Truck, Award, Zap, MessageCircle, Palette, ShoppingBag } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { cn } from "@/lib/utils"
+import { imageOverlayVariants, glassVariants } from "@/lib/overlay-variants"
 
 // Mock data
 const heroSlides: HeroSlide[] = [
   {
     id: "1",
-    title: "Flores con Amor y Dedicación",
+    title: "Amor y Dedicación",
     subtitle: "Soy Nadia, emprendedora, mamá y amante de las flores",
     description: "Mi proyecto surgió a partir de un sueño que me dio la señal de que debía comenzar con esto",
-    image: "/placeholder.svg?height=600&width=1200&text=Flores+Naturales",
+    image: "/1.jpg",
     primaryCTA: { text: "Ver Servicios", href: "/productos" },
     secondaryCTA: { text: "Conocer a Nadia", href: "/nosotros" },
   },
@@ -33,7 +35,7 @@ const heroSlides: HeroSlide[] = [
     title: "Ambientaciones Únicas",
     subtitle: "Para eventos y espacios especiales",
     description: "Cada ramo y ambientación está hecho con mucho amor y dedicación, como si fuera único",
-    image: "/placeholder.svg?height=600&width=1200&text=Ambientaciones+Florales",
+    image: "/2.jpg",
     primaryCTA: { text: "Ver Ambientaciones", href: "/productos?categoria=ambientaciones" },
     secondaryCTA: { text: "Contactar", href: "/contacto" },
   },
@@ -42,7 +44,7 @@ const heroSlides: HeroSlide[] = [
     title: "Servicio Semanal de Flores",
     subtitle: "Abonos semanales o quincenales",
     description: "Mantén tu espacio siempre lleno de vida con nuestros servicios de flores frescas",
-    image: "/placeholder.svg?height=600&width=1200&text=Servicio+Semanal",
+    image: "/3.jpg",
     primaryCTA: { text: "Suscribirse", href: "/productos?categoria=semanal" },
     secondaryCTA: { text: "Más Info", href: "/contacto" },
   },
@@ -168,7 +170,7 @@ export default function HomePage() {
         cartComponent={<ShoppingCart items={cartItems} onUpdateCart={handleUpdateCart} />}
       />
 
-      <main className="relative z-10">
+      <main className="relative z-10 pt-16">
         {/* Hero Slider Section */}
         <section className={`container mx-auto px-4 py-6 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <HeroSlider slides={heroSlides} />
@@ -186,7 +188,11 @@ export default function HomePage() {
               ].map((stat, index) => (
                 <div 
                   key={index} 
-                  className={`bg-card/80 backdrop-blur-sm rounded-xl p-4 text-center shadow-subtle-lg border border-border/50 hover:scale-105 transition-all duration-300 delay-${index * 100}`}
+                  className={cn(
+                    "rounded-xl p-4 text-center shadow-subtle-lg hover:scale-105 transition-all duration-300",
+                    glassVariants({ variant: "card", hover: "subtle" }),
+                    `delay-${index * 100}`
+                  )}
                 >
                   <stat.icon className={`w-6 h-6 mx-auto mb-2 ${stat.color}`} />
                   <div className="text-xl font-bold text-foreground">{stat.number}</div>
@@ -207,7 +213,7 @@ export default function HomePage() {
                   <Sparkles className="w-4 h-4 mr-2" />
                   Sobre Nadia
                 </SectionTag>
-                <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent leading-tight">
+                <h2 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
                   Flores con Amor y Dedicación
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed">
@@ -234,19 +240,18 @@ export default function HomePage() {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-3 pt-4">
-                  <Button size="default" asChild className="rounded-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 shadow-lg transform hover:scale-105 transition-all duration-200">
+                  <Button size="lg" variant="elegant" asChild className="btn-shine btn-float">
                     <Link href="/nosotros">
                       <Heart className="w-4 h-4 mr-2" />
                       Conocer Más
                     </Link>
                   </Button>
-                  <Link
-                    href="/contacto"
-                    className="inline-flex items-center justify-center gap-2 text-foreground hover:text-primary transition-colors font-medium py-2 px-4 rounded-full border border-border hover:border-primary/50 hover:bg-primary/5"
-                  >
-                    Contactar
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
+                  <Button variant="outline" size="lg" asChild className="btn-float">
+                    <Link href="/contacto">
+                      Contactar
+                      <ArrowRight className="h-4 w-4 ml-1" />
+                    </Link>
+                  </Button>
                 </div>
               </div>
               <div className="relative group">
@@ -259,8 +264,11 @@ export default function HomePage() {
                     height={400}
                     className="object-cover w-full h-full"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
-                  <Badge className="absolute top-3 right-3 bg-white/90 text-primary border-0 shadow-lg text-xs">
+                  <div className={imageOverlayVariants({ variant: "subtle" })}></div>
+                  <Badge className={cn(
+                    "absolute top-3 right-3 border-0 shadow-lg text-xs",
+                    glassVariants({ variant: "card" })
+                  )}>
                     <Star className="w-3 h-3 mr-1 fill-current" />
                     Emprendedora
                   </Badge>
@@ -278,7 +286,7 @@ export default function HomePage() {
                 <Flower2 className="w-4 h-4 mr-2" />
                 Servicios
               </SectionTag>
-              <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground">
                 Nuestros Servicios
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
@@ -308,18 +316,20 @@ export default function HomePage() {
                 fill
                 className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/60" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+              <div className={imageOverlayVariants({ variant: "full" })} />
               
               <div className="relative h-full flex items-center justify-center text-center text-white px-6">
                 <div className="max-w-3xl space-y-6">
-                  <Badge className="bg-white/20 border-white/30 text-white text-sm px-3 py-1">
+                  <Badge className={cn(
+                    "text-white text-sm px-3 py-1",
+                    glassVariants({ variant: "light" })
+                  )}>
                     <Sparkles className="w-3 h-3 mr-1" />
                     Oferta Especial
                   </Badge>
-                  <h2 className="text-3xl md:text-5xl font-bold leading-tight">
+                  <h2 className="text-3xl md:text-5xl font-bold text-white leading-tight">
                     Cada Flor Cuenta 
-                    <span className="bg-gradient-to-r from-white to-primary bg-clip-text text-transparent"> una Historia</span>
+                    <span className="text-primary"> una Historia</span>
                   </h2>
                   <p className="text-lg md:text-xl text-white/90 max-w-xl mx-auto leading-relaxed">
                     Servicio personalizado de flores frescas con 
@@ -327,9 +337,10 @@ export default function HomePage() {
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3 justify-center items-center pt-2">
                     <Button 
-                      size="default" 
+                      size="lg" 
+                      variant="elegant"
                       asChild 
-                      className="rounded-full bg-white text-foreground hover:bg-white/90 shadow-xl transform hover:scale-105 transition-all duration-200"
+                      className="btn-shine"
                     >
                       <Link href="/productos">
                         <Flower2 className="w-4 h-4 mr-2" />
@@ -337,10 +348,10 @@ export default function HomePage() {
                       </Link>
                     </Button>
                     <Button 
-                      size="default" 
-                      variant="outline" 
+                      size="lg" 
+                      variant="outline-white" 
                       asChild 
-                      className="rounded-full border-white/50 text-white hover:bg-white/10 backdrop-blur-sm"
+                      className="btn-float"
                     >
                       <Link href="/contacto">
                         Contactar
@@ -361,7 +372,7 @@ export default function HomePage() {
                 <Star className="w-4 h-4 mr-2" />
                 Servicios Destacados
               </SectionTag>
-              <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground">
                 Nuestros Servicios Más Populares
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
@@ -383,9 +394,10 @@ export default function HomePage() {
             
             <div className="text-center mt-12">
               <Button 
-                size="default" 
+                size="lg" 
+                variant="elegant"
                 asChild 
-                className="rounded-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 shadow-lg transform hover:scale-105 transition-all duration-200 px-6"
+                className="btn-shine btn-float"
               >
                 <Link href="/productos">
                   <Flower2 className="w-4 h-4 mr-2" />
@@ -406,7 +418,7 @@ export default function HomePage() {
                   <Sparkles className="w-4 h-4 mr-2" />
                   Nuestro Proceso
                 </SectionTag>
-                <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
+                <h2 className="text-3xl md:text-4xl font-bold text-foreground">
                   Cómo Trabajamos
                 </h2>
                 <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -447,7 +459,11 @@ export default function HomePage() {
                 ].map((process, index) => (
                   <div 
                     key={index}
-                    className={`relative text-center p-6 rounded-xl bg-card/50 backdrop-blur-sm border border-border/50 hover:bg-card/70 transition-all duration-300 delay-${index * 100} group hover:scale-105`}
+                    className={cn(
+                      "relative text-center p-6 rounded-xl transition-all duration-300 group hover:scale-105",
+                      glassVariants({ variant: "card", hover: "medium" }),
+                      `delay-${index * 100}`
+                    )}
                   >
                     <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-primary rounded-full flex items-center justify-center text-white text-xs font-bold">
                       {process.step}
@@ -473,7 +489,7 @@ export default function HomePage() {
                   <Heart className="w-4 h-4 mr-2" />
                   Testimonios
                 </SectionTag>
-                <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
+                <h2 className="text-3xl md:text-4xl font-bold text-foreground">
                   Lo que Dicen Nuestros Clientes
                 </h2>
                 <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
@@ -508,10 +524,13 @@ export default function HomePage() {
         <section className="container mx-auto px-4 py-16">
           <div className="max-w-4xl mx-auto">
             <div className="relative rounded-2xl overflow-hidden bg-gradient-to-r from-primary to-accent p-8 md:p-12 text-center text-white">
-              <div className="absolute inset-0 bg-black/10"></div>
+              <div className={imageOverlayVariants({ variant: "subtle" })}></div>
               <div className="relative z-10 space-y-6">
                 <div className="space-y-3">
-                  <Badge className="bg-white/20 border-white/30 text-white text-sm px-3 py-1">
+                  <Badge className={cn(
+                    "text-white text-sm px-3 py-1",
+                    glassVariants({ variant: "light" })
+                  )}>
                     <Sparkles className="w-3 h-3 mr-1" />
                     ¡Oferta Limitada!
                   </Badge>
@@ -525,9 +544,10 @@ export default function HomePage() {
                 
                 <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
                   <Button 
-                    size="default" 
+                    size="lg" 
+                    variant="elegant"
                     asChild 
-                    className="rounded-full bg-white text-foreground hover:bg-white/90 shadow-xl transform hover:scale-105 transition-all duration-200"
+                    className="btn-shine"
                   >
                     <Link href="/contacto">
                       <Heart className="w-4 h-4 mr-2" />
@@ -535,10 +555,10 @@ export default function HomePage() {
                     </Link>
                   </Button>
                   <Button 
-                    size="default" 
-                    variant="outline" 
+                    size="lg" 
+                    variant="outline-white" 
                     asChild 
-                    className="rounded-full border-white/50 text-white hover:bg-white/10 backdrop-blur-sm"
+                    className="btn-float"
                   >
                     <Link href="/productos">
                       Ver Servicios

@@ -4,6 +4,8 @@ import { useState, useEffect } from "react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import { cn } from "@/lib/utils"
+import { imageOverlayVariants, glassVariants } from "@/lib/overlay-variants"
 
 export interface HeroSlide {
   id: string
@@ -61,13 +63,13 @@ export function HeroSlider({ slides, autoPlay = true, autoPlayInterval = 5000 }:
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
-          src={currentSlideData.image || "/placeholder.svg"}
+          src={currentSlideData.image || "/1.jpg"}
           alt={currentSlideData.title}
           fill
           className="object-cover"
           priority
         />
-        <div className="absolute inset-0 bg-black/40" />
+        <div className={imageOverlayVariants({ variant: "simple" })} />
       </div>
 
       {/* Content */}
@@ -82,19 +84,20 @@ export function HeroSlider({ slides, autoPlay = true, autoPlayInterval = 5000 }:
           <p className="text-lg text-white/80 max-w-xl mx-auto">
             {currentSlideData.description}
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center pt-4">
             <Button 
               size="lg" 
+              variant="elegant"
               asChild 
-              className="rounded-full"
+              className="btn-shine"
             >
               <a href={currentSlideData.primaryCTA.href}>{currentSlideData.primaryCTA.text}</a>
             </Button>
             <Button
               size="lg"
-              variant="outline"
+              variant="outline-white"
               asChild
-              className="rounded-full bg-white/10 border-white/20 text-white hover:bg-white/20"
+              className="btn-float"
             >
               <a href={currentSlideData.secondaryCTA.href}>{currentSlideData.secondaryCTA.text}</a>
             </Button>
@@ -105,19 +108,25 @@ export function HeroSlider({ slides, autoPlay = true, autoPlayInterval = 5000 }:
       {/* Navigation Arrows */}
       <Button
         variant="ghost"
-        size="icon"
-        className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20 rounded-full"
+        size="sm"
+        className={cn(
+          "absolute left-4 top-1/2 -translate-y-1/2 text-white btn-float w-12 h-12",
+          glassVariants({ variant: "light", hover: "medium" })
+        )}
         onClick={goToPrevious}
       >
-        <ChevronLeft className="h-6 w-6" />
+        <ChevronLeft className="h-5 w-5" />
       </Button>
       <Button
         variant="ghost"
-        size="icon"
-        className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20 rounded-full"
+        size="sm"
+        className={cn(
+          "absolute right-4 top-1/2 -translate-y-1/2 text-white btn-float w-12 h-12",
+          glassVariants({ variant: "light", hover: "medium" })
+        )}
         onClick={goToNext}
       >
-        <ChevronRight className="h-6 w-6" />
+        <ChevronRight className="h-5 w-5" />
       </Button>
 
       {/* Indicators */}

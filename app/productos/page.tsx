@@ -161,7 +161,7 @@ export default function ProductsPage() {
         cartComponent={<ShoppingCart items={cartItems} onUpdateCart={handleUpdateCart} />}
       />
 
-      <main>
+      <main className="pt-16">
         {/* Header Section */}
         <section className="container mx-auto px-4 py-8">
           <div className="text-center space-y-4 mb-8">
@@ -301,6 +301,9 @@ export default function ProductsPage() {
                 No se encontraron servicios que coincidan con tu búsqueda
               </p>
               <Button
+                variant="elegant"
+                size="lg"
+                className="btn-shine"
                 onClick={() => {
                   setSearchTerm("")
                   setSelectedCategory("Todos")

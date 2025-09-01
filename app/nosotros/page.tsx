@@ -15,6 +15,8 @@ import Image from "next/image"
 import Link from "next/link"
 import { useToast } from "@/hooks/use-toast"
 import type { Product } from "@/components/product-card"
+import { cn } from "@/lib/utils"
+import { imageOverlayVariants, glassVariants } from "@/lib/overlay-variants"
 
 const values = [
   {
@@ -249,7 +251,7 @@ export default function AboutPage() {
         cartComponent={<ShoppingCart items={cartItems} onUpdateCart={handleUpdateCart} />}
       />
 
-      <main className="relative z-10">
+      <main className="relative z-10 pt-16">
         {/* Hero Section with Video Background Effect */}
         <section className={`relative container mx-auto px-4 py-20 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           {/* Animated background pattern */}
@@ -265,7 +267,7 @@ export default function AboutPage() {
                 <Sparkles className="w-4 h-4 mr-2" />
                 Sobre Nadia
               </SectionTag>
-              <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-foreground via-primary to-accent bg-clip-text text-transparent leading-tight">
+              <h1 className="text-5xl md:text-7xl font-bold text-foreground leading-tight">
                 Conoce Mi Historia
               </h1>
               <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
@@ -283,7 +285,11 @@ export default function AboutPage() {
               ].map((stat, index) => (
                 <div 
                   key={index} 
-                  className={`group text-center p-6 rounded-2xl bg-card/60 backdrop-blur-sm border border-border/50 hover:bg-card/80 transition-all duration-500 hover:scale-110 delay-${index * 200}`}
+                  className={cn(
+                    "group text-center p-6 rounded-2xl transition-all duration-500 hover:scale-110",
+                    glassVariants({ variant: "card", hover: "medium" }),
+                    `delay-${index * 200}`
+                  )}
                 >
                   <div className="relative mb-4">
                     <div className="w-16 h-16 mx-auto bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
@@ -320,10 +326,10 @@ export default function AboutPage() {
                   </SectionTag>
                 </div>
                 
-                <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent leading-tight">
+                <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight">
                   Un Sueño Convertido en 
                   <span className="relative">
-                    <span className="relative z-10"> Realidad</span>
+                    <span className="relative z-10 text-primary"> Realidad</span>
                     <div className="absolute bottom-2 left-0 w-full h-3 bg-primary/20 -z-10"></div>
                   </span>
                 </h2>
@@ -410,28 +416,40 @@ export default function AboutPage() {
                       height={500}
                       className="object-cover w-full h-full"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
+                    <div className={imageOverlayVariants({ variant: "subtle" })}></div>
                     
                     {/* Floating badges */}
-                    <Badge className="absolute top-6 left-6 bg-white/95 text-primary border-0 shadow-lg">
+                    <Badge className={cn(
+                      "absolute top-6 left-6 border-0 shadow-lg",
+                      glassVariants({ variant: "card" })
+                    )}>
                       <Award className="w-4 h-4 mr-2" />
                       Emprendedora 2024
                     </Badge>
                     
                     <div className="absolute bottom-6 right-6 flex space-x-2">
-                      <Badge className="bg-black/50 text-white border-0 backdrop-blur-sm">
+                      <Badge className={cn(
+                        "text-white border-0",
+                        glassVariants({ variant: "dark" })
+                      )}>
                         <MapPin className="w-3 h-3 mr-1" />
                         Local
                       </Badge>
-                      <Badge className="bg-black/50 text-white border-0 backdrop-blur-sm">
+                      <Badge className={cn(
+                        "text-white border-0",
+                        glassVariants({ variant: "dark" })
+                      )}>
                         <Clock className="w-3 h-3 mr-1" />
                         24/7 Disponible
                       </Badge>
                     </div>
 
                     {/* Play button overlay for video effect */}
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 bg-black/20">
-                      <Button size="lg" className="rounded-full bg-white/20 backdrop-blur-sm border border-white/30 text-white hover:bg-white/30">
+                    <div className={cn(
+                      "absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300",
+                      imageOverlayVariants({ variant: "hover" })
+                    )}>
+                      <Button size="lg" variant="outline-white" className="btn-float">
                         <Play className="w-6 h-6 ml-1" />
                       </Button>
                     </div>
@@ -470,7 +488,7 @@ export default function AboutPage() {
                 <Calendar className="w-4 h-4 mr-2" />
                 Mi Trayectoria
               </SectionTag>
-              <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
+              <h2 className="text-4xl md:text-5xl font-bold text-foreground">
                 El Camino Hacia el Éxito
               </h2>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -488,7 +506,10 @@ export default function AboutPage() {
                 {milestones.map((milestone, index) => (
                   <div key={index} className={`flex items-center ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} flex-col md:gap-12 gap-8`}>
                     <div className={`w-full md:w-1/2 ${index % 2 === 0 ? 'md:text-right md:pr-8' : 'md:text-left md:pl-8'} text-center`}>
-                      <div className="group p-8 rounded-3xl bg-card/60 backdrop-blur-sm border border-border/50 hover:bg-card/80 transition-all duration-500 hover:scale-105 hover:shadow-2xl">
+                      <div className={cn(
+                        "group p-8 rounded-3xl transition-all duration-500 hover:scale-105 hover:shadow-2xl",
+                        glassVariants({ variant: "card", hover: "medium" })
+                      )}>
                         <div className={`flex items-center gap-4 mb-6 ${index % 2 === 0 ? 'md:justify-end' : 'md:justify-start'} justify-center`}>
                           <Badge className="bg-gradient-to-r from-primary to-accent text-white text-lg px-4 py-2 font-bold">
                             {milestone.year}
@@ -527,7 +548,7 @@ export default function AboutPage() {
                   <Heart className="w-4 h-4 mr-2" />
                   Mis Valores
                 </SectionTag>
-                <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
+                <h2 className="text-4xl md:text-5xl font-bold text-foreground">
                   Lo que me Define
                 </h2>
                 <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -541,7 +562,11 @@ export default function AboutPage() {
                   return (
                     <div
                       key={index}
-                      className={`group relative p-8 rounded-3xl bg-card/60 backdrop-blur-sm border border-border/50 hover:bg-card/80 transition-all duration-500 hover:scale-105 hover:shadow-2xl delay-${index * 100} overflow-hidden`}
+                      className={cn(
+                        "group relative p-8 rounded-3xl transition-all duration-500 hover:scale-105 hover:shadow-2xl overflow-hidden",
+                        glassVariants({ variant: "card", hover: "medium" }),
+                        `delay-${index * 100}`
+                      )}
                     >
                       {/* Background gradient on hover */}
                       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -572,7 +597,7 @@ export default function AboutPage() {
                 <Camera className="w-4 h-4 mr-2" />
                 Mi Portafolio
               </SectionTag>
-              <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
+              <h2 className="text-4xl md:text-5xl font-bold text-foreground">
                 Proyectos que Inspiran
               </h2>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -626,7 +651,8 @@ export default function AboutPage() {
                         <p className="text-white/90 leading-relaxed text-lg">{item.description}</p>
                         <Button 
                           size="lg" 
-                          className="rounded-full bg-white text-foreground hover:bg-white/90 transform hover:scale-105 transition-all duration-200"
+                          variant="elegant"
+                          className="btn-shine"
                           onClick={(e) => {
                             e.stopPropagation()
                             toast({
@@ -656,7 +682,7 @@ export default function AboutPage() {
                   <TrendingUp className="w-4 h-4 mr-2" />
                   Mis Logros
                 </SectionTag>
-                <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
+                <h2 className="text-4xl md:text-5xl font-bold text-foreground">
                   Resultados que Hablan
                 </h2>
                 <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -668,7 +694,11 @@ export default function AboutPage() {
                 {achievements.map((achievement, index) => (
                   <div
                     key={achievement.metric}
-                    className={`group p-10 rounded-3xl bg-card/60 backdrop-blur-sm border border-border/50 hover:bg-card/80 transition-all duration-700 hover:scale-105 hover:shadow-2xl delay-${index * 200}`}
+                    className={cn(
+                      "group p-10 rounded-3xl transition-all duration-700 hover:scale-105 hover:shadow-2xl",
+                      glassVariants({ variant: "card", hover: "medium" }),
+                      `delay-${index * 200}`
+                    )}
                   >
                     <div className="flex items-center justify-between mb-8">
                       <div className="flex items-center space-x-6">
@@ -759,13 +789,13 @@ export default function AboutPage() {
                 </div>
                 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button size="lg" asChild className="rounded-full bg-white text-foreground hover:bg-white/90 shadow-xl transform hover:scale-105 transition-all duration-200">
+                  <Button size="lg" variant="elegant" asChild className="btn-shine">
                     <Link href="/productos">
                       <Flower2 className="w-5 h-5 mr-2" />
                       Ver Mis Servicios
                     </Link>
                   </Button>
-                  <Button size="lg" variant="outline" asChild className="rounded-full border-white/50 text-white hover:bg-white/10 backdrop-blur-sm">
+                  <Button size="lg" variant="outline-white" asChild className="btn-float">
                     <Link href="/contacto">
                       <Heart className="w-5 h-5 mr-2" />
                       Contactar Ahora

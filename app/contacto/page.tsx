@@ -75,7 +75,7 @@ export default function ContactPage() {
         cartComponent={<ShoppingCart items={cartItems} onUpdateCart={handleUpdateCart} />}
       />
 
-      <main>
+      <main className="pt-16">
         {/* Page Header */}
         <section className="container mx-auto px-4 py-4 pt-8">
           <div className="text-center space-y-4 mb-4">
@@ -155,7 +155,7 @@ export default function ContactPage() {
                         className="min-h-[200px]"
                       />
                     </div>
-                    <Button type="submit" size="lg" className="w-full rounded-full">
+                    <Button type="submit" variant="elegant" size="lg" className="w-full btn-shine">
                       Enviar Mensaje
                     </Button>
                   </form>

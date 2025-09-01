@@ -583,9 +583,9 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
         cartComponent={<ShoppingCart items={cartItems} onUpdateCart={handleUpdateCart} />}
       />
 
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-8 pt-24">
         {/* Back Button */}
-        <Button variant="ghost" onClick={() => router.back()} className="mb-6 hover:bg-muted rounded-full">
+        <Button variant="outline" size="lg" onClick={() => router.back()} className="mb-6 btn-float">
           <ArrowLeft className="h-4 w-4 mr-2" />
           Volver
         </Button>
@@ -711,15 +711,15 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
 
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" onClick={handleAddToCart} disabled={!product.inStock} className="flex-1 rounded-full">
+              <Button size="xl" variant="elegant" onClick={handleAddToCart} disabled={!product.inStock} className="flex-1 btn-shine">
                 <ShoppingCartIcon className="h-5 w-5 mr-2" />
                 Agregar al Carrito
               </Button>
-              <Button variant="outline" size="lg" className="rounded-full bg-transparent">
+              <Button variant="outline" size="lg" className="btn-float">
                 <Heart className="h-5 w-5 mr-2" />
                 Favoritos
               </Button>
-              <Button variant="outline" size="lg" className="rounded-full bg-transparent">
+              <Button variant="outline" size="lg" className="btn-float">
                 <Share2 className="h-5 w-5 mr-2" />
                 Compartir
               </Button>
