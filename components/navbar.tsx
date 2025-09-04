@@ -52,8 +52,8 @@ export function Navbar({ cartItemsCount = 0, onCartOpen, cartComponent }: Navbar
     <nav className={cn(
       "fixed top-0 left-0 right-0 z-50 w-full transition-all duration-500",
       isScrolled 
-        ? "bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl border-b border-gray-200/80 dark:border-slate-700/80 shadow-2xl shadow-black/20 dark:shadow-slate-900/40" 
-        : "bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl border-b border-gray-200/60 dark:border-slate-600/60 shadow-lg shadow-black/10 dark:shadow-slate-800/30"
+        ? "bg-white dark:bg-slate-900 backdrop-blur-2xl border-b border-gray-200 dark:border-slate-700 shadow-2xl shadow-black/20 dark:shadow-slate-900/40" 
+        : "bg-white dark:bg-slate-800 backdrop-blur-xl border-b border-gray-200 dark:border-slate-600 shadow-lg shadow-black/10 dark:shadow-slate-800/30"
     )}>
       <div className="container mx-auto px-6 lg:px-12">
         <div className="flex h-20 items-center justify-between">
@@ -100,42 +100,28 @@ export function Navbar({ cartItemsCount = 0, onCartOpen, cartComponent }: Navbar
           <div className="flex items-center space-x-4">
             {/* Theme Toggle Mejorado */}
             {mounted && (
-              <Button 
-                variant="ghost" 
-                size="icon" 
+              <button
                 onClick={toggleTheme} 
-                className={cn(
-                  "h-11 w-11 rounded-full transition-all duration-300 border-2",
-                  "bg-gray-100/80 dark:bg-slate-700/80 text-gray-700 dark:text-gray-200",
-                  "border-gray-200/60 dark:border-slate-600/60 shadow-lg dark:shadow-slate-900/20",
-                  "hover:bg-purple-100 dark:hover:bg-slate-600/60 hover:border-purple-200 dark:hover:border-slate-500 hover:scale-105 hover:shadow-xl hover:text-purple-700 dark:hover:text-purple-300"
-                )}
+                className="h-11 w-11 rounded-full bg-gray-300 dark:bg-slate-500 text-gray-900 dark:text-white border-2 border-gray-500 dark:border-slate-400 shadow-lg transition-all duration-300 hover:bg-purple-300 dark:hover:bg-purple-500 hover:border-purple-600 dark:hover:border-purple-400 hover:scale-105 hover:shadow-xl flex items-center justify-center"
               >
                 <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                 <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
                 <span className="sr-only">Toggle theme</span>
-              </Button>
+              </button>
             )}
 
             {/* Cart Mejorado */}
             {cartComponent || (
-              <Button 
-                variant="ghost" 
-                size="icon" 
+              <button
                 onClick={onCartOpen} 
-                className={cn(
-                  "relative h-11 w-11 rounded-full transition-all duration-300 border-2",
-                  "bg-gray-100/80 dark:bg-slate-700/80 text-gray-700 dark:text-gray-200",
-                  "border-gray-200/60 dark:border-slate-600/60 shadow-lg dark:shadow-slate-900/20",
-                  "hover:bg-blue-100 dark:hover:bg-slate-600/60 hover:border-blue-200 dark:hover:border-slate-500 hover:scale-105 hover:shadow-xl hover:text-blue-700 dark:hover:text-blue-300"
-                )}
+                className="relative h-11 w-11 rounded-full bg-gray-300 dark:bg-slate-500 text-gray-900 dark:text-white border-2 border-gray-500 dark:border-slate-400 shadow-lg transition-all duration-300 hover:bg-pink-300 dark:hover:bg-pink-500 hover:border-pink-600 dark:hover:border-pink-400 hover:scale-105 hover:shadow-xl flex items-center justify-center"
               >
                 <ShoppingCart className="h-5 w-5 transition-colors" />
                 {cartItemsCount > 0 && (
                   <Badge
                     className={cn(
                       "absolute -top-2 -right-2 h-6 w-6 rounded-full p-0 flex items-center justify-center text-xs font-bold",
-                      "bg-pink-300 dark:bg-pink-400 text-white border-2 border-white dark:border-slate-700",
+                      "bg-gray-900 dark:bg-pink-400 text-white border-2 border-white dark:border-slate-700",
                       "shadow-lg shadow-pink-300/50 dark:shadow-pink-400/50"
                     )}
                   >
@@ -143,28 +129,25 @@ export function Navbar({ cartItemsCount = 0, onCartOpen, cartComponent }: Navbar
                   </Badge>
                 )}
                 <span className="sr-only">Shopping cart</span>
-              </Button>
+              </button>
             )}
 
             {/* Mobile menu toggle Mejorado */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className={cn(
-                "lg:hidden h-11 w-11 rounded-full transition-all duration-300 border-2",
-                isMenuOpen 
-                  ? "bg-pink-300 dark:bg-pink-400 border-pink-200 dark:border-pink-300 text-white shadow-lg shadow-pink-300/25 dark:shadow-pink-400/30 hover:bg-pink-400 dark:hover:bg-pink-500 hover:border-pink-300 dark:hover:border-pink-400" 
-                  : "bg-gray-100/80 dark:bg-slate-700/80 border-gray-200/60 dark:border-slate-600/60 text-gray-700 dark:text-gray-200 shadow-lg dark:shadow-slate-900/20 hover:bg-pink-50 dark:hover:bg-slate-600/60 hover:border-pink-200 dark:hover:border-slate-500 hover:text-pink-700 dark:hover:text-pink-300",
-                "hover:scale-105 hover:shadow-xl"
-              )}
+            <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className={cn(
+                "lg:hidden h-11 w-11 rounded-full transition-all duration-300 border-2 flex items-center justify-center shadow-lg hover:scale-105 hover:shadow-xl",
+                isMenuOpen 
+                  ? "bg-pink-500 dark:bg-pink-500 border-pink-600 dark:border-pink-600 text-white hover:bg-pink-600 dark:hover:bg-pink-600 hover:border-pink-700 dark:hover:border-pink-700" 
+                  : "bg-gray-300 dark:bg-slate-500 border-gray-500 dark:border-slate-400 text-gray-900 dark:text-white hover:bg-pink-300 dark:hover:bg-pink-500 hover:border-pink-600 dark:hover:border-pink-400"
+              )}
             >
               {isMenuOpen ? 
                 <X className="h-5 w-5" /> : 
                 <Menu className="h-5 w-5" />
               }
               <span className="sr-only">Toggle menu</span>
-            </Button>
+            </button>
           </div>
         </div>
 
@@ -173,7 +156,7 @@ export function Navbar({ cartItemsCount = 0, onCartOpen, cartComponent }: Navbar
           <div className="lg:hidden">
             <div className={cn(
               "absolute top-full left-0 right-0 mt-2 mx-6 rounded-2xl",
-              "bg-white/95 dark:bg-slate-800/95 backdrop-blur-xl border-2 border-gray-200/80 dark:border-slate-600/80",
+              "bg-white dark:bg-slate-800 backdrop-blur-xl border-2 border-gray-200 dark:border-slate-600",
               "shadow-2xl shadow-black/20 dark:shadow-slate-900/40 animate-in slide-in-from-top-2 duration-300"
             )}>
               <div className="p-8 space-y-4">
@@ -187,15 +170,15 @@ export function Navbar({ cartItemsCount = 0, onCartOpen, cartComponent }: Navbar
                         "flex items-center space-x-4 p-5 rounded-xl transition-all duration-300 border-2",
                         "hover:scale-105 hover:shadow-lg",
                         isActive
-                          ? "bg-pink-300 dark:bg-pink-400 text-white shadow-lg shadow-pink-300/25 dark:shadow-pink-400/30 border-pink-200 dark:border-pink-300 hover:bg-pink-400 dark:hover:bg-pink-500 hover:border-pink-300 dark:hover:border-pink-400"
-                          : "bg-gray-50 dark:bg-slate-700/50 text-gray-700 dark:text-gray-200 border-gray-200/60 dark:border-slate-600/60 hover:bg-pink-50 dark:hover:bg-slate-600/60 hover:border-pink-200 dark:hover:border-slate-500 hover:text-pink-700 dark:hover:text-pink-300"
+                          ? "bg-pink-400 dark:bg-pink-400 text-white shadow-lg shadow-pink-300/25 dark:shadow-pink-400/30 border-pink-300 dark:border-pink-300 hover:bg-pink-500 dark:hover:bg-pink-500 hover:border-pink-400 dark:hover:border-pink-400"
+                          : "bg-gray-50 dark:bg-slate-700 text-gray-700 dark:text-gray-200 border-gray-200 dark:border-slate-600 hover:bg-pink-50 dark:hover:bg-slate-600 hover:border-pink-200 dark:hover:border-slate-500 hover:text-pink-700 dark:hover:text-pink-300"
                       )}
                       onClick={() => setIsMenuOpen(false)}
                       style={{ animationDelay: `${index * 50}ms` }}
                     >
                       <div className={cn(
                         "h-4 w-4 rounded-full transition-all duration-300",
-                        isActive ? "bg-white shadow-lg" : "bg-pink-300/70 dark:bg-pink-400/70"
+                        isActive ? "bg-white shadow-lg" : "bg-pink-400 dark:bg-pink-400"
                       )}></div>
                       <span className="font-medium text-lg">{link.label}</span>
                     </Link>

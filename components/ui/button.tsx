@@ -19,6 +19,7 @@ const buttonVariants = cva(
         secondary:
           "bg-gradient-to-r from-gray-100 to-gray-200 text-white shadow-md hover:shadow-lg hover:from-gray-200 hover:to-gray-300 border-0 rounded-full",
         ghost: "text-white hover:bg-pink-50 hover:text-white rounded-full backdrop-blur-sm",
+        navbar: "!bg-gray-200 dark:!bg-slate-500 !text-gray-900 dark:!text-white !border-2 !border-gray-400 dark:!border-slate-400 !shadow-lg !rounded-full !transition-all !duration-300 hover:!bg-gray-300 dark:hover:!bg-slate-400 hover:!scale-105 hover:!shadow-xl",
         link: "text-white underline-offset-4 hover:underline hover:text-white rounded-none",
         success: "bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-lg hover:shadow-xl hover:from-green-600 hover:to-emerald-700 border-0 rounded-full",
         warning: "bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-lg hover:shadow-xl hover:from-amber-600 hover:to-orange-700 border-0 rounded-full",
