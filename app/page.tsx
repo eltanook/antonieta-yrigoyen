@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { WhatsAppFloat } from "@/components/whatsapp-float"
@@ -18,6 +18,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { imageOverlayVariants, glassVariants } from "@/lib/overlay-variants"
+import { useCounter } from "@/hooks/use-counter"
 
 // Mock data
 const heroSlides: HeroSlide[] = [
@@ -55,21 +56,21 @@ const featuredCategories: Category[] = [
     id: "ambientaciones",
     name: "Ambientaciones",
     description: "Eventos y espacios especiales con flores naturales",
-    image: "/placeholder.svg?height=300&width=400&text=Ambientaciones",
+    image: "/a.jpg",
     productCount: 15,
   },
   {
     id: "semanal",
     name: "Servicio Semanal",
     description: "Abonos semanales y quincenales de flores frescas",
-    image: "/placeholder.svg?height=300&width=400&text=Servicio+Semanal",
+    image: "/b.jpg",
     productCount: 8,
   },
   {
     id: "jardines",
     name: "Estética de Jardines",
     description: "Diseño y mantenimiento de espacios verdes",
-    image: "/placeholder.svg?height=300&width=400&text=Jardines",
+    image: "/c.jpg",
     productCount: 12,
   },
 ]
@@ -80,7 +81,7 @@ const featuredProducts: Product[] = [
     name: "Ramo de Rosas Rojas",
     price: 45.99,
     originalPrice: 55.99,
-    image: "/placeholder.svg?height=300&width=300&text=Rosas+Rojas",
+    image: "/a.jpg",
     category: "Ramos",
     inStock: true,
     featured: true,
@@ -89,7 +90,7 @@ const featuredProducts: Product[] = [
     id: "2",
     name: "Ambientación para Evento",
     price: 199.99,
-    image: "/placeholder.svg?height=300&width=300&text=Ambientacion+Evento",
+    image: "/b.jpg",
     category: "Ambientaciones",
     inStock: true,
   },
@@ -98,7 +99,7 @@ const featuredProducts: Product[] = [
     name: "Servicio Semanal Premium",
     price: 89.99,
     originalPrice: 109.99,
-    image: "/placeholder.svg?height=300&width=300&text=Servicio+Semanal",
+    image: "/c.jpg",
     category: "Servicio Semanal",
     inStock: true,
   },
@@ -106,7 +107,7 @@ const featuredProducts: Product[] = [
     id: "4",
     name: "Diseño de Jardín",
     price: 299.99,
-    image: "/placeholder.svg?height=300&width=300&text=Diseño+Jardin",
+    image: "/dd.jpg",
     category: "Jardines",
     inStock: true,
   },
@@ -137,11 +138,107 @@ const testimonials: Testimonial[] = [
     rating: 5,
     avatar: "/placeholder.svg?height=80&width=80&text=LG",
   },
+  {
+    id: "4",
+    name: "María Elena Silva",
+    role: "Cumpleaños Especial",
+    content: "Para el cumpleaños de mi madre, Nadia creó un arreglo tan hermoso que todos los invitados no paraban de preguntar quién lo había hecho. Superó todas mis expectativas.",
+    rating: 5,
+    avatar: "/placeholder.svg?height=80&width=80&text=MS",
+  },
+  {
+    id: "5",
+    name: "Roberto Fernández",
+    role: "Oficina Corporativa",
+    content: "Contratamos el servicio semanal para nuestra oficina y ha cambiado completamente el ambiente de trabajo. Los empleados están más motivados y el espacio se ve profesional.",
+    rating: 5,
+    avatar: "/placeholder.svg?height=80&width=80&text=RF",
+  },
+  {
+    id: "6",
+    name: "Carmen López",
+    role: "Aniversario de Matrimonio",
+    content: "Nadia nos ayudó a recrear las flores de nuestra boda para nuestro 25 aniversario. Fue emotivo y perfecto. Su atención al detalle es extraordinaria.",
+    rating: 5,
+    avatar: "/placeholder.svg?height=80&width=80&text=CL",
+  },
+  {
+    id: "7",
+    name: "Diego Morales",
+    role: "Restaurante",
+    content: "Como chef, entiendo la importancia de los detalles. Nadia logra que nuestro restaurante tenga siempre flores frescas que complementan perfectamente la experiencia culinaria.",
+    rating: 5,
+    avatar: "/placeholder.svg?height=80&width=80&text=DM",
+  },
+  {
+    id: "8",
+    name: "Patricia Ruiz",
+    role: "Baby Shower",
+    content: "El baby shower de mi hija fue mágico gracias a Nadia. Cada detalle floral estaba pensado con amor y las fotos quedaron increíbles. ¡Mil gracias!",
+    rating: 5,
+    avatar: "/placeholder.svg?height=80&width=80&text=PR",
+  }
 ]
+
+// Elegant Minimal Stat Card Component
+function AnimatedStatCard({ stat, index }: { stat: any, index: number }) {
+  const numericValue = parseInt(stat.number.replace(/\D/g, '')) || 0
+  const hasPlus = stat.number.includes('+')
+  const isDecimal = stat.number.includes('.')
+  
+  const { count, elementRef } = useCounter({ 
+    end: numericValue, 
+    duration: 1000 + (index * 100),
+    decimals: isDecimal ? 1 : 0,
+    startOnInView: true 
+  })
+
+  const formatCount = (value: number) => {
+    if (isDecimal) {
+      return value.toFixed(1)
+    }
+    return hasPlus ? `${value}+` : value.toString()
+  }
+
+  return (
+    <div 
+      ref={elementRef}
+      className={cn(
+        "text-center space-y-4 minimal-hover",
+        "transition-all duration-200 ease-out",
+        `animation-delay-${index * 150}`
+      )}
+      style={{ 
+        animationDelay: `${index * 150}ms`
+      }}
+    >
+      {/* Subtle Icon */}
+      <div className="flex justify-center">
+        <stat.icon className={cn("w-5 h-5", stat.color, "opacity-70 transition-opacity duration-300 group-hover:opacity-100")} />
+      </div>
+
+      {/* Clean Number */}
+      <div 
+        className="text-3xl md:text-4xl font-extralight text-foreground tracking-wide"
+        style={{ 
+          animation: count > 0 ? 'count-appear 0.3s ease-out' : 'none'
+        }}
+      >
+        {formatCount(count)}
+      </div>
+
+      {/* Simple Label */}
+      <div className="text-xs md:text-sm text-muted-foreground font-light tracking-wider uppercase">
+        {stat.label}
+      </div>
+    </div>
+  )
+}
 
 export default function HomePage() {
   const [cartItems, setCartItems] = useState<Product[]>([])
   const [isVisible, setIsVisible] = useState(false)
+  const cartTriggerRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     setIsVisible(true)
@@ -155,8 +252,12 @@ export default function HomePage() {
     setCartItems(items)
   }
 
+  const handleCartOpen = () => {
+    cartTriggerRef.current?.click()
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5 relative overflow-hidden">
+    <div className="min-h-screen bg-white dark:bg-slate-800 relative overflow-hidden">
       {/* Floating decorative elements - reduced and more subtle */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute top-32 left-16 w-12 h-12 bg-primary/8 rounded-full blur-xl animate-pulse delay-1000"></div>
@@ -166,8 +267,19 @@ export default function HomePage() {
 
       <Navbar
         cartItemsCount={cartItems.length}
-        onCartOpen={() => {}}
-        cartComponent={<ShoppingCart items={cartItems} onUpdateCart={handleUpdateCart} />}
+        onCartOpen={handleCartOpen}
+      />
+
+      <ShoppingCart 
+        items={cartItems} 
+        onUpdateCart={handleUpdateCart}
+        trigger={
+          <button 
+            ref={cartTriggerRef}
+            style={{ display: 'none' }} 
+            aria-hidden="true"
+          />
+        }
       />
 
       <main className="relative z-10 pt-16">
@@ -176,187 +288,181 @@ export default function HomePage() {
           <HeroSlider slides={heroSlides} />
         </section>
 
-        {/* Floating stats section */}
-        <section className="container mx-auto px-4 py-12">
+        {/* Minimal Stats Section */}
+        <section className="container mx-auto px-4 py-16">
           <div className="max-w-4xl mx-auto">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {[
-                { icon: Heart, number: "500+", label: "Clientes Felices", color: "text-red-500" },
-                { icon: Star, number: "5.0", label: "Calificación", color: "text-yellow-500" },
-                { icon: Flower2, number: "1000+", label: "Flores Entregadas", color: "text-pink-500" },
-                { icon: Leaf, number: "3+", label: "Años de Experiencia", color: "text-green-500" }
-              ].map((stat, index) => (
-                <div 
-                  key={index} 
-                  className={cn(
-                    "rounded-xl p-4 text-center shadow-subtle-lg hover:scale-105 transition-all duration-300",
-                    glassVariants({ variant: "card", hover: "subtle" }),
-                    `delay-${index * 100}`
-                  )}
-                >
-                  <stat.icon className={`w-6 h-6 mx-auto mb-2 ${stat.color}`} />
-                  <div className="text-xl font-bold text-foreground">{stat.number}</div>
-                  <div className="text-xs text-muted-foreground">{stat.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* About Section */}
-        <section className="container mx-auto px-4 py-16">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="space-y-6 relative">
-                <div className="absolute -left-4 top-0 w-1 h-16 bg-gradient-to-b from-primary to-accent rounded-full"></div>
-                <SectionTag className="ml-4">
-                  <Sparkles className="w-4 h-4 mr-2" />
-                  Sobre Nadia
-                </SectionTag>
-                <h2 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
-                  Flores con Amor y Dedicación
-                </h2>
-                <p className="text-lg text-muted-foreground leading-relaxed">
-                  Soy Nadia, emprendedora, mamá y amante de las flores y su energía. Mi proyecto surgió a partir de un sueño que me dio la señal de que debía comenzar con esto. 
-                  <span className="text-primary font-medium"> Armo cada ramo con mucho amor y dedicación como si fuera único.</span>
-                </p>
-                
-                {/* Feature highlights */}
-                <div className="grid grid-cols-2 gap-3 mt-6">
-                  {[
-                    { icon: Flower2, title: "Flores Frescas", desc: "Seleccionadas diariamente", color: "text-pink-500" },
-                    { icon: Gift, title: "Hecho con Amor", desc: "Cada arreglo es único", color: "text-red-500" },
-                    { icon: Truck, title: "Entrega Rápida", desc: "En tiempo y forma", color: "text-blue-500" },
-                    { icon: Award, title: "Calidad Premium", desc: "Solo las mejores flores", color: "text-yellow-500" }
-                  ].map((feature, index) => (
-                    <div key={index} className="flex items-start space-x-3 p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors">
-                      <feature.icon className={`w-5 h-5 ${feature.color} mt-0.5`} />
-                      <div>
-                        <h4 className="font-medium text-sm">{feature.title}</h4>
-                        <p className="text-xs text-muted-foreground">{feature.desc}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-3 pt-4">
-                  <Button size="lg" variant="elegant" asChild className="btn-shine btn-float">
-                    <Link href="/nosotros">
-                      <Heart className="w-4 h-4 mr-2" />
-                      Conocer Más
-                    </Link>
-                  </Button>
-                  <Button variant="outline" size="lg" asChild className="btn-float">
-                    <Link href="/contacto">
-                      Contactar
-                      <ArrowRight className="h-4 w-4 ml-1" />
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-              <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl blur-2xl group-hover:blur-xl transition-all duration-500"></div>
-                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl transform group-hover:scale-105 transition-all duration-500">
-                  <Image
-                    src="/placeholder.svg?height=400&width=500&text=Nadia+con+Flores"
-                    alt="Nadia con sus flores"
-                    width={500}
-                    height={400}
-                    className="object-cover w-full h-full"
-                  />
-                  <div className={imageOverlayVariants({ variant: "subtle" })}></div>
-                  <Badge className={cn(
-                    "absolute top-3 right-3 border-0 shadow-lg text-xs",
-                    glassVariants({ variant: "card" })
-                  )}>
-                    <Star className="w-3 h-3 mr-1 fill-current" />
-                    Emprendedora
-                  </Badge>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Featured Categories Section */}
-        <section className="container mx-auto px-4 py-16">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center space-y-4 mb-12">
+            {/* Section Header */}
+            <div className="text-center mb-16">
               <SectionTag className="mx-auto">
-                <Flower2 className="w-4 h-4 mr-2" />
-                Servicios
-              </SectionTag>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-                Nuestros Servicios
-              </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                Descubre todos los servicios florales que ofrecemos con amor y dedicación
+                  <Flower2 className="w-4 h-4 mr-2" />
+                  Nuestros Numeros
+                </SectionTag>
+              <div className="w-12 h-0.5 bg-primary/30 mx-auto mb-6"></div>
+              <p className="text-base text-muted-foreground max-w-md mx-auto font-light">
+                Momentos especiales creados con dedicación
               </p>
             </div>
-            <div className="grid md:grid-cols-3 gap-6">
-              {featuredCategories.map((category, index) => (
-                <div
-                  key={category.id}
-                  className={`transform hover:scale-105 transition-all duration-300 delay-${index * 100}`}
-                >
-                  <CategoryCard category={category} />
-                </div>
+
+            {/* Stats Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-16">
+              {[
+                { 
+                  icon: Heart, 
+                  number: "500+", 
+                  label: "Clientes Felices",
+                  color: "text-pink-400"
+                },
+                { 
+                  icon: Star, 
+                  number: "5.0", 
+                  label: "Calificación",
+                  color: "text-amber-400"
+                },
+                { 
+                  icon: Flower2, 
+                  number: "1000+", 
+                  label: "Flores Entregadas",
+                  color: "text-rose-400"
+                },
+                { 
+                  icon: Leaf, 
+                  number: "3+", 
+                  label: "Experiencia",
+                  color: "text-emerald-400"
+                }
+              ].map((stat, index) => (
+                <AnimatedStatCard key={index} stat={stat} index={index} />
               ))}
             </div>
           </div>
         </section>
 
-        {/* Banner Section */}
-        <section className="container mx-auto px-4 py-16">
-          <div className="max-w-6xl mx-auto">
-            <div className="relative h-[400px] rounded-2xl overflow-hidden group">
-              <Image
-                src="/placeholder.svg?height=400&width=1200&text=Flores+Naturales+Banner"
-                alt="Banner promocional flores"
-                fill
-                className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
-              />
-              <div className={imageOverlayVariants({ variant: "full" })} />
-              
-              <div className="relative h-full flex items-center justify-center text-center text-white px-6">
-                <div className="max-w-3xl space-y-6">
-                  <Badge className={cn(
-                    "text-white text-sm px-3 py-1",
-                    glassVariants({ variant: "light" })
-                  )}>
-                    <Sparkles className="w-3 h-3 mr-1" />
-                    Oferta Especial
-                  </Badge>
-                  <h2 className="text-3xl md:text-5xl font-bold text-white leading-tight">
-                    Cada Flor Cuenta 
-                    <span className="text-primary"> una Historia</span>
-                  </h2>
-                  <p className="text-lg md:text-xl text-white/90 max-w-xl mx-auto leading-relaxed">
-                    Servicio personalizado de flores frescas con 
-                    <span className="text-primary font-medium"> entrega gratuita</span>
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-3 justify-center items-center pt-2">
+        {/* About Section - Minimal */}
+        <section className="py-20">
+          <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto">
+              <div className="grid lg:grid-cols-2 gap-16 items-center">
+                {/* Content Side */}
+                <div className="space-y-8">
+                  <div className="space-y-6">
+                    <SectionTag>
+                      <Sparkles className="w-4 h-4 mr-2" />
+                      Conoce a Nadia
+                    </SectionTag>
+                    
+                    <div className="space-y-4">
+                      <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight">
+                        Flores con{" "}
+                        <span className="text-pink-500">
+                          Amor y Dedicación
+                        </span>
+                      </h2>
+                      
+                      <div className="w-16 h-1 bg-pink-500 rounded-full"></div>
+                    </div>
+                    
+                    <div className="space-y-6">
+                      <p className="text-lg text-foreground/80 leading-relaxed">
+                        Soy Nadia, emprendedora, mamá y amante de las flores y su energía. Mi proyecto surgió a partir de{" "}
+                        <span className="text-pink-500 font-medium">un sueño</span> que me dio la señal de que debía comenzar con esto.
+                      </p>
+                      
+                      <blockquote className="border-l-4 border-pink-500 pl-6 py-2">
+                        <p className="text-lg font-medium text-foreground italic">
+                          "Armo cada ramo con mucho amor y dedicación como si fuera único"
+                        </p>
+                      </blockquote>
+                    </div>
+                  </div>
+
+                  {/* Simple Feature List */}
+                  <div className="grid grid-cols-2 gap-6">
+                    {[
+                      { 
+                        icon: Flower2, 
+                        title: "Flores Frescas", 
+                        desc: "Seleccionadas cada día", 
+                        color: "text-pink-500"
+                      },
+                      { 
+                        icon: Gift, 
+                        title: "Hecho con Amor", 
+                        desc: "Cada arreglo es único", 
+                        color: "text-red-500"
+                      },
+                      { 
+                        icon: Truck, 
+                        title: "Entrega Rápida", 
+                        desc: "Puntual y cuidadosa", 
+                        color: "text-blue-500"
+                      },
+                      { 
+                        icon: Award, 
+                        title: "Calidad Premium", 
+                        desc: "Solo lo mejor", 
+                        color: "text-amber-500"
+                      }
+                    ].map((feature, index) => (
+                      <div key={index} className="flex items-start space-x-3">
+                        <div className="p-2 rounded-lg bg-muted">
+                          <feature.icon className={cn("w-5 h-5", feature.color)} />
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-foreground text-sm mb-1">{feature.title}</h4>
+                          <p className="text-xs text-muted-foreground">{feature.desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Simple CTA Buttons */}
+                  <div className="flex flex-col sm:flex-row gap-4">
                     <Button 
                       size="lg" 
-                      variant="elegant"
-                      asChild 
-                      className="btn-shine"
+                      className="bg-pink-500 hover:bg-pink-600 text-white"
+                      asChild
                     >
-                      <Link href="/productos">
-                        <Flower2 className="w-4 h-4 mr-2" />
-                        Ver Servicios
+                      <Link href="/nosotros">
+                        <Heart className="w-4 h-4 mr-2" />
+                        Conocer Mi Historia
                       </Link>
                     </Button>
+                    
                     <Button 
-                      size="lg" 
-                      variant="outline-white" 
-                      asChild 
-                      className="btn-float"
+                      variant="outline" 
+                      size="lg"
+                      className="border-2 border-border hover:border-pink-500 hover:bg-pink-50 dark:hover:bg-pink-950/20 dark:border-slate-600 dark:hover:border-pink-400 transition-all duration-300"
+                      asChild
                     >
                       <Link href="/contacto">
-                        Contactar
+                        Conversemos
+                        <ArrowRight className="w-4 h-4 ml-2" />
                       </Link>
                     </Button>
+                  </div>
+                </div>
+
+                {/* Simple Image Side */}
+                <div className="relative">
+                  <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-lg">
+                    <Image
+                      src="/logoooo.jpg"
+                      alt="Nadia trabajando con flores"
+                      width={600}
+                      height={800}
+                      className="object-cover w-full h-full"
+                    />
+                    
+                    {/* Simple Badges */}
+                    <Badge className="absolute top-4 right-4 bg-white/90 text-foreground border-0 shadow-md">
+                      <Star className="w-3 h-3 mr-1 fill-current text-yellow-500" />
+                      Emprendedora
+                    </Badge>
+                    
+                    <Badge className="absolute bottom-4 left-4 bg-white/90 text-foreground border-0 shadow-md">
+                      <Heart className="w-3 h-3 mr-1 fill-current text-red-500" />
+                      3+ Años
+                    </Badge>
                   </div>
                 </div>
               </div>
@@ -364,115 +470,139 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Featured Products Section */}
-        <section className="container mx-auto px-4 py-16">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center space-y-4 mb-12">
-              <SectionTag className="mx-auto">
-                <Star className="w-4 h-4 mr-2" />
-                Servicios Destacados
-              </SectionTag>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-                Nuestros Servicios Más Populares
-              </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                Descubre nuestros servicios florales más solicitados, hechos con amor y dedicación
-              </p>
-            </div>
-            
-            {/* Product grid with staggered animation */}
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {featuredProducts.map((product, index) => (
-                <div
-                  key={product.id}
-                  className={`transform hover:scale-105 transition-all duration-300 delay-${index * 100} hover:shadow-xl`}
-                >
-                  <ProductCard product={product} onAddToCart={handleAddToCart} />
+        {/* Minimal Featured Products Section */}
+        <section className="py-20">
+          <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto">
+              
+              {/* Clean Header */}
+              <div className="text-center space-y-6 mb-16">
+                <SectionTag className="mx-auto">
+                  <Star className="w-4 h-4 mr-2" />
+                  Servicios Destacados
+                </SectionTag>
+                
+                <div className="space-y-4">
+                  <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight">
+                    Nuestros Servicios{" "}
+                    <span className="text-pink-500">Más Populares</span>
+                  </h2>
+                  
+                  <div className="w-20 h-0.5 bg-pink-500 mx-auto"></div>
                 </div>
-              ))}
-            </div>
-            
-            <div className="text-center mt-12">
-              <Button 
-                size="lg" 
-                variant="elegant"
-                asChild 
-                className="btn-shine btn-float"
-              >
-                <Link href="/productos">
-                  <Flower2 className="w-4 h-4 mr-2" />
-                  Ver Todos los Servicios
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Link>
-              </Button>
+                
+                <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+                  Descubre nuestros servicios florales más solicitados, hechos con amor y dedicación
+                </p>
+              </div>
+              
+              {/* Simple Product Grid */}
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {featuredProducts.map((product, index) => (
+                  <div
+                    key={product.id}
+                    className="transform hover:scale-105 transition-all duration-300 hover:shadow-lg"
+                  >
+                    <ProductCard product={product} onAddToCart={handleAddToCart} />
+                  </div>
+                ))}
+              </div>
+              
+              {/* Simple CTA */}
+              <div className="text-center mt-16">
+                <Button 
+                  size="lg" 
+                  className="bg-pink-500 hover:bg-pink-600 text-white"
+                  asChild
+                >
+                  <Link href="/productos">
+                    <Flower2 className="w-4 h-4 mr-2" />
+                    Ver Todos los Servicios
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Process Section - NEW */}
-        <section className="bg-gradient-to-br from-muted/20 to-primary/5 py-16">
+        
+      
+        
+
+        {/* Minimal Process Section */}
+        <section className="py-20">
           <div className="container mx-auto px-4">
             <div className="max-w-5xl mx-auto">
-              <div className="text-center space-y-4 mb-12">
+              
+              {/* Clean Header */}
+              <div className="text-center space-y-6 mb-16">
                 <SectionTag className="mx-auto">
                   <Sparkles className="w-4 h-4 mr-2" />
                   Nuestro Proceso
                 </SectionTag>
-                <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-                  Cómo Trabajamos
-                </h2>
-                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                
+                <div className="space-y-4">
+                  <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight">
+                    Cómo{" "}
+                    <span className="text-pink-500">Trabajamos</span>
+                  </h2>
+                  
+                  <div className="w-16 h-0.5 bg-pink-500 mx-auto"></div>
+                </div>
+                
+                <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
                   Un proceso simple y cuidadoso para brindarte la mejor experiencia floral
                 </p>
               </div>
               
-              <div className="grid md:grid-cols-4 gap-6">
+              {/* Simple Process Grid */}
+              <div className="grid md:grid-cols-4 gap-8">
                 {[
                   {
                     step: "01",
                     icon: MessageCircle,
                     title: "Consulta",
-                    description: "Conversamos sobre tus necesidades florales",
-                    color: "text-blue-500"
+                    description: "Conversamos sobre tus necesidades florales"
                   },
                   {
                     step: "02", 
                     icon: Palette,
                     title: "Diseño",
-                    description: "Creamos un diseño personalizado",
-                    color: "text-purple-500"
+                    description: "Creamos un diseño personalizado"
                   },
                   {
                     step: "03",
                     icon: Flower2,
                     title: "Selección",
-                    description: "Seleccionamos las flores más frescas",
-                    color: "text-pink-500"
+                    description: "Seleccionamos las flores más frescas"
                   },
                   {
                     step: "04",
                     icon: Truck,
                     title: "Entrega",
-                    description: "Entregamos con amor y puntualidad",
-                    color: "text-green-500"
+                    description: "Entregamos con amor y puntualidad"
                   }
                 ].map((process, index) => (
                   <div 
                     key={index}
-                    className={cn(
-                      "relative text-center p-6 rounded-xl transition-all duration-300 group hover:scale-105",
-                      glassVariants({ variant: "card", hover: "medium" }),
-                      `delay-${index * 100}`
-                    )}
+                    className="text-center space-y-4 group"
                   >
-                    <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-primary rounded-full flex items-center justify-center text-white text-xs font-bold">
+                    {/* Step Number */}
+                    <div className="w-12 h-12 bg-pink-100 dark:bg-pink-950/30 rounded-full flex items-center justify-center text-pink-500 font-bold text-sm mx-auto">
                       {process.step}
                     </div>
-                    <div className="mb-3 group-hover:scale-110 transition-transform duration-200 flex justify-center">
-                      <process.icon className={`w-8 h-8 ${process.color}`} />
+                    
+                    {/* Icon */}
+                    <div className="flex justify-center">
+                      <process.icon className="w-8 h-8 text-pink-500" />
                     </div>
-                    <h3 className="text-lg font-semibold mb-2">{process.title}</h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">{process.description}</p>
+                    
+                    {/* Content */}
+                    <div className="space-y-2">
+                      <h3 className="text-lg font-semibold text-foreground">{process.title}</h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{process.description}</p>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -480,95 +610,155 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Testimonials Section */}
-        <section className="py-16">
+        {/* Minimal Testimonials Section */}
+        <section className="py-20">
           <div className="container mx-auto px-4">
             <div className="max-w-5xl mx-auto">
-              <div className="text-center space-y-4 mb-12">
+              
+              {/* Clean Header */}
+              <div className="text-center space-y-6 mb-16">
                 <SectionTag className="mx-auto">
                   <Heart className="w-4 h-4 mr-2" />
                   Testimonios
                 </SectionTag>
-                <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-                  Lo que Dicen Nuestros Clientes
-                </h2>
+                
+                <div className="space-y-4">
+                  <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight">
+                    Lo que Dicen{" "}
+                    <span className="text-pink-500">Nuestros Clientes</span>
+                  </h2>
+                  
+                  <div className="w-20 h-0.5 bg-pink-500 mx-auto"></div>
+                </div>
+                
                 <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
                   Cada testimonio es una flor más en nuestro jardín de experiencias compartidas
                 </p>
               </div>
               
-              <Carousel
-                opts={{
-                  align: "start",
-                  loop: true,
-                }}
-                className="w-full"
-              >
-                <CarouselContent>
-                  {testimonials.map((testimonial, index) => (
-                    <CarouselItem key={testimonial.id} className="md:basis-1/2 lg:basis-1/3">
-                      <div className={`p-2 transform hover:scale-105 transition-all duration-300 delay-${index * 100}`}>
-                        <TestimonialCard testimonial={testimonial} />
-                      </div>
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                <CarouselPrevious className="hover:bg-primary hover:text-white transition-colors" />
-                <CarouselNext className="hover:bg-primary hover:text-white transition-colors" />
-              </Carousel>
-            </div>
-          </div>
-        </section>
+              {/* Carousel Testimonials */}
+              <div className="mb-20">
+                <Carousel
+                  opts={{
+                    align: "start",
+                    loop: true,
+                  }}
+                  className="w-full"
+                >
+                  <CarouselContent>
+                    {testimonials.map((testimonial) => (
+                      <CarouselItem key={testimonial.id} className="md:basis-1/2 lg:basis-1/3">
+                        <div className="p-2 h-full">
+                          <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-slate-700 h-full flex flex-col justify-between min-h-[280px]">
+                            {/* Rating */}
+                            <div className="flex justify-center mb-4">
+                              {[...Array(5)].map((_, i) => (
+                                <Star key={i} className="w-4 h-4 text-yellow-500 fill-current" />
+                              ))}
+                            </div>
+                            
+                            {/* Quote */}
+                            <blockquote className="text-muted-foreground italic mb-6 leading-relaxed text-center flex-grow flex items-center justify-center">
+                              "{testimonial.content}"
+                            </blockquote>
+                            
+                            {/* Author */}
+                            <div className="text-center space-y-1 mt-auto">
+                              <h4 className="font-semibold text-foreground">{testimonial.name}</h4>
+                              <p className="text-sm text-pink-500">{testimonial.role}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                  <CarouselPrevious className="hover:bg-pink-500 hover:text-white hover:border-pink-500 transition-colors" />
+                  <CarouselNext className="hover:bg-pink-500 hover:text-white hover:border-pink-500 transition-colors" />
+                </Carousel>
+              </div>
 
-        {/* CTA Section - NEW */}
-        <section className="container mx-auto px-4 py-16">
-          <div className="max-w-4xl mx-auto">
-            <div className="relative rounded-2xl overflow-hidden bg-gradient-to-r from-primary to-accent p-8 md:p-12 text-center text-white">
-              <div className={imageOverlayVariants({ variant: "subtle" })}></div>
-              <div className="relative z-10 space-y-6">
-                <div className="space-y-3">
-                  <Badge className={cn(
-                    "text-white text-sm px-3 py-1",
-                    glassVariants({ variant: "light" })
-                  )}>
-                    <Sparkles className="w-3 h-3 mr-1" />
-                    ¡Oferta Limitada!
-                  </Badge>
-                  <h2 className="text-3xl md:text-4xl font-bold leading-tight">
-                    ¿Listo para Transformar tu Espacio?
-                  </h2>
-                  <p className="text-lg md:text-xl text-white/90 max-w-xl mx-auto">
-                    Obtén un 20% de descuento en tu primer servicio semanal
+              {/* Enhanced Client Gallery */}
+              <div className="space-y-12">
+                <div className="text-center space-y-6">
+                  <div className="inline-flex items-center space-x-2 bg-pink-50 dark:bg-pink-950/20 px-4 py-2 rounded-full">
+                    <Flower2 className="w-4 h-4 text-pink-500" />
+                    <span className="text-sm text-pink-600 dark:text-pink-400 font-medium">Portfolio</span>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <h3 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
+                      Galería de{" "}
+                      <span className="text-pink-500">Nuestros Trabajos</span>
+                    </h3>
+                    <div className="w-24 h-1 bg-gradient-to-r from-pink-400 to-pink-600 mx-auto rounded-full"></div>
+                  </div>
+                  
+                  <p className="text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
+                    Cada imagen cuenta una historia de amor, dedicación y momentos únicos que hemos tenido el honor de crear
                   </p>
                 </div>
                 
-                <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-                  <Button 
-                    size="lg" 
-                    variant="elegant"
-                    asChild 
-                    className="btn-shine"
-                  >
-                    <Link href="/contacto">
-                      <Heart className="w-4 h-4 mr-2" />
-                      Comenzar Ahora
-                    </Link>
-                  </Button>
-                  <Button 
-                    size="lg" 
-                    variant="outline-white" 
-                    asChild 
-                    className="btn-float"
-                  >
-                    <Link href="/productos">
-                      Ver Servicios
-                    </Link>
-                  </Button>
+                {/* Enhanced Image Grid with Categories */}
+                <div className="space-y-8">
+                  {/* Aligned Masonry Grid */}
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-fr">
+                    {[
+                      { src: "/1.jpg", alt: "Ramo de novia elegante", category: "Bodas" },
+                      { src: "/2.jpg", alt: "Ambientación evento corporativo", category: "Eventos" },
+                      { src: "/3.jpg", alt: "Decoración mesa romántica", category: "Eventos" },
+                      { src: "/a.jpg", alt: "Arreglo floral primaveral", category: "Semanal" },
+                      { src: "/b.jpg", alt: "Centro de mesa minimalista", category: "Eventos" },
+                      { src: "/c.jpg", alt: "Jardín diseñado con amor", category: "Jardines" },
+                      { src: "/11.jpg", alt: "Servicio semanal premium", category: "Semanal" },
+                      { src: "/dd.jpg", alt: "Decoración especial única", category: "Bodas" }
+                    ].map((image, index) => (
+                      <div 
+                        key={index} 
+                        className="relative aspect-square rounded-2xl overflow-hidden group cursor-pointer shadow-md hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2"
+                      >
+                        <Image
+                          src={image.src}
+                          alt={image.alt}
+                          width={400}
+                          height={400}
+                          className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700"
+                        />
+                        
+                        {/* Gradient Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        
+                        {/* Image Info */}
+                        <div className="absolute bottom-0 left-0 right-0 p-3 transform translate-y-0 group-hover:translate-y-0 transition-transform duration-300">
+                          <div className="text-white space-y-1">
+                            <Badge className="bg-pink-500/90 text-white text-xs border-0 mb-1">
+                              {image.category}
+                            </Badge>
+                            <h4 className="font-medium text-xs leading-tight">{image.alt}</h4>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  {/* View More Button */}
+                  <div className="text-center pt-8">
+                    <Button 
+                      variant="outline" 
+                      size="lg"
+                      className="border-2 border-pink-200 hover:border-pink-500 hover:bg-pink-50 dark:hover:bg-pink-950/20 text-pink-600 hover:text-pink-700 dark:border-pink-800 dark:text-pink-400 dark:hover:border-pink-400 transition-all duration-300 group"
+                    >
+                      <Flower2 className="w-4 h-4 mr-2 group-hover:rotate-12 transition-transform duration-300" />
+                      Ver Más Trabajos
+                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </section>
+
+       
       </main>
 
       <Footer />

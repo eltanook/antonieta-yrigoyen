@@ -111,7 +111,7 @@ export function HeroSlider({ slides, autoPlay = true, autoPlayInterval = 5000 }:
         size="sm"
         className={cn(
           "absolute left-4 top-1/2 -translate-y-1/2 text-white btn-float w-12 h-12",
-          glassVariants({ variant: "light", hover: "medium" })
+          "backdrop-blur-sm border border-white/20 hover:border-white/40 hover:scale-110 hover:bg-white/10 transition-all duration-300"
         )}
         onClick={goToPrevious}
       >
@@ -122,7 +122,7 @@ export function HeroSlider({ slides, autoPlay = true, autoPlayInterval = 5000 }:
         size="sm"
         className={cn(
           "absolute right-4 top-1/2 -translate-y-1/2 text-white btn-float w-12 h-12",
-          glassVariants({ variant: "light", hover: "medium" })
+          "backdrop-blur-sm border border-white/20 hover:border-white/40 hover:scale-110 hover:bg-white/10 transition-all duration-300"
         )}
         onClick={goToNext}
       >
@@ -130,18 +130,27 @@ export function HeroSlider({ slides, autoPlay = true, autoPlayInterval = 5000 }:
       </Button>
 
       {/* Indicators */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3">
         {slides.map((_, index) => (
           <button
             key={index}
-            className={`w-3 h-3 rounded-full transition-all ${
+            className={`relative group transition-all duration-500 ease-out ${
               index === currentSlide 
-                ? "bg-white" 
-                : "bg-white/50 hover:bg-white/70"
+                ? "w-8 h-3" 
+                : "w-3 h-3 hover:w-4"
             }`}
             onClick={() => goToSlide(index)}
             aria-label={`Go to slide ${index + 1}`}
-          />
+          >
+            <div className={`absolute inset-0 rounded-full transition-all duration-500 backdrop-blur-sm ${
+              index === currentSlide 
+                ? "bg-pink-300 shadow-lg shadow-pink-300/50 border-2 border-white/30" 
+                : "bg-white/40 hover:bg-pink-200/80 border border-white/50 group-hover:border-white/70 group-hover:shadow-md"
+            }`} />
+            {index === currentSlide && (
+              <div className="absolute inset-0 rounded-full bg-pink-300/30 animate-pulse" />
+            )}
+          </button>
         ))}
       </div>
     </div>

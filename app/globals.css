@@ -393,3 +393,183 @@
     }
   }
 }
+
+/* Custom Scrollbar Styles */
+/* For Webkit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f8fafc;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #f9a8d4; /* pink-300 */
+  border-radius: 6px;
+  border: 1px solid #f3e8ff;
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #f472b6; /* pink-400 */
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(249, 168, 212, 0.4);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: #ec4899; /* pink-500 */
+}
+
+/* Dark mode scrollbar */
+.dark ::-webkit-scrollbar-track {
+  background: #1e293b; /* slate-800 - coincide con el fondo del navbar */
+  border: 1px solid #334155; /* slate-700 - coincide con los bordes de botones */
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #f9a8d4; /* pink-300 - mismo color que modo claro para consistencia */
+  border: 1px solid #f472b6; /* pink-400 - borde sutil */
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #f472b6; /* pink-400 - hover consistente */
+  box-shadow: 0 2px 8px rgba(249, 168, 212, 0.6); /* sombra más visible en oscuro */
+}
+
+.dark ::-webkit-scrollbar-thumb:active {
+  background: #ec4899; /* pink-500 - estado activo */
+}
+
+/* For Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #f9a8d4 #f8fafc; /* pink-300 y fondo claro */
+}
+
+.dark html {
+  scrollbar-color: #f9a8d4 #1e293b; /* pink-300 y slate-800 para consistencia */
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar for specific containers */
+.custom-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #f9a8d4 #f8fafc;
+}
+
+.custom-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: #f8fafc;
+  border-radius: 4px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: #f9a8d4; /* pink-300 */
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: #f472b6; /* pink-400 */
+}
+
+.dark .custom-scroll {
+  scrollbar-color: #f9a8d4 #1e293b; /* consistencia con el tema principal */
+}
+
+.dark .custom-scroll::-webkit-scrollbar-track {
+  background: #1e293b; /* slate-800 - coincide con navbar */
+}
+
+.dark .custom-scroll::-webkit-scrollbar-thumb {
+  background: #f9a8d4; /* pink-300 - mismo color que modo claro */
+}
+
+.dark .custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: #f472b6; /* pink-400 - hover consistente */
+}
+
+/* Enhanced Stats Section Animations - Minimal & Soft */
+@keyframes gentle-fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes soft-pulse {
+  0%, 100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes subtle-float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+.animation-delay-0 {
+  animation: gentle-fade-up 0.6s ease-out forwards;
+  animation-delay: 0ms;
+  opacity: 0;
+}
+
+.animation-delay-150 {
+  animation: gentle-fade-up 0.6s ease-out forwards;
+  animation-delay: 150ms;
+  opacity: 0;
+}
+
+.animation-delay-300 {
+  animation: gentle-fade-up 0.6s ease-out forwards;
+  animation-delay: 300ms;
+  opacity: 0;
+}
+
+.animation-delay-450 {
+  animation: gentle-fade-up 0.6s ease-out forwards;
+  animation-delay: 450ms;
+  opacity: 0;
+}
+
+/* Minimal hover effects */
+.minimal-hover {
+  transition: all 0.2s ease-out;
+}
+
+.minimal-hover:hover {
+  transform: translateY(-1px);
+}
+
+/* Soft number counter animation */
+@keyframes count-appear {
+  from {
+    opacity: 0.5;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

@@ -1,6 +1,7 @@
 import Link from "next/link"
-import { Facebook, Instagram, Mail, Phone, MapPin, Clock } from "lucide-react"
+import { Facebook, Instagram, Mail, Phone, MapPin, Clock, Heart, Star } from "lucide-react"
 import { FaTiktok } from "react-icons/fa"
+import Image from "next/image"
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
@@ -12,6 +13,13 @@ export function Footer() {
     { href: "/contacto", label: "Contacto" },
   ]
 
+  const services = [
+    { label: "Ambientaciones" },
+    { label: "Servicio Semanal" },
+    { label: "Eventos y Bodas" },
+    { label: "Diseño de Jardines" },
+  ]
+
   const socialLinks = [
     { href: "https://facebook.com/antonietairigoyen", icon: Facebook, label: "Facebook" },
     { href: "https://instagram.com/antonietairigoyen", icon: Instagram, label: "Instagram" },
@@ -19,32 +27,53 @@ export function Footer() {
   ]
 
   return (
-    <footer className="bg-muted/50 border-t">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <footer className="bg-white dark:bg-slate-800 border-t border-gray-200 dark:border-slate-700">
+      <div className="container mx-auto px-4 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Column 1: Logo and description */}
-          <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">N</span>
+          <div className="space-y-6 lg:col-span-1">
+            <div className="space-y-4">
+              <div className="flex items-center space-x-3">
+                <div className="h-12 w-auto">
+                  <Image
+                    src="/antonieta-logo.svg"
+                    alt="Antonieta Flowers"
+                    width={120}
+                    height={48}
+                    className="h-12 w-auto"
+                  />
+                </div>
               </div>
-              <span className="font-bold text-xl">Nadia Flores</span>
+              <div className="flex items-center space-x-1 mt-2">
+                <Star className="h-3 w-3 text-yellow-500 fill-current" />
+                <Star className="h-3 w-3 text-yellow-500 fill-current" />
+                <Star className="h-3 w-3 text-yellow-500 fill-current" />
+                <Star className="h-3 w-3 text-yellow-500 fill-current" />
+                <Star className="h-3 w-3 text-yellow-500 fill-current" />
+                <span className="text-xs text-muted-foreground ml-1">5.0</span>
+              </div>
+              <p className="text-muted-foreground leading-relaxed">
+                Flores naturales con <span className="text-pink-500 font-medium">amor y dedicación</span>. 
+                Creando momentos únicos a través de ambientaciones, eventos y servicios florales.
+              </p>
+              <div className="inline-flex items-center space-x-2 bg-pink-50 dark:bg-pink-950/20 px-4 py-2 rounded-full">
+                <Heart className="w-4 h-4 text-pink-500" />
+                <span className="text-sm text-pink-600 dark:text-pink-400 font-medium">Hecho con amor</span>
+              </div>
             </div>
-            <p className="text-sm text-muted-foreground">
-              Flores naturales con amor y dedicación. Ambientaciones, eventos y servicios florales semanales.
-            </p>
           </div>
 
           {/* Column 2: Quick Links */}
-          <div className="space-y-4">
-            <h3 className="font-semibold text-foreground">Enlaces Rápidos</h3>
-            <ul className="space-y-2">
+          <div className="space-y-6">
+            <h3 className="font-bold text-lg text-foreground">Enlaces Rápidos</h3>
+            <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                    className="text-muted-foreground hover:text-pink-500 transition-colors duration-300 flex items-center group"
                   >
+                    <span className="w-2 h-2 bg-pink-200 dark:bg-pink-800 rounded-full mr-3 group-hover:bg-pink-500 transition-colors duration-300"></span>
                     {link.label}
                   </Link>
                 </li>
@@ -52,52 +81,93 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Column 3: Contact */}
-          <div className="space-y-4">
-            <h3 className="font-semibold text-foreground">Contacto</h3>
-            <div className="space-y-2 text-sm text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <Mail className="h-4 w-4" />
-                <span>antonietairigoyen74@gmail.com</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Phone className="h-4 w-4" />
-                <span>+34 911 685 249</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4" />
-                <span>Madrid, España</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4" />
-                <span>Consulta horarios por WhatsApp</span>
-              </div>
-            </div>
+          {/* Column 3: Services */}
+          <div className="space-y-6">
+            <h3 className="font-bold text-lg text-foreground">Nuestros Servicios</h3>
+            <ul className="space-y-3">
+              {services.map((service, index) => (
+                <li key={index} className="text-muted-foreground flex items-center">
+                  <Heart className="w-4 h-4 text-pink-400 mr-3" />
+                  {service.label}
+                </li>
+              ))}
+            </ul>
           </div>
 
-          {/* Column 4: Social Media */}
-          <div className="space-y-4">
-            <h3 className="font-semibold text-foreground">Síguenos</h3>
-            <div className="flex space-x-4">
-              {socialLinks.map((social) => {
-                const Icon = social.icon
-                return (
-                  <Link
-                    key={social.label}
-                    href={social.href}
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                    aria-label={social.label}
-                  >
-                    <Icon className="h-5 w-5" />
-                  </Link>
-                )
-              })}
+          {/* Column 4: Contact & Social */}
+          <div className="space-y-6">
+            <h3 className="font-bold text-lg text-foreground">Contacto</h3>
+            <div className="space-y-4">
+              <div className="space-y-3 text-sm text-muted-foreground">
+                <div className="flex items-center gap-3 group">
+                  <div className="w-8 h-8 bg-pink-100 dark:bg-pink-950/30 rounded-lg flex items-center justify-center group-hover:bg-pink-200 dark:group-hover:bg-pink-900/50 transition-colors duration-300">
+                    <Mail className="h-4 w-4 text-pink-500" />
+                  </div>
+                  <span>antonietairigoyen74@gmail.com</span>
+                </div>
+                <div className="flex items-center gap-3 group">
+                  <div className="w-8 h-8 bg-pink-100 dark:bg-pink-950/30 rounded-lg flex items-center justify-center group-hover:bg-pink-200 dark:group-hover:bg-pink-900/50 transition-colors duration-300">
+                    <Phone className="h-4 w-4 text-pink-500" />
+                  </div>
+                  <span>+34 911 685 249</span>
+                </div>
+                <div className="flex items-center gap-3 group">
+                  <div className="w-8 h-8 bg-pink-100 dark:bg-pink-950/30 rounded-lg flex items-center justify-center group-hover:bg-pink-200 dark:group-hover:bg-pink-900/50 transition-colors duration-300">
+                    <MapPin className="h-4 w-4 text-pink-500" />
+                  </div>
+                  <span>Madrid, España</span>
+                </div>
+                <div className="flex items-center gap-3 group">
+                  <div className="w-8 h-8 bg-pink-100 dark:bg-pink-950/30 rounded-lg flex items-center justify-center group-hover:bg-pink-200 dark:group-hover:bg-pink-900/50 transition-colors duration-300">
+                    <Clock className="h-4 w-4 text-pink-500" />
+                  </div>
+                  <span>Consulta horarios por WhatsApp</span>
+                </div>
+              </div>
+
+              {/* Social Media */}
+              <div className="space-y-3">
+                <h4 className="font-semibold text-foreground">Síguenos</h4>
+                <div className="flex space-x-3">
+                  {socialLinks.map((social) => {
+                    const Icon = social.icon
+                    return (
+                      <Link
+                        key={social.label}
+                        href={social.href}
+                        className="w-10 h-10 bg-pink-100 dark:bg-pink-950/30 rounded-lg flex items-center justify-center text-pink-500 hover:bg-pink-500 hover:text-white transition-all duration-300 transform hover:scale-110"
+                        aria-label={social.label}
+                      >
+                        <Icon className="h-5 w-5" />
+                      </Link>
+                    )
+                  })}
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="mt-8 pt-8 border-t text-center text-sm text-muted-foreground">
-          <p>&copy; {currentYear} Nexium Solutions. Todos los derechos reservados.</p>
+        {/* Bottom section */}
+        <div className="mt-12 pt-8 border-t border-gray-200 dark:border-slate-700">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <div className="flex items-center space-x-4 text-sm text-muted-foreground">
+              <p>&copy; {currentYear} Nadia Flores. Todos los derechos reservados.</p>
+            </div>
+            <div className="flex items-center space-x-6 text-sm">
+              <Link href="/privacidad" className="text-muted-foreground hover:text-pink-500 transition-colors duration-300">
+                Política de Privacidad
+              </Link>
+              <Link href="/terminos" className="text-muted-foreground hover:text-pink-500 transition-colors duration-300">
+                Términos de Servicio
+              </Link>
+            </div>
+          </div>
+          <div className="mt-4 text-center">
+            <p className="text-xs text-muted-foreground">
+              Desarrollado con <Heart className="w-3 h-3 text-pink-500 inline mx-1" /> por Nexium Solutions y Ditiero
+            </p>
+          </div>
         </div>
       </div>
     </footer>
