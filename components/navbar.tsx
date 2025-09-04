@@ -87,7 +87,7 @@ export function Navbar({ cartItemsCount = 0, onCartOpen, cartComponent }: Navbar
                     "border-2 hover:scale-105 hover:shadow-lg",
                     isActive
                       ? "text-white bg-pink-300 shadow-lg shadow-pink-300/25 border-pink-200 hover:bg-pink-400 hover:border-pink-300 dark:bg-pink-400 dark:border-pink-300 dark:shadow-pink-400/30"
-                      : "text-gray-700 dark:text-gray-200 bg-gray-100/80 dark:bg-slate-700/80 border-gray-200/60 dark:border-slate-600/60 hover:bg-pink-50 dark:hover:bg-slate-600/60 hover:border-pink-200 dark:hover:border-slate-500 hover:text-pink-700 dark:hover:text-pink-300"
+                      : "text-gray-700 dark:text-gray-200 bg-white/80 dark:bg-slate-800/80 border-gray-200/60 dark:border-slate-600/60 hover:bg-pink-50 dark:hover:bg-slate-700/60 hover:border-pink-200 dark:hover:border-slate-500 hover:text-pink-700 dark:hover:text-pink-300"
                   )}
                 >
                   <span className="relative z-10">{link.label}</span>
@@ -102,7 +102,7 @@ export function Navbar({ cartItemsCount = 0, onCartOpen, cartComponent }: Navbar
             {mounted && (
               <button
                 onClick={toggleTheme} 
-                className="h-11 w-11 rounded-full bg-gray-300 dark:bg-slate-500 text-gray-900 dark:text-white border-2 border-gray-500 dark:border-slate-400 shadow-lg transition-all duration-300 hover:bg-purple-300 dark:hover:bg-purple-500 hover:border-purple-600 dark:hover:border-purple-400 hover:scale-105 hover:shadow-xl flex items-center justify-center"
+                className="h-11 w-11 rounded-full bg-white dark:bg-slate-800 text-gray-900 dark:text-white border-2 border-gray-300 dark:border-slate-600 shadow-lg transition-all duration-300 hover:bg-purple-50 dark:hover:bg-purple-900 hover:border-purple-300 dark:hover:border-purple-600 hover:scale-105 hover:shadow-xl flex items-center justify-center"
               >
                 <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                 <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
@@ -114,14 +114,14 @@ export function Navbar({ cartItemsCount = 0, onCartOpen, cartComponent }: Navbar
             {cartComponent || (
               <button
                 onClick={onCartOpen} 
-                className="relative h-11 w-11 rounded-full bg-gray-300 dark:bg-slate-500 text-gray-900 dark:text-white border-2 border-gray-500 dark:border-slate-400 shadow-lg transition-all duration-300 hover:bg-pink-300 dark:hover:bg-pink-500 hover:border-pink-600 dark:hover:border-pink-400 hover:scale-105 hover:shadow-xl flex items-center justify-center"
+                className="relative h-11 w-11 rounded-full bg-white dark:bg-slate-800 text-gray-900 dark:text-white border-2 border-gray-300 dark:border-slate-600 shadow-lg transition-all duration-300 hover:bg-pink-50 dark:hover:bg-pink-900 hover:border-pink-300 dark:hover:border-pink-600 hover:scale-105 hover:shadow-xl flex items-center justify-center"
               >
                 <ShoppingCart className="h-5 w-5 transition-colors" />
                 {cartItemsCount > 0 && (
                   <Badge
                     className={cn(
                       "absolute -top-2 -right-2 h-6 w-6 rounded-full p-0 flex items-center justify-center text-xs font-bold",
-                      "bg-gray-900 dark:bg-pink-400 text-white border-2 border-white dark:border-slate-700",
+                      "bg-pink-500 dark:bg-pink-400 text-white border-2 border-white dark:border-slate-700",
                       "shadow-lg shadow-pink-300/50 dark:shadow-pink-400/50"
                     )}
                   >
@@ -139,7 +139,7 @@ export function Navbar({ cartItemsCount = 0, onCartOpen, cartComponent }: Navbar
                 "lg:hidden h-11 w-11 rounded-full transition-all duration-300 border-2 flex items-center justify-center shadow-lg hover:scale-105 hover:shadow-xl",
                 isMenuOpen 
                   ? "bg-pink-500 dark:bg-pink-500 border-pink-600 dark:border-pink-600 text-white hover:bg-pink-600 dark:hover:bg-pink-600 hover:border-pink-700 dark:hover:border-pink-700" 
-                  : "bg-gray-300 dark:bg-slate-500 border-gray-500 dark:border-slate-400 text-gray-900 dark:text-white hover:bg-pink-300 dark:hover:bg-pink-500 hover:border-pink-600 dark:hover:border-pink-400"
+                  : "bg-white dark:bg-slate-800 border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white hover:bg-pink-50 dark:hover:bg-pink-900 hover:border-pink-300 dark:hover:border-pink-600"
               )}
             >
               {isMenuOpen ? 
@@ -171,7 +171,7 @@ export function Navbar({ cartItemsCount = 0, onCartOpen, cartComponent }: Navbar
                         "hover:scale-105 hover:shadow-lg",
                         isActive
                           ? "bg-pink-400 dark:bg-pink-400 text-white shadow-lg shadow-pink-300/25 dark:shadow-pink-400/30 border-pink-300 dark:border-pink-300 hover:bg-pink-500 dark:hover:bg-pink-500 hover:border-pink-400 dark:hover:border-pink-400"
-                          : "bg-gray-50 dark:bg-slate-700 text-gray-700 dark:text-gray-200 border-gray-200 dark:border-slate-600 hover:bg-pink-50 dark:hover:bg-slate-600 hover:border-pink-200 dark:hover:border-slate-500 hover:text-pink-700 dark:hover:text-pink-300"
+                          : "bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-200 border-gray-200 dark:border-slate-600 hover:bg-pink-50 dark:hover:bg-slate-700 hover:border-pink-200 dark:hover:border-slate-500 hover:text-pink-700 dark:hover:text-pink-300"
                       )}
                       onClick={() => setIsMenuOpen(false)}
                       style={{ animationDelay: `${index * 50}ms` }}

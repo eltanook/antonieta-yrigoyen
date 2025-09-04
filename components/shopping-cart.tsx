@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { X, Plus, Minus, ShoppingBag } from "lucide-react"
+import { X, Plus, Minus, ShoppingBag, ShoppingCart as ShoppingCartIcon } from "lucide-react"
 import { FaWhatsapp } from "react-icons/fa"
 import { useToast } from "@/hooks/use-toast"
 import type { Product } from "@/components/product-card"
@@ -124,14 +124,14 @@ export function ShoppingCart({ items, onUpdateCart, trigger, open, onOpenChange 
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
         {trigger || (
-          <Button variant="ghost" size="icon" className="relative">
-            <ShoppingBag className="h-4 w-4" />
+          <button className="relative h-11 w-11 rounded-full bg-white dark:bg-slate-800 text-gray-900 dark:text-white border-2 border-gray-300 dark:border-slate-600 shadow-lg transition-all duration-300 hover:bg-pink-50 dark:hover:bg-pink-900 hover:border-pink-300 dark:hover:border-pink-600 hover:scale-105 hover:shadow-xl flex items-center justify-center">
+            <ShoppingCartIcon className="h-5 w-5 transition-colors" />
             {items.length > 0 && (
-              <span className="absolute -top-1 -right-1 bg-pink-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+              <span className="absolute -top-2 -right-2 bg-pink-500 dark:bg-pink-400 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center font-bold border-2 border-white dark:border-slate-700 shadow-lg shadow-pink-300/50 dark:shadow-pink-400/50">
                 {items.length}
               </span>
             )}
-          </Button>
+          </button>
         )}
       </SheetTrigger>
       <SheetContent className="w-full sm:max-w-lg bg-white dark:bg-slate-900">
