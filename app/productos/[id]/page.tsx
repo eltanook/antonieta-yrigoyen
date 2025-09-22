@@ -394,10 +394,10 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
     <div className="min-h-screen bg-white dark:bg-slate-800 relative overflow-hidden">
       {/* Floating decorative elements - consistent with home */}
       <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-32 left-16 w-12 h-12 bg-pink-500/8 rounded-full blur-xl animate-pulse delay-1000"></div>
-        <div className="absolute top-64 right-24 w-16 h-16 bg-rose-500/10 rounded-full blur-xl animate-pulse delay-2000"></div>
-        <div className="absolute bottom-64 left-24 w-14 h-14 bg-pink-500/6 rounded-full blur-xl animate-pulse delay-3000"></div>
-        <div className="absolute bottom-32 right-16 w-10 h-10 bg-pink-500/12 rounded-full blur-xl animate-pulse delay-4000"></div>
+        <div className="absolute top-32 left-16 w-12 h-12 bg-[#00473E]/8 rounded-full blur-xl animate-pulse delay-1000"></div>
+        <div className="absolute top-64 right-24 w-16 h-16 bg-[#00473E]/10 rounded-full blur-xl animate-pulse delay-2000"></div>
+        <div className="absolute bottom-64 left-24 w-14 h-14 bg-[#00473E]/6 rounded-full blur-xl animate-pulse delay-3000"></div>
+        <div className="absolute bottom-32 right-16 w-10 h-10 bg-[#00473E]/12 rounded-full blur-xl animate-pulse delay-4000"></div>
       </div>
 
       <Navbar
@@ -408,8 +408,8 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
 
       <main className="container mx-auto px-4 py-6 pt-28 relative z-10">
         {/* Back Button */}
-        <Button variant="outline" size="sm" onClick={() => router.back()} className="mb-6">
-          <ArrowLeft className="h-4 w-4 mr-2" />
+        <Button variant="outline" size="sm" onClick={() => router.back()} className="mb-6 dark:text-[#21c1ab]">
+          <ArrowLeft className="h-4 w-4 mr-2 " />
           Volver
         </Button>
 
@@ -435,7 +435,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                   key={index}
                   onClick={() => setSelectedImage(index)}
                   className={`aspect-square rounded-lg overflow-hidden border-2 transition-all ${
-                    selectedImage === index ? "border-pink-500" : "border-transparent hover:border-muted-foreground"
+                    selectedImage === index ? "border-[#00473E]" : "border-transparent hover:border-muted-foreground"
                   }`}
                 >
                   <Image
@@ -467,7 +467,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
 
             {/* Price */}
             <div className="flex items-center gap-3">
-              <span className="text-2xl font-bold text-pink-500">${product.price.toFixed(2)}</span>
+              <span className="text-2xl font-bold text-[#00473E] dark:text-[#21c1ab]">${product.price.toFixed(2)}</span>
               {product.originalPrice && (
                 <>
                   <span className="text-lg text-muted-foreground line-through">
@@ -478,13 +478,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
               )}
             </div>
 
-            {/* Stock Status */}
-            <div className="flex items-center gap-2">
-              <div className={`w-2 h-2 rounded-full ${product.inStock ? "bg-green-500" : "bg-red-500"}`} />
-              <span className={`text-sm ${product.inStock ? "text-green-600" : "text-red-600"}`}>
-                {product.inStock ? "En stock" : "Agotado"}
-              </span>
-            </div>
+            
 
             {/* Description */}
             <p className="text-muted-foreground leading-relaxed text-sm">{product.description}</p>
@@ -508,33 +502,40 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
               </div>
             )}
 
-            {/* Quantity */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Cantidad:</label>
-              <div className="flex items-center gap-2 w-fit">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  disabled={quantity <= 1}
-                >
-                  <Minus className="h-3 w-3" />
-                </Button>
-                <span className="w-8 text-center font-medium text-sm">{quantity}</span>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setQuantity(quantity + 1)}
-                  disabled={quantity >= 10}
-                >
-                  <Plus className="h-3 w-3" />
-                </Button>
+            {/* Quantity (oculto para Ambientaciones) */}
+            {product.category === "Ambientaciones" ? (
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Cantidad:</label>
+                <div className="text-muted-foreground text-sm italic">Las ambientaciones se cotizan sin medidas ni cantidades fijas.</div>
               </div>
-            </div>
+            ) : (
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Cantidad:</label>
+                <div className="flex items-center gap-2 w-fit">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                    disabled={quantity <= 1}
+                  >
+                    <Minus className="h-3 w-3 dark:text-[#21c1ab]" />
+                  </Button>
+                  <span className="w-8 text-center font-medium text-sm">{quantity}</span>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setQuantity(quantity + 1)}
+                    disabled={quantity >= 10}
+                  >
+                    <Plus className="h-3 w-3 dark:text-[#21c1ab]" />
+                  </Button>
+                </div>
+              </div>
+            )}
 
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" onClick={handleAddToCart} disabled={!product.inStock} className="flex-1 bg-pink-500 hover:bg-pink-600 text-white">
+              <Button size="lg" onClick={handleAddToCart} disabled={!product.inStock} className="flex-1 bg-[#00473E] hover:bg-[#00392F] text-white">
                 <ShoppingCartIcon className="h-5 w-5 mr-2" />
                 Agregar al Carrito
               </Button>

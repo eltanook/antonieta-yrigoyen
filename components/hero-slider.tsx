@@ -144,11 +144,11 @@ export function HeroSlider({ slides, autoPlay = true, autoPlayInterval = 5000 }:
           >
             <div className={`absolute inset-0 rounded-full transition-all duration-500 backdrop-blur-sm ${
               index === currentSlide 
-                ? "bg-pink-300 shadow-lg shadow-pink-300/50 border-2 border-white/30" 
-                : "bg-white/40 hover:bg-pink-200/80 border border-white/50 group-hover:border-white/70 group-hover:shadow-md"
+                ? "bg-[#00473E] shadow-lg shadow-[#00473E]/50 border-2 border-white/30" 
+                : "bg-white/40 hover:bg-[#00473E]/80 border border-white/50 group-hover:border-white/70 group-hover:shadow-md"
             }`} />
             {index === currentSlide && (
-              <div className="absolute inset-0 rounded-full bg-pink-300/30 animate-pulse" />
+              <div className="absolute inset-0 rounded-full bg-[#00473E]/30 animate-pulse" />
             )}
           </button>
         ))}

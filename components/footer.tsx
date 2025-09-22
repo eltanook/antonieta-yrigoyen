@@ -53,12 +53,17 @@ export function Footer() {
                 <span className="text-xs text-muted-foreground ml-1">5.0</span>
               </div>
               <p className="text-muted-foreground leading-relaxed">
-                Flores naturales con <span className="text-pink-500 font-medium">amor y dedicación</span>. 
-                Creando momentos únicos a través de ambientaciones, eventos y servicios florales.
+                Flores naturales con{" "}
+                <span className="text-[#00473E] dark:text-white font-medium">
+                  amor y dedicación
+                </span>
+                . Creando momentos únicos a través de ambientaciones, eventos y servicios florales.
               </p>
-              <div className="inline-flex items-center space-x-2 bg-pink-50 dark:bg-pink-950/20 px-4 py-2 rounded-full">
-                <Heart className="w-4 h-4 text-pink-500" />
-                <span className="text-sm text-pink-600 dark:text-pink-400 font-medium">Hecho con amor</span>
+              <div className="inline-flex items-center space-x-2 bg-[#00473E]/10 dark:bg-[#00473E]/20 px-4 py-2 rounded-full">
+                <Heart className="w-4 h-4 text-[#00473E] dark:text-white" />
+                <span className="text-sm text-[#00473E] dark:text-white font-medium">
+                  Hecho con amor
+                </span>
               </div>
             </div>
           </div>
@@ -71,9 +76,9 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-muted-foreground hover:text-pink-500 transition-colors duration-300 flex items-center group"
+                    className="text-muted-foreground hover:text-[#00473E] dark:hover:text-white transition-colors duration-300 flex items-center group"
                   >
-                    <span className="w-2 h-2 bg-pink-200 dark:bg-pink-800 rounded-full mr-3 group-hover:bg-pink-500 transition-colors duration-300"></span>
+                    <span className="w-2 h-2 bg-[#00473E]/30 dark:bg-white rounded-full mr-3 group-hover:bg-[#00473E] dark:group-hover:bg-white transition-colors duration-300"></span>
                     {link.label}
                   </Link>
                 </li>
@@ -87,7 +92,7 @@ export function Footer() {
             <ul className="space-y-3">
               {services.map((service, index) => (
                 <li key={index} className="text-muted-foreground flex items-center">
-                  <Heart className="w-4 h-4 text-pink-400 mr-3" />
+                  <Heart className="w-4 h-4 text-[#00473E] dark:text-white mr-3" />
                   {service.label}
                 </li>
               ))}
@@ -100,26 +105,26 @@ export function Footer() {
             <div className="space-y-4">
               <div className="space-y-3 text-sm text-muted-foreground">
                 <div className="flex items-center gap-3 group">
-                  <div className="w-8 h-8 bg-pink-100 dark:bg-pink-950/30 rounded-lg flex items-center justify-center group-hover:bg-pink-200 dark:group-hover:bg-pink-900/50 transition-colors duration-300">
-                    <Mail className="h-4 w-4 text-pink-500" />
+                  <div className="w-8 h-8 bg-[#00473E]/10 dark:bg-[#00473E]/30 rounded-lg flex items-center justify-center group-hover:bg-[#00473E]/20 dark:group-hover:bg-[#00473E]/50 transition-colors duration-300">
+                    <Mail className="h-4 w-4 text-[#00473E] dark:text-white" />
                   </div>
                   <span>antonietairigoyen74@gmail.com</span>
                 </div>
                 <div className="flex items-center gap-3 group">
-                  <div className="w-8 h-8 bg-pink-100 dark:bg-pink-950/30 rounded-lg flex items-center justify-center group-hover:bg-pink-200 dark:group-hover:bg-pink-900/50 transition-colors duration-300">
-                    <Phone className="h-4 w-4 text-pink-500" />
+                  <div className="w-8 h-8 bg-[#00473E]/10 dark:bg-[#00473E]/30 rounded-lg flex items-center justify-center group-hover:bg-[#00473E]/20 dark:group-hover:bg-[#00473E]/50 transition-colors duration-300">
+                    <Phone className="h-4 w-4 text-[#00473E] dark:text-white" />
                   </div>
                   <span>+34 911 685 249</span>
                 </div>
                 <div className="flex items-center gap-3 group">
-                  <div className="w-8 h-8 bg-pink-100 dark:bg-pink-950/30 rounded-lg flex items-center justify-center group-hover:bg-pink-200 dark:group-hover:bg-pink-900/50 transition-colors duration-300">
-                    <MapPin className="h-4 w-4 text-pink-500" />
+                  <div className="w-8 h-8 bg-[#00473E]/10 dark:bg-[#00473E]/30 rounded-lg flex items-center justify-center group-hover:bg-[#00473E]/20 dark:group-hover:bg-[#00473E]/50 transition-colors duration-300">
+                    <MapPin className="h-4 w-4 text-[#00473E] dark:text-white" />
                   </div>
                   <span>Madrid, España</span>
                 </div>
                 <div className="flex items-center gap-3 group">
-                  <div className="w-8 h-8 bg-pink-100 dark:bg-pink-950/30 rounded-lg flex items-center justify-center group-hover:bg-pink-200 dark:group-hover:bg-pink-900/50 transition-colors duration-300">
-                    <Clock className="h-4 w-4 text-pink-500" />
+                  <div className="w-8 h-8 bg-[#00473E]/10 dark:bg-[#00473E]/30 rounded-lg flex items-center justify-center group-hover:bg-[#00473E]/20 dark:group-hover:bg-[#00473E]/50 transition-colors duration-300">
+                    <Clock className="h-4 w-4 text-[#00473E] dark:text-white" />
                   </div>
                   <span>Consulta horarios por WhatsApp</span>
                 </div>
@@ -135,7 +140,7 @@ export function Footer() {
                       <Link
                         key={social.label}
                         href={social.href}
-                        className="w-10 h-10 bg-pink-100 dark:bg-pink-950/30 rounded-lg flex items-center justify-center text-pink-500 hover:bg-pink-500 hover:text-white transition-all duration-300 transform hover:scale-110"
+                        className="w-10 h-10 bg-[#00473E]/10 dark:bg-[#00473E]/30 rounded-lg flex items-center justify-center text-[#00473E] dark:text-white hover:bg-[#00473E] dark:hover:bg-white hover:text-white dark:hover:text-[#00473E] transition-all duration-300 transform hover:scale-110"
                         aria-label={social.label}
                       >
                         <Icon className="h-5 w-5" />
@@ -155,17 +160,17 @@ export function Footer() {
               <p>&copy; {currentYear} Nadia Flores. Todos los derechos reservados.</p>
             </div>
             <div className="flex items-center space-x-6 text-sm">
-              <Link href="/privacidad" className="text-muted-foreground hover:text-pink-500 transition-colors duration-300">
+              <Link href="/privacidad" className="text-muted-foreground hover:text-[#00473E] dark:hover:text-white transition-colors duration-300">
                 Política de Privacidad
               </Link>
-              <Link href="/terminos" className="text-muted-foreground hover:text-pink-500 transition-colors duration-300">
+              <Link href="/terminos" className="text-muted-foreground hover:text-[#00473E] dark:hover:text-white transition-colors duration-300">
                 Términos de Servicio
               </Link>
             </div>
           </div>
           <div className="mt-4 text-center">
             <p className="text-xs text-muted-foreground">
-              Desarrollado con <Heart className="w-3 h-3 text-pink-500 inline mx-1" /> por Nexium Solutions y Ditiero
+              Desarrollado con <Heart className="w-3 h-3 text-[#00473E] dark:text-white inline mx-1" /> por Nexium Solutions y Ditiero
             </p>
           </div>
         </div>

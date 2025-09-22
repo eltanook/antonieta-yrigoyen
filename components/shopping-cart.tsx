@@ -28,11 +28,9 @@ export function ShoppingCart({ items, onUpdateCart, trigger, open, onOpenChange 
   const [internalIsOpen, setInternalIsOpen] = useState(false)
   const { toast } = useToast()
   
-  // Use external open state if provided, otherwise use internal state
   const isOpen = open !== undefined ? open : internalIsOpen
   const setIsOpen = onOpenChange !== undefined ? onOpenChange : setInternalIsOpen
 
-  // Group items by id and count quantities
   const cartItems: CartItem[] = items.reduce((acc, item) => {
     const existingItem = acc.find((cartItem) => cartItem.id === item.id)
     if (existingItem) {
@@ -56,11 +54,9 @@ export function ShoppingCart({ items, onUpdateCart, trigger, open, onOpenChange 
     const difference = newQuantity - currentQuantity
 
     if (difference > 0) {
-      // Add items
       const newItems = Array(difference).fill(currentItem)
       onUpdateCart([...items, ...newItems])
     } else {
-      // Remove items
       const itemsToRemove = Math.abs(difference)
       let removedCount = 0
       const newItems = items.filter((item) => {
@@ -93,7 +89,6 @@ export function ShoppingCart({ items, onUpdateCart, trigger, open, onOpenChange 
     })
   }
 
-  // Calculate totals
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
   const shipping = subtotal >= 50 ? 0 : 10
   const total = subtotal + shipping
@@ -124,10 +119,10 @@ export function ShoppingCart({ items, onUpdateCart, trigger, open, onOpenChange 
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
         {trigger || (
-          <button className="relative h-11 w-11 rounded-full bg-white dark:bg-slate-800 text-gray-900 dark:text-white border-2 border-gray-300 dark:border-slate-600 shadow-lg transition-all duration-300 hover:bg-pink-50 dark:hover:bg-pink-900 hover:border-pink-300 dark:hover:border-pink-600 hover:scale-105 hover:shadow-xl flex items-center justify-center">
+          <button className="relative h-11 w-11 rounded-full bg-white dark:bg-slate-800 text-gray-900 dark:text-white border-2 border-gray-300 dark:border-slate-600 shadow-lg transition-all duration-300 hover:bg-[#00473E]/10 dark:hover:bg-[#00473E]/20 hover:border-[#00473E] dark:hover:border-[#00473E] hover:scale-105 hover:shadow-xl flex items-center justify-center">
             <ShoppingCartIcon className="h-5 w-5 transition-colors" />
             {items.length > 0 && (
-              <span className="absolute -top-2 -right-2 bg-pink-500 dark:bg-pink-400 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center font-bold border-2 border-white dark:border-slate-700 shadow-lg shadow-pink-300/50 dark:shadow-pink-400/50">
+              <span className="absolute -top-2 -right-2 bg-[#00473E] text-white text-xs rounded-full h-6 w-6 flex items-center justify-center font-bold border-2 border-white dark:border-slate-700 shadow-lg shadow-[#00473E]/50">
                 {items.length}
               </span>
             )}
@@ -152,7 +147,7 @@ export function ShoppingCart({ items, onUpdateCart, trigger, open, onOpenChange 
             <Button 
               onClick={() => setIsOpen(false)} 
               variant="outline"
-              className="mt-4"
+              className="mt-4 hover:text-white dark:text-white"
             >
               Continuar Comprando
             </Button>
@@ -245,7 +240,7 @@ export function ShoppingCart({ items, onUpdateCart, trigger, open, onOpenChange 
               <div className="space-y-2 mt-4">
                 <Button 
                   onClick={handleCheckout} 
-                  className="w-full bg-pink-500 hover:bg-pink-600 text-white" 
+                  className="w-full bg-[#00473E] hover:bg-[#00473E]/90 text-white" 
                   size="lg"
                 >
                   <FaWhatsapp className="h-4 w-4 mr-2" />
