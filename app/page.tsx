@@ -51,7 +51,7 @@ const heroSlides: HeroSlide[] = [
     subtitle: "Soy Nadia, emprendedora, mamá y amante de las flores",
     description:
       "Mi proyecto surgió a partir de un sueño que me dio la señal de que debía comenzar con esto",
-    image: "/1.jpg",
+    image: "/fotos-hero/1.jpg",
     primaryCTA: { text: "Ver Servicios", href: "/productos" },
     secondaryCTA: { text: "Conocer a Nadia", href: "/nosotros" },
   },
@@ -61,7 +61,7 @@ const heroSlides: HeroSlide[] = [
     subtitle: "Para eventos y espacios especiales",
     description:
       "Cada ramo y ambientación está hecho con mucho amor y dedicación, como si fuera único",
-    image: "/2.jpg",
+    image: "/fotos-hero/2.jpg",
     primaryCTA: {
       text: "Ver Ambientaciones",
       href: "/productos?categoria=ambientaciones",
@@ -74,7 +74,7 @@ const heroSlides: HeroSlide[] = [
     subtitle: "Abonos semanales o quincenales",
     description:
       "Mantén tu espacio siempre lleno de vida con nuestros servicios de flores frescas",
-    image: "/3.jpg",
+    image: "/fotos-hero/3.jpg",
     primaryCTA: { text: "Suscribirse", href: "/productos?categoria=semanal" },
     secondaryCTA: { text: "Más Info", href: "/contacto" },
   },
