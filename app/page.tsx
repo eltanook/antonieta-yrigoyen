@@ -74,7 +74,7 @@ const heroSlides: HeroSlide[] = [
     subtitle: "Abonos semanales o quincenales",
     description:
       "Mantén tu espacio siempre lleno de vida con nuestros servicios de flores frescas",
-    image: "/fotos-hero/3.jpg",
+    image: "/fotos-hero/4.jpg",
     primaryCTA: { text: "Suscribirse", href: "/productos?categoria=semanal" },
     secondaryCTA: { text: "Más Info", href: "/contacto" },
   },
@@ -769,42 +769,42 @@ export default function HomePage() {
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-fr">
                 {[
                   {
-                    src: "/1.jpg",
+                    src: "/galeria/1.jpg",
                     alt: "Ramo de novia elegante",
                     category: "Bodas",
                   },
                   {
-                    src: "/2.jpg",
+                    src: "/galeria/2.jpg",
                     alt: "Ambientación evento corporativo",
                     category: "Eventos",
                   },
                   {
-                    src: "/3.jpg",
+                    src: "/galeria/3.jpg",
                     alt: "Decoración mesa romántica",
                     category: "Eventos",
                   },
                   {
-                    src: "/a.jpg",
+                    src: "/galeria/4.jpg",
                     alt: "Arreglo floral primaveral",
                     category: "Semanal",
                   },
                   {
-                    src: "/b.jpg",
+                    src: "/galeria/5.jpg",
                     alt: "Centro de mesa minimalista",
                     category: "Eventos",
                   },
                   {
-                    src: "/c.jpg",
+                    src: "/galeria/6.jpg",
                     alt: "Jardín diseñado con amor",
                     category: "Jardines",
                   },
                   {
-                    src: "/11.jpg",
+                    src: "/galeria/7.jpg",
                     alt: "Servicio semanal premium",
                     category: "Semanal",
                   },
                   {
-                    src: "/dd.jpg",
+                    src: "/galeria/8.jpg",
                     alt: "Decoración especial única",
                     category: "Bodas",
                   },
