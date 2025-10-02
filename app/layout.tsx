@@ -13,13 +13,12 @@ const montserrat = Montserrat({
 })
 
 export const metadata: Metadata = {
-  title: "Ecommerce Template - Productos de Calidad Premium",
+  title: "Antonieta Yrigoyen",
   description:
     "Descubre nuestra colección exclusiva de productos de calidad premium. Electrónicos, moda, hogar y más con envío gratuito y garantía de satisfacción.",
   keywords: "ecommerce, productos premium, electrónicos, moda, hogar, compras online, envío gratuito",
-  authors: [{ name: "Ecommerce Template" }],
-  creator: "v0.app",
-  publisher: "Ecommerce Template",
+  authors: [{ name: "Antonieta Yrigoyen" }],
+  publisher: "Antonieta Yrigoyen",
   formatDetection: {
     email: false,
     address: false,

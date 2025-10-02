@@ -36,12 +36,15 @@ import {
   MessageCircle,
   Palette,
   ShoppingBag,
+  Eye,
+  PlayCircle,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { imageOverlayVariants, glassVariants } from "@/lib/overlay-variants";
 import { useCounter } from "@/hooks/use-counter";
+import { Play } from "next/font/google";
 
 // Mock data
 const heroSlides: HeroSlide[] = [
@@ -323,540 +326,738 @@ export default function HomePage() {
       />
 
       <main className="relative z-10 pt-16">
-        {/* Hero Slider Section */}
-        <section
-          className={`container mx-auto px-4 py-6 transition-all duration-1000 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          <HeroSlider slides={heroSlides} />
-        </section>
+  {/* Hero Slider Section - Refinado */}
+  <section
+    className={`container mx-auto px-4 py-8 transition-all duration-1000 ${
+      isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+    }`}
+  >
+    <HeroSlider slides={heroSlides} />
+  </section>
 
-        {/* Minimal Stats Section */}
-        <section className="container mx-auto px-4 py-16">
-          <div className="max-w-4xl mx-auto">
-            {/* Section Header */}
-            <div className="text-center mb-16">
-              <SectionTag className="mx-auto">
-                <Flower2 className="w-4 h-4 mr-2" />
-                Nuestros Numeros
-              </SectionTag>
-              <div className="w-12 h-0.5 bg-primary/30 mx-auto mb-6"></div>
-              <p className="text-base text-muted-foreground max-w-md mx-auto font-light">
-                Momentos especiales creados con dedicación
-              </p>
-            </div>
+  {/* Minimal Stats Section - Con paleta consistente */}
+  <section className="container mx-auto px-4 py-20 bg-white dark:bg-slate-950">
+    <div className="max-w-5xl mx-auto">
+      {/* Section Header */}
+      <div className="text-center mb-20">
+        <SectionTag className="mx-auto mb-4">
+          <Flower2 className="w-4 h-4 mr-2 text-[#00473E] dark:text-[#21c1ab]" />
+          Nuestro Impacto
+        </SectionTag>
+        <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+          Momentos que <span className="text-[#00473E] dark:text-[#21c1ab]">inspiran confianza</span>
+        </h2>
+        <div className="w-16 h-1 bg-[#00473E] dark:bg-[#21c1ab] mx-auto mb-6"></div>
+        <p className="text-lg text-muted-foreground max-w-2xl mx-auto font-light leading-relaxed">
+          Cifras que reflejan nuestra dedicación y el amor que ponemos en cada creación
+        </p>
+      </div>
 
-            {/* Stats Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-16">
-              {[
-                {
-                  icon: Heart,
-                  number: "500+",
-                  label: "Clientes Felices",
-                  color: "text-pink-400",
-                },
-                {
-                  icon: Star,
-                  number: "5.0",
-                  label: "Calificación",
-                  color: "text-amber-400",
-                },
-                {
-                  icon: Flower2,
-                  number: "1000+",
-                  label: "Flores Entregadas",
-                  color: "text-rose-400",
-                },
-                {
-                  icon: Leaf,
-                  number: "3+",
-                  label: "Experiencia",
-                  color: "text-emerald-400",
-                },
-              ].map((stat, index) => (
-                <AnimatedStatCard key={index} stat={stat} index={index} />
-              ))}
+      {/* Stats Grid - Colores dentro de la paleta */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+        {[
+          {
+            icon: Heart,
+            number: "500+",
+            label: "Clientes Felices",
+            color: "text-[#00473E] dark:text-[#21c1ab]",
+            bgColor: "bg-[#E8F5F5] dark:bg-[#001512]"
+          },
+          {
+            icon: Star,
+            number: "5.0",
+            label: "Calificación",
+            color: "text-[#00473E] dark:text-[#21c1ab]",
+            bgColor: "bg-[#E8F5F5] dark:bg-[#001512]"
+          },
+          {
+            icon: Flower2,
+            number: "1000+",
+            label: "Flores Entregadas",
+            color: "text-[#00473E] dark:text-[#21c1ab]",
+            bgColor: "bg-[#E8F5F5] dark:bg-[#001512]"
+          },
+          {
+            icon: Leaf,
+            number: "3+",
+            label: "Años de Experiencia",
+            color: "text-[#00473E] dark:text-[#21c1ab]",
+            bgColor: "bg-[#E8F5F5] dark:bg-[#001512]"
+          },
+        ].map((stat, index) => (
+          <div 
+            key={index} 
+            className="text-center group p-6 rounded-2xl transition-all duration-500 hover:scale-105 hover:shadow-lg border border-[#E8F5F5] dark:border-[#002D27]"
+          >
+            <div className={`w-16 h-16 ${stat.bgColor} rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}>
+              <stat.icon className={`w-7 h-7 ${stat.color}`} />
             </div>
+            <div className="text-3xl font-bold text-foreground mb-2">{stat.number}</div>
+            <div className="text-sm text-muted-foreground font-medium">{stat.label}</div>
           </div>
-        </section>
+        ))}
+      </div>
+    </div>
+  </section>
 
-        {/* About Section - Minimal */}
-        <section className="py-20">
-          <div className="container mx-auto px-4">
-            <div className="max-w-6xl mx-auto">
-              <div className="grid lg:grid-cols-2 gap-16 items-center">
-                {/* Content Side */}
-                <div className="space-y-8">
-                  <div className="space-y-6">
-                    <SectionTag>
-                      <Sparkles className="w-4 h-4 mr-2" />
-                      Conoce a Nadia
-                    </SectionTag>
+  {/* About Section - Paleta consistente */}
+  <section className="py-24 bg-slate-50 dark:bg-slate-900 relative overflow-hidden">
+    {/* Elementos decorativos sutiles */}
+    <div className="absolute top-0 left-0 w-72 h-72 bg-[#00473E]/5 dark:bg-[#21c1ab]/5 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+    
+    <div className="container mx-auto px-4 relative z-10">
+  <div className="max-w-7xl mx-auto">
+    <div className="grid lg:grid-cols-2 gap-16 items-center">
+      {/* Content Side - Enriquecida */}
+      <div className="space-y-8">
+        <div className="space-y-6">
+          <SectionTag>
+            <Sparkles className="w-4 h-4 mr-2 text-[#00473E] dark:text-[#21c1ab]" />
+            Nuestra Esencia
+          </SectionTag>
 
-                    <div className="space-y-4">
-                      <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight">
-                        Flores con{" "}
-                        <span className="text-[#00473E] dark:text-[#21c1ab]">
-                          Amor y Dedicación
-                        </span>
-                      </h2>
+          <div className="space-y-4">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
+              Flores con{" "}
+              <span className="text-[#00473E] dark:text-[#21c1ab]">
+                Propósito y Pasión
+              </span>
+            </h2>
+            <div className="w-20 h-1 bg-[#00473E] dark:bg-[#21c1ab] rounded-full"></div>
+          </div>
 
-                      <div className="w-16 h-1 bg-[#00473E] rounded-full"></div>
-                    </div>
+          <div className="space-y-6">
+            <p className="text-lg text-foreground/80 leading-relaxed">
+              Soy Nadia, emprendedora, mamá y canalizadora de energía a través de las flores. 
+              Este proyecto nació de <span className="text-[#00473E] dark:text-[#21c1ab] font-semibold">un sueño revelador</span> 
+              que me guió hacia mi verdadero propósito.
+            </p>
 
-                    <div className="space-y-6">
-                      <p className="text-lg text-foreground/80 leading-relaxed">
-                        Soy Nadia, emprendedora, mamá y amante de las flores y
-                        su energía. Mi proyecto surgió a partir de{" "}
-                        <span className="text-[#00473E] font-medium">
-                          un sueño
-                        </span>{" "}
-                        que me dio la señal de que debía comenzar con esto.
-                      </p>
-
-                      <blockquote className="border-l-4 border-[#00473E] pl-6 py-2">
-                        <p className="text-lg font-medium text-foreground italic">
-                          "Armo cada ramo con mucho amor y dedicación como si
-                          fuera único"
-                        </p>
-                      </blockquote>
-                    </div>
-                  </div>
-
-                  {/* Simple Feature List */}
-                  <div className="grid grid-cols-2 gap-6">
-                    {[
-                      {
-                        icon: Flower2,
-                        title: "Flores Frescas",
-                        desc: "Seleccionadas cada día",
-                        color: "text-[#00473E]",
-                      },
-                      {
-                        icon: Gift,
-                        title: "Hecho con Amor",
-                        desc: "Cada arreglo es único",
-                        color: "text-red-500",
-                      },
-                      {
-                        icon: Truck,
-                        title: "Entrega Rápida",
-                        desc: "Puntual y cuidadosa",
-                        color: "text-blue-500",
-                      },
-                      {
-                        icon: Award,
-                        title: "Calidad Premium",
-                        desc: "Solo lo mejor",
-                        color: "text-amber-500",
-                      },
-                    ].map((feature, index) => (
-                      <div key={index} className="flex items-start space-x-3">
-                        <div className="p-2 rounded-lg bg-muted">
-                          <feature.icon
-                            className={cn("w-5 h-5", feature.color)}
-                          />
-                        </div>
-                        <div>
-                          <h4 className="font-semibold text-foreground text-sm mb-1">
-                            {feature.title}
-                          </h4>
-                          <p className="text-xs text-muted-foreground">
-                            {feature.desc}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Simple CTA Buttons */}
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <Button
-                      size="lg"
-                      className="bg-[#00473E] hover:bg-[#00352A] text-white"
-                      asChild
-                    >
-                      <Link href="/nosotros">
-                        <Heart className="w-4 h-4 mr-2" />
-                        Conocer Mi Historia
-                      </Link>
-                    </Button>
-
-                    <Button
-                      variant="outline"
-                      size="lg"
-                      className="border-2 border-border hover:border-[#00473E] hover:bg-emerald-50 dark:hover:bg-[#00473E]/20 dark:border-slate-600 dark:hover:border-[#00473E] dark:text-white transition-all duration-300"
-                      asChild
-                    >
-                      <Link href="/contacto">
-                        Conversemos
-                        <ArrowRight className="w-4 h-4 ml-2" />
-                      </Link>
-                    </Button>
-                  </div>
-                </div>
-
-                {/* Simple Image Side */}
-                <div className="relative">
-                  <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-lg">
-                    <Image
-                      src="/logoooo.jpg"
-                      alt="Nadia trabajando con flores"
-                      width={600}
-                      height={800}
-                      className="object-cover w-full h-full"
-                    />
-
-                    {/* Simple Badges */}
-                    <Badge className="absolute top-4 right-4 bg-white/90 text-foreground border-0 shadow-md">
-                      <Star className="w-3 h-3 mr-1 fill-current text-yellow-500" />
-                      Emprendedora
-                    </Badge>
-
-                    <Badge className="absolute bottom-4 left-4 bg-white/90 text-foreground border-0 shadow-md">
-                      <Heart className="w-3 h-3 mr-1 fill-current text-red-500" />
-                      3+ Años
-                    </Badge>
-                  </div>
-                </div>
+            {/* Mini Galería de Procesos */}
+            <div className="grid grid-cols-3 gap-3 py-4">
+              <div className="aspect-square rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
+                <Image
+                  src="/galeria/8.jpg"
+                  alt="Selección cuidadosa de flores frescas"
+                  width={120}
+                  height={120}
+                  className="object-cover w-full h-full hover:scale-110 transition-transform duration-500"
+                />
+              </div>
+              <div className="aspect-square rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
+                <Image
+                  src="/galeria/1.jpg"
+                  alt="Trabajo artesanal en cada arreglo"
+                  width={120}
+                  height={120}
+                  className="object-cover w-full h-full hover:scale-110 transition-transform duration-500"
+                />
+              </div>
+              <div className="aspect-square rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
+                <Image
+                  src="/galeria/3.jpg"
+                  alt="Momento especial de entrega"
+                  width={120}
+                  height={120}
+                  className="object-cover w-full h-full hover:scale-110 transition-transform duration-500"
+                />
               </div>
             </div>
+
+            <blockquote className="border-l-4 border-[#00473E] dark:border-[#21c1ab] pl-6 py-2 bg-[#00473E]/5 dark:bg-[#21c1ab]/5 rounded-r-2xl -ml-6">
+              <p className="text-lg font-medium text-foreground italic">
+                "Cada ramo es una meditación, creado con la intención de ser único y especial"
+              </p>
+            </blockquote>
           </div>
-        </section>
+        </div>
 
-        {/* Minimal Featured Products Section */}
-        <section className="py-20">
-          <div className="container mx-auto px-4">
-            <div className="max-w-6xl mx-auto">
-              {/* Clean Header */}
-              <div className="text-center space-y-6 mb-16">
-                <SectionTag className="mx-auto">
-                  <Star className="w-4 h-4 mr-2" />
-                  Servicios Destacados
-                </SectionTag>
-
-                <div className="space-y-4">
-                  <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight">
-                    Nuestros Servicios{" "}
-                    <span className="text-[#00473E] dark:text-[#21c1ab]">Más Populares</span>
-                  </h2>
-
-                  <div className="w-20 h-0.5 bg-[#00473E] mx-auto"></div>
+        {/* Feature Grid Mejorada */}
+        {/* <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {[
+            {
+              icon: Flower2,
+              title: "Frescura Garantizada",
+              desc: "Selección diaria de proveedores locales",
+              color: "text-[#00473E] dark:text-[#21c1ab]",
+              image: "/features/frescura.jpg"
+            },
+            {
+              icon: Gift,
+              title: "Arte Personalizado",
+              desc: "Diseños únicos para cada ocasión",
+              color: "text-[#00473E] dark:text-[#21c1ab]",
+              image: "/galeria/3.jpg"
+            },
+            {
+              icon: Truck,
+              title: "Entrega Experiencia",
+              desc: "Cuidadosa y puntual en toda la ciudad",
+              color: "text-[#00473E] dark:text-[#21c1ab]",
+              image: "/galeria/2.jpg"
+            },
+            {
+              icon: Award,
+              title: "Calidad Consciente",
+              desc: "Prácticas sostenibles y éticas",
+              color: "text-[#00473E] dark:text-[#21c1ab]",
+              image: "/galeria/8.jpg"
+            },
+          ].map((feature, index) => (
+            <div 
+              key={index} 
+              className="flex items-start space-x-4 p-4 rounded-xl bg-white dark:bg-slate-800 shadow-sm hover:shadow-md transition-all duration-300 group border border-slate-100 dark:border-slate-700 hover:border-[#00473E]/20 dark:hover:border-[#21c1ab]/20"
+            >
+              <div className="flex-shrink-0">
+                <div className="p-3 rounded-lg bg-[#E8F5F5] dark:bg-[#001512] group-hover:scale-110 transition-transform duration-300">
+                  <feature.icon className={`w-6 h-6 ${feature.color}`} />
                 </div>
-
-                <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                  Descubre nuestros servicios florales más solicitados, hechos
-                  con amor y dedicación
+              </div>
+              <div className="flex-grow">
+                <h4 className="font-semibold text-foreground text-base mb-2">
+                  {feature.title}
+                </h4>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {feature.desc}
                 </p>
               </div>
-
-              {/* Simple Product Grid */}
-              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {featuredProducts.map((product, index) => (
-                  <div
-                    key={product.id}
-                    className="transform hover:scale-105 transition-all duration-300 hover:shadow-lg"
-                  >
-                    <ProductCard
-                      product={product}
-                      onAddToCart={handleAddToCart}
-                    />
-                  </div>
-                ))}
-              </div>
-
-              {/* Simple CTA */}
-              <div className="text-center mt-16">
-                <Button
-                  size="lg"
-                  className="bg-[#00473E] hover:bg-[#00352A] text-white"
-                  asChild
-                >
-                  <Link href="/productos">
-                    <Flower2 className="w-4 h-4 mr-2" />
-                    Ver Todos los Servicios
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Link>
-                </Button>
-              </div>
             </div>
+          ))}
+        </div> */}
+
+        {/* CTA Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 pt-4">
+          <Button
+            size="lg"
+            className="bg-[#00473E] hover:bg-[#00352A] dark:bg-[#21c1ab] dark:hover:bg-[#1ba897] text-white shadow-lg hover:shadow-xl transition-all duration-300 group"
+            asChild
+          >
+            <Link href="/nosotros">
+              <Heart className="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" />
+              Conectar con Mi Historia
+            </Link>
+          </Button>
+
+          <Button
+            variant="outline"
+            size="lg"
+            className="border-2 border-[#00473E] dark:border-[#21c1ab] hover:bg-[#E8F5F5] dark:hover:bg-[#001512] text-foreground transition-all duration-300 group"
+            asChild
+          >
+            <Link href="/contacto">
+              Iniciar Proyecto
+              <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </Button>
+        </div>
+      </div>
+
+      {/* Image Side - Mejorada con Video y Más Imágenes */}
+      <div className="relative">
+        {/* Imagen Principal con Video Embed */}
+        <div className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl border-4 border-white dark:border-slate-800 group">
+          <Image
+            src="/logoooo.jpg"
+            alt="Nadia - Artista floral y emprendedora"
+            width={600}
+            height={750}
+            className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700"
+            priority
+          />
+          
+          {/* Overlay sutil */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"></div>
+
+          {/* Video Play Button Overlay */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <Button 
+              className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-full w-16 h-16 hover:scale-110 transition-transform duration-300 shadow-lg"
+              onClick={() => {
+                const modal = document.getElementById('video-modal') as HTMLDialogElement | null;
+                if (modal) {
+                  modal.showModal();
+                }
+              }}
+            >
+              <PlayCircle className="w-6 h-6 text-[#00473E] dark:text-[#21c1ab] ml-1" />
+            </Button>
           </div>
-        </section>
 
-        {/* Minimal Process Section */}
-        <section className="py-20">
-      <div className="container mx-auto px-4">
-        <div className="max-w-5xl mx-auto">
-          {/* Clean Header */}
-          <div className="text-center space-y-6 mb-16">
-            <SectionTag className="mx-auto">
-              <Sparkles className="w-4 h-4 mr-2" />
-              Nuestro Proceso
-            </SectionTag>
-
-            <div className="space-y-4">
-              <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight">
-                Cómo <span className="text-[#00473E] dark:text-[#21c1ab]">Trabajamos</span>
-              </h2>
-
-              <div className="w-16 h-0.5 bg-[#00473E] mx-auto"></div>
-            </div>
-
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Un proceso simple y cuidadoso para brindarte la mejor
-              experiencia floral
-            </p>
+          {/* Badges */}
+          <div className="absolute top-6 right-6 bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg flex items-center space-x-2 border border-slate-200 dark:border-slate-700">
+            <Star className="w-4 h-4 text-[#00473E] dark:text-[#21c1ab]" />
+            <span className="text-sm font-medium text-foreground">+500 Proyectos</span>
           </div>
 
-          {/* Simple Process Grid */}
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="absolute bottom-6 left-6 bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg flex items-center space-x-2 border border-slate-200 dark:border-slate-700">
+            <Heart className="w-4 h-4 text-[#00473E] dark:text-[#21c1ab]" />
+            <span className="text-sm font-medium text-foreground">3+ Años Creando</span>
+          </div>
+        </div>
+
+        {/* Mini Galería Lateral */}
+        <div className="absolute -right-8 top-1/2 transform -translate-y-1/2 z-20 hidden xl:block">
+          <div className="space-y-4">
             {[
               {
-                step: "01",
-                icon: MessageCircle,
-                title: "Consulta",
-                description: "Conversamos sobre tus necesidades florales",
+                src: "/galeria/1.jpg",
+                alt: "Detalle de flores frescas"
               },
               {
-                step: "02",
-                icon: Palette,
-                title: "Diseño",
-                description: "Creamos un diseño personalizado",
+                src: "/galeria/2.jpg", 
+                alt: "Proceso de creación"
               },
               {
-                step: "03",
-                icon: Flower2,
-                title: "Selección",
-                description: "Seleccionamos las flores más frescas",
-              },
-              {
-                step: "04",
-                icon: Truck,
-                title: "Entrega",
-                description: "Entregamos con amor y puntualidad",
-              },
-            ].map((process, index) => (
-              <div key={index} className="text-center space-y-4 group">
-                {/* Step Number */}
-                <div className="w-12 h-12 bg-[#E8F5F5] dark:bg-[#001512]/30 rounded-full flex items-center justify-center text-[#00473E] font-bold text-sm mx-auto">
-                  {process.step}
-                </div>
-
-                {/* Icon */}
-                <div className="flex justify-center">
-                  <process.icon className="w-8 h-8 text-[#00473E]" />
-                </div>
-
-                {/* Content */}
-                <div className="space-y-2">
-                  <h3 className="text-lg font-semibold text-foreground">
-                    {process.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {process.description}
-                  </p>
-                </div>
+                src: "/galeria/3.jpg",
+                alt: "Momento de entrega especial"
+              }
+            ].map((image, index) => (
+              <div 
+                key={index}
+                className="w-20 h-20 rounded-xl overflow-hidden shadow-lg border-2 border-white dark:border-slate-800 hover:scale-110 hover:shadow-xl transition-all duration-300 cursor-pointer"
+              >
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  width={80}
+                  height={80}
+                  className="object-cover w-full h-full"
+                />
               </div>
             ))}
           </div>
         </div>
+
+        {/* Grid de Imágenes Inferior */}
+        <div className="grid grid-cols-2 gap-4 mt-6">
+          <div className="aspect-square rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group">
+            <Image
+              src="/galeria/1.jpg"
+              alt="Taller de Nadia trabajando"
+              width={200}
+              height={200}
+              className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
+            />
+          </div>
+          <div className="aspect-square rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group">
+            <Image
+              src="/galeria/2.jpg"
+              alt="Herramientas y materiales de trabajo"
+              width={200}
+              height={200}
+              className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
+            />
+          </div>
+        </div>
+
+        {/* Elemento decorativo */}
+        <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-[#00473E]/10 dark:bg-[#21c1ab]/10 rounded-2xl -z-10"></div>
       </div>
-    </section>
+    </div>
+  </div>
 
-        {/* Minimal Testimonials Section */}
-        <section className="py-20">
-      <div className="container mx-auto px-4">
-        <div className="max-w-5xl mx-auto">
-          {/* Clean Header */}
-          <div className="text-center space-y-6 mb-16">
-            <SectionTag className="mx-auto">
-              <Heart className="w-4 h-4 mr-2" />
-              Testimonios
-            </SectionTag>
+  {/* Modal de Video */}
+  <dialog id="video-modal" className="modal">
+    <div className="modal-box max-w-4xl p-0 bg-transparent shadow-none">
+      <form method="dialog">
+        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 z-10 text-white">
+          ✕
+        </button>
+      </form>
+      <div className="aspect-video rounded-2xl overflow-hidden">
+        <video 
+          className="w-full h-full object-cover"
+          controls
+          autoPlay
+          poster="/video-poster.jpg"
+        >
+          <source src="/videos/nuestra-historia.mp4" type="video/mp4" />
+          Tu navegador no soporta el elemento video.
+        </video>
+      </div>
+    </div>
+    <form method="dialog" className="modal-backdrop">
+      <button>close</button>
+    </form>
+  </dialog>
+</div>
+  </section>
 
-            <div className="space-y-4">
-              <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight">
-                Lo que Dicen{" "}
-                <span className="text-[#00473E] dark:text-[#21c1ab]">Nuestros Clientes</span>
-              </h2>
+  {/* Featured Products Section */}
+  <section className="py-24 bg-white dark:bg-slate-950">
+    <div className="container mx-auto px-4">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="text-center space-y-6 mb-16">
+          <SectionTag className="mx-auto">
+            <Star className="w-4 h-4 mr-2 text-[#00473E] dark:text-[#21c1ab]" />
+            Servicios Signature
+          </SectionTag>
 
-              <div className="w-20 h-0.5 bg-[#00473E] mx-auto"></div>
-            </div>
-
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Cada testimonio es una flor más en nuestro jardín de
-              experiencias compartidas
-            </p>
+          <div className="space-y-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight">
+              Experiencias Florales{" "}
+              <span className="text-[#00473E] dark:text-[#21c1ab]">
+                Más Populares
+              </span>
+            </h2>
+            <div className="w-24 h-1 bg-[#00473E] dark:bg-[#21c1ab] mx-auto rounded-full"></div>
           </div>
 
-          {/* Carousel Testimonials */}
-          <div className="mb-20">
-            <Carousel
-              opts={{
-                align: "start",
-                loop: true,
-              }}
-              className="w-full"
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            Servicios cuidadosamente diseñados que han tocado corazones y creado momentos inolvidables
+          </p>
+        </div>
+
+        {/* Product Grid */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+          {featuredProducts.map((product, index) => (
+            <div
+              key={product.id}
+              className="group transform hover:scale-105 transition-all duration-500 hover:shadow-2xl rounded-2xl overflow-hidden bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700"
             >
-              <CarouselContent>
-                {testimonials.map((testimonial) => (
-                  <CarouselItem
-                    key={testimonial.id}
-                    className="md:basis-1/2 lg:basis-1/3"
-                  >
-                    <div className="p-2 h-full">
-                      <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-slate-700 h-full flex flex-col justify-between min-h-[280px]">
-                        {/* Rating */}
-                        <div className="flex justify-center mb-4">
-                          {[...Array(5)].map((_, i) => (
-                            <Star
-                              key={i}
-                              className="w-4 h-4 text-yellow-500 fill-current"
-                            />
-                          ))}
-                        </div>
+              <ProductCard
+                product={product}
+                onAddToCart={handleAddToCart}
+              />
+            </div>
+          ))}
+        </div>
 
-                        {/* Quote */}
-                        <blockquote className="text-muted-foreground italic mb-6 leading-relaxed text-center flex-grow flex items-center justify-center">
-                          "{testimonial.content}"
-                        </blockquote>
+        {/* CTA */}
+        <div className="text-center">
+          <Button
+            size="lg"
+            className="bg-[#00473E] hover:bg-[#00352A] dark:bg-[#21c1ab] dark:hover:bg-[#1ba897] text-white shadow-lg hover:shadow-xl transition-all duration-300 group px-8"
+            asChild
+          >
+            <Link href="/productos">
+              <Flower2 className="w-5 h-5 mr-3 group-hover:rotate-12 transition-transform" />
+              Explorar Catálogo Completo
+              <ArrowRight className="w-5 h-5 ml-3 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
 
-                        {/* Author */}
-                        <div className="text-center space-y-1 mt-auto">
-                          <h4 className="font-semibold text-foreground dark:text-[#21c1ab]">
-                            {testimonial.name}
-                          </h4>
-                          <p className="text-sm text-[#00473E] dark:text-[#21c1ab]">
-                            {testimonial.role}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className="hover:bg-[#00473E] hover:text-white hover:border-[#00473E] transition-colors" />
-              <CarouselNext className="hover:bg-[#00473E] hover:text-white hover:border-[#00473E] transition-colors" />
-            </Carousel>
+  {/* Process Section */}
+  <section className="py-24 bg-slate-50 dark:bg-slate-900">
+    <div className="container mx-auto px-4">
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="text-center space-y-6 mb-20">
+          <SectionTag className="mx-auto">
+            <Sparkles className="w-4 h-4 mr-2 text-[#00473E] dark:text-[#21c1ab]" />
+            Nuestra Metodología
+          </SectionTag>
+
+          <div className="space-y-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight">
+              El Arte del{" "}
+              <span className="text-[#00473E] dark:text-[#21c1ab]">
+                Proceso Creativo
+              </span>
+            </h2>
+            <div className="w-20 h-1 bg-[#00473E] dark:bg-[#21c1ab] mx-auto rounded-full"></div>
           </div>
 
-          {/* Enhanced Client Gallery */}
-          <div className="space-y-12">
-            <div className="text-center space-y-6">
-              <SectionTag className="mx-auto">
-              <Heart className="w-4 h-4 mr-2" />
-              Portfolio
-            </SectionTag>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            Un journey cuidadosamente diseñado para transformar tu visión en una experiencia floral memorable
+          </p>
+        </div>
 
-              <div className="space-y-4">
-                <h3 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
-                  Galería de{" "}
-                  <span className="text-[#00473E] dark:text-[#21c1ab]">Nuestros Trabajos</span>
-                </h3>
-                <div className="w-24 h-1 bg-gradient-to-r from-[#306A63] to-[#003D37] mx-auto rounded-full"></div>
+        {/* Process Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
+          {/* Línea conectadora */}
+          <div className="hidden lg:block absolute top-12 left-1/4 right-1/4 h-0.5 bg-[#00473E] dark:bg-[#21c1ab] -translate-y-1/2"></div>
+          
+          {[
+            {
+              step: "01",
+              icon: MessageCircle,
+              title: "Conexión Inicial",
+              description: "Escuchamos tu historia y entendemos la energía que quieres transmitir",
+            },
+            {
+              step: "02",
+              icon: Palette,
+              title: "Diseño Energético",
+              description: "Creamos un concepto que armoniza colores, formas y significados",
+            },
+            {
+              step: "03",
+              icon: Flower2,
+              title: "Selección Consciente",
+              description: "Elegimos cada flor considerando frescura, temporada y simbolismo",
+            },
+            {
+              step: "04",
+              icon: Truck,
+              title: "Entrega con Alma",
+              description: "Cada entrega es una experiencia cuidadosa y memorable",
+            },
+          ].map((process, index) => (
+            <div key={index} className="text-center space-y-6 group relative">
+              {/* Step Circle */}
+              <div className="relative mx-auto">
+                <div className="w-20 h-20 bg-[#00473E] dark:bg-[#21c1ab] rounded-2xl flex items-center justify-center text-white font-bold text-lg shadow-lg group-hover:scale-110 transition-transform duration-300 mx-auto">
+                  {process.step}
+                </div>
               </div>
 
-              <p className="text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
-                Cada imagen cuenta una historia de amor, dedicación y
-                momentos únicos que hemos tenido el honor de crear
-              </p>
+              {/* Icono */}
+              <div className="flex justify-center">
+                <div className="p-4 rounded-2xl bg-white dark:bg-slate-800 shadow-sm group-hover:shadow-md transition-all duration-300 border border-slate-200 dark:border-slate-700">
+                  <process.icon className="w-8 h-8 text-[#00473E] dark:text-[#21c1ab]" />
+                </div>
+              </div>
+
+              {/* Contenido */}
+              <div className="space-y-3">
+                <h3 className="text-xl font-semibold text-foreground group-hover:text-[#00473E] dark:group-hover:text-[#21c1ab] transition-colors duration-300">
+                  {process.title}
+                </h3>
+                <p className="text-muted-foreground leading-relaxed text-sm">
+                  {process.description}
+                </p>
+              </div>
             </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
 
-            {/* Enhanced Image Grid with Categories */}
-            <div className="space-y-8">
-              {/* Aligned Masonry Grid */}
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-fr">
-                {[
-                  {
-                    src: "/galeria/1.jpg",
-                    alt: "Ramo de novia elegante",
-                    category: "Bodas",
-                  },
-                  {
-                    src: "/galeria/2.jpg",
-                    alt: "Ambientación evento corporativo",
-                    category: "Eventos",
-                  },
-                  {
-                    src: "/galeria/3.jpg",
-                    alt: "Decoración mesa romántica",
-                    category: "Eventos",
-                  },
-                  {
-                    src: "/galeria/4.jpg",
-                    alt: "Arreglo floral primaveral",
-                    category: "Semanal",
-                  },
-                  {
-                    src: "/galeria/5.jpg",
-                    alt: "Centro de mesa minimalista",
-                    category: "Eventos",
-                  },
-                  {
-                    src: "/galeria/6.jpg",
-                    alt: "Jardín diseñado con amor",
-                    category: "Jardines",
-                  },
-                  {
-                    src: "/galeria/7.jpg",
-                    alt: "Servicio semanal premium",
-                    category: "Semanal",
-                  },
-                  {
-                    src: "/galeria/8.jpg",
-                    alt: "Decoración especial única",
-                    category: "Bodas",
-                  },
-                ].map((image, index) => (
-                  <div
-                    key={index}
-                    className="relative aspect-square rounded-2xl overflow-hidden group cursor-pointer shadow-md hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2"
-                  >
-                    <Image
-                      src={image.src}
-                      alt={image.alt}
-                      width={400}
-                      height={400}
-                      className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700"
-                    />
+  {/* Testimonials Section */}
+  <section className="py-24 bg-white dark:bg-slate-950">
+    <div className="container mx-auto px-4">
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="text-center space-y-6 mb-20">
+          <SectionTag className="mx-auto">
+            <Heart className="w-4 h-4 mr-2 text-[#00473E] dark:text-[#21c1ab]" />
+            Voces de Confianza
+          </SectionTag>
 
-                    {/* Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="space-y-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight">
+              Historias que{" "}
+              <span className="text-[#00473E] dark:text-[#21c1ab]">
+                Inspiran
+              </span>
+            </h2>
+            <div className="w-24 h-1 bg-[#00473E] dark:bg-[#21c1ab] mx-auto rounded-full"></div>
+          </div>
 
-                    {/* Image Info */}
-                    <div className="absolute bottom-0 left-0 right-0 p-3 transform translate-y-0 group-hover:translate-y-0 transition-transform duration-300">
-                      <div className="text-white space-y-1">
-                        <Badge className="bg-[#00473E]/90 text-white text-xs border-0 mb-1">
-                          {image.category}
-                        </Badge>
-                        <h4 className="font-medium text-xs leading-tight">
-                          {image.alt}
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            Experiencias reales de clientes que han vivido la magia de nuestras creaciones
+          </p>
+        </div>
+
+        {/* Testimonials Carousel */}
+        <div className="mb-20">
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent>
+              {testimonials.map((testimonial) => (
+                <CarouselItem
+                  key={testimonial.id}
+                  className="md:basis-1/2 lg:basis-1/3"
+                >
+                  <div className="p-4 h-full">
+                    <div className="bg-slate-50 dark:bg-slate-800 rounded-3xl p-8 shadow-lg border border-slate-200 dark:border-slate-700 h-full flex flex-col justify-between min-h-[320px] hover:shadow-xl transition-all duration-500 group">
+                      {/* Rating */}
+                      <div className="flex justify-center mb-6">
+                        {[...Array(5)].map((_, i) => (
+                          <Star
+                            key={i}
+                            className="w-5 h-5 text-[#00473E] dark:text-[#21c1ab] fill-current transform group-hover:scale-110 transition-transform duration-300"
+                            style={{ transitionDelay: `${i * 100}ms` }}
+                          />
+                        ))}
+                      </div>
+
+                      {/* Quote */}
+                      <blockquote className="text-foreground/80 italic mb-8 leading-relaxed text-center flex-grow flex items-center justify-center text-lg">
+                        "{testimonial.content}"
+                      </blockquote>
+
+                      {/* Author */}
+                      <div className="text-center space-y-2 mt-auto">
+                        <div className="w-12 h-12 bg-[#00473E] dark:bg-[#21c1ab] rounded-full mx-auto mb-2 flex items-center justify-center text-white font-semibold text-sm">
+                          {testimonial.name.split(' ').map(n => n[0]).join('')}
+                        </div>
+                        <h4 className="font-bold text-foreground">
+                          {testimonial.name}
                         </h4>
+                        <p className="text-sm text-[#00473E] dark:text-[#21c1ab] font-medium">
+                          {testimonial.role}
+                        </p>
                       </div>
                     </div>
                   </div>
-                ))}
-              </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="hover:bg-[#00473E] hover:text-white border-2 hover:border-[#00473E] transition-all duration-300 -left-12 dark:hover:bg-[#21c1ab] dark:hover:border-[#21c1ab]" />
+            <CarouselNext className="hover:bg-[#00473E] hover:text-white border-2 hover:border-[#00473E] transition-all duration-300 -right-12 dark:hover:bg-[#21c1ab] dark:hover:border-[#21c1ab]" />
+          </Carousel>
+        </div>
 
-              {/* View More Button */}
-              <div className="text-center pt-8">
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="border-2 border-[#C5E0E0] hover:border-[#00473E] hover:bg-[#E8F5F5] dark:hover:bg-[#001512]/20 text-[#003D37] hover:text-[#00473E] dark:border-[#002D27] dark:text-white dark:hover:border-[#306A63] transition-all duration-300 group"
+        {/* Portfolio Gallery - PERFECCIONADA */}
+        <div className="space-y-16">
+          <div className="text-center space-y-6">
+            <SectionTag className="mx-auto">
+              <Sparkles className="w-4 h-4 mr-2 text-[#00473E] dark:text-[#21c1ab]" />
+              Galería Viviente
+            </SectionTag>
+
+            <div className="space-y-4">
+              <h3 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
+                Momentos Capturados en{" "}
+                <span className="text-[#00473E] dark:text-[#21c1ab]">
+                  Flores
+                </span>
+              </h3>
+              <div className="w-32 h-1 bg-[#00473E] dark:bg-[#21c1ab] mx-auto rounded-full"></div>
+            </div>
+
+            <p className="text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
+              Cada imagen es un testimonio visual del amor, la dedicación y los momentos únicos que hemos tenido el honor de crear
+            </p>
+          </div>
+
+          {/* Enhanced Masonry Grid - PERFECCIONADA */}
+          <div className="space-y-8">
+            <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
+              {[
+                {
+                  src: "/galeria/1.jpg",
+                  alt: "Ramo de novia con flores de estación",
+                  category: "Bodas",
+                  featured: true,
+                  aspect: "aspect-[3/4]"
+                },
+                {
+                  src: "/galeria/2.jpg",
+                  alt: "Ambientación floral para evento corporativo",
+                  category: "Eventos",
+                  featured: false,
+                  aspect: "aspect-square"
+                },
+                {
+                  src: "/galeria/3.jpg",
+                  alt: "Mesa romántica con centro floral",
+                  category: "Eventos",
+                  featured: true,
+                  aspect: "aspect-[4/3]"
+                },
+                {
+                  src: "/galeria/4.jpg",
+                  alt: "Arreglo primaveral con flores locales",
+                  category: "Entregas Semanales",
+                  featured: false,
+                  aspect: "aspect-square"
+                },
+                {
+                  src: "/galeria/5.jpg",
+                  alt: "Composición minimalista para mesa",
+                  category: "Eventos",
+                  featured: false,
+                  aspect: "aspect-[3/2]"
+                },
+                {
+                  src: "/galeria/6.jpg",
+                  alt: "Jardín diseñado con especies nativas",
+                  category: "Proyectos Especiales",
+                  featured: true,
+                  aspect: "aspect-[4/5]"
+                },
+                {
+                  src: "/galeria/7.jpg",
+                  alt: "Servicio de flores premium semanal",
+                  category: "Suscripciones",
+                  featured: false,
+                  aspect: "aspect-square"
+                },
+                {
+                  src: "/galeria/8.jpg",
+                  alt: "Decoración única para boda íntima",
+                  category: "Bodas",
+                  featured: true,
+                  aspect: "aspect-[3/4]"
+                },
+              ].map((image, index) => (
+                <div
+                  key={index}
+                  className={`relative break-inside-avoid rounded-xl overflow-hidden group cursor-pointer shadow-md hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-1 ${image.aspect}`}
                 >
-                  <Flower2 className="w-4 h-4 mr-2 group-hover:rotate-12 transition-transform duration-300" />
-                  Ver Más Trabajos
-                  <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-                </Button>
-              </div>
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    width={400}
+                    height={500}
+                    className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700 ease-out"
+                  />
+
+                  {/* Gradient Overlay Mejorado */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                  {/* Content Overlay Mejorado */}
+                  <div className="absolute bottom-0 left-0 right-0 p-4 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                    <div className="text-white space-y-2">
+                      <Badge className="bg-[#00473E] dark:bg-[#21c1ab] text-white border-0 text-xs font-medium">
+                        {image.category}
+                      </Badge>
+                      <h4 className="font-semibold text-sm leading-tight opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-200 line-clamp-2">
+                        {image.alt}
+                      </h4>
+                    </div>
+                  </div>
+
+                  {/* Hover Effect Indicator */}
+                  <div className="absolute top-3 right-3 w-2 h-2 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100"></div>
+                  
+                  {/* Quick View Button */}
+                  <div className="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-150">
+                    <Button 
+                      size="sm" 
+                      className="bg-white/20 backdrop-blur-sm text-white border-0 hover:bg-white/30 h-8 w-8 p-0"
+                    >
+                      <Eye className="w-3 h-3" />
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* CTA Mejorado */}
+            <div className="text-center pt-12">
+              <Button
+                size="lg"
+                className="bg-[#00473E] hover:bg-[#00352A] dark:bg-[#21c1ab] dark:hover:bg-[#1ba897] text-white shadow-lg hover:shadow-xl transition-all duration-300 group px-8 py-6 border-0"
+                asChild
+              >
+                <Link href="/galeria">
+                  <Eye className="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" />
+                  Explorar Galería Completa
+                  <ArrowRight className="w-5 h-5 ml-3 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </Button>
             </div>
           </div>
         </div>
       </div>
-    </section>
-      </main>
+    </div>
+  </section>
+</main>
 
       <Footer />
       <WhatsAppFloat />
