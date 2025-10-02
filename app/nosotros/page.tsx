@@ -81,63 +81,75 @@ export default function AboutPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-slate-800">
+    <div className="min-h-screen bg-gray-50/30 dark:bg-slate-900 relative">
+      {/* Minimal geometric background */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-20 left-8 w-2 h-2 bg-[#00473E]/10 rounded-full"></div>
+        <div className="absolute top-40 right-12 w-1 h-1 bg-[#00473E]/15 rounded-full"></div>
+        <div className="absolute bottom-32 left-16 w-1.5 h-1.5 bg-[#00473E]/8 rounded-full"></div>
+        <div className="absolute bottom-64 right-8 w-2 h-2 bg-[#00473E]/12 rounded-full"></div>
+      </div>
+
       <Navbar
         cartItemsCount={cartItems.length}
         onCartOpen={() => {}}
         cartComponent={<ShoppingCart items={cartItems} onUpdateCart={handleUpdateCart} />}
       />
 
-      <main className="pt-16">
-        {/* Hero Section */}
-        <section className="container mx-auto px-4 py-16">
+      <main className="pt-16 relative z-10">
+        {/* Hero Minimalista */}
+        <section className="container mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
           <div className={cn(
             "max-w-4xl mx-auto text-center space-y-8 transition-all duration-1000",
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           )}>
-            <SectionTag className="mx-auto">
-              <Sparkles className="w-4 h-4 mr-2" />
-              Sobre Nadia
-            </SectionTag>
+            <div className="inline-flex items-center px-3 py-1.5 rounded-full bg-[#00473E]/5 border border-[#00473E]/10">
+              <Sparkles className="w-4 h-4 mr-2 text-[#00473E]" />
+              <span className="text-sm font-medium text-[#00473E]">Sobre Nadia</span>
+            </div>
             
-            <h1 className="text-4xl md:text-6xl font-bold text-foreground">
-              Conoce Mi <span className="text-[#00473E] dark:text-[#21c1ab]">Historia</span>
-            </h1>
+            <div className="space-y-4">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">
+                Conoce Mi <span className="text-[#00473E] dark:text-[#00473E]">Historia</span>
+              </h1>
+              <div className="w-16 h-0.5 bg-[#00473E] mx-auto"></div>
+            </div>
             
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              De un sueño revelador a una empresa floreciente que transforma espacios con 
-              <span className="text-[#00473E] font-medium dark:text-[#21c1ab]"> amor y dedicación</span>
+            <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              De un sueño revelador a una empresa floreciente que transforma espacios con amor y dedicación.
             </p>
 
-            {/* Stats */}
+            {/* Stats Minimalistas */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8">
               {stats.map((stat, index) => (
-                <div key={index} className="text-center space-y-3 group">
-                  <div className="w-16 h-16 mx-auto bg-[#00473E]/10 dark:bg-[#00473E]/20 rounded-2xl flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-                    <stat.icon className="w-8 h-8 text-[#00473E] dark:text-[#21c1ab]" />
+                <div key={index} className="text-center space-y-3">
+                  <div className="w-12 h-12 mx-auto bg-[#00473E]/5 rounded-full flex items-center justify-center">
+                    <stat.icon className="w-5 h-5 text-[#00473E]" />
                   </div>
-                  <div className="text-3xl font-bold text-foreground">{stat.number}</div>
-                  <div className="text-sm text-muted-foreground font-medium">{stat.label}</div>
+                  <div className="text-2xl font-bold text-gray-900 dark:text-white">{stat.number}</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-300">{stat.label}</div>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Main Story Section */}
-        <section className="container mx-auto px-4 py-20">
+        {/* Historia Principal */}
+        <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="max-w-6xl mx-auto">
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               <div className="space-y-8">
-                <SectionTag>
-                  <Heart className="w-4 h-4 mr-2" />
-                  Mi Historia
-                </SectionTag>
+                <div className="inline-flex items-center px-3 py-1 rounded-full bg-[#00473E]/5 border border-[#00473E]/10">
+                  <Heart className="w-4 h-4 mr-2 text-[#00473E]" />
+                  <span className="text-sm font-medium text-[#00473E]">Mi Historia</span>
+                </div>
                 
-                <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-                  Un Sueño Convertido en 
-                  <span className="text-[#00473E] dark:text-[#21c1ab]"> Realidad</span>
-                </h2>
+                <div className="space-y-4">
+                  <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
+                    Un Sueño Convertido en <span className="text-[#00473E]">Realidad</span>
+                  </h2>
+                  <div className="w-12 h-0.5 bg-[#00473E]"></div>
+                </div>
                 
                 <div className="space-y-6">
                   <p className="text-lg text-muted-foreground leading-relaxed">
@@ -145,13 +157,13 @@ export default function AboutPage() {
                     Soy Nadia, emprendedora, mamá y amante de las flores y su energía transformadora.
                   </p>
                   
-                <div className="p-6 bg-[#00473E]/10 dark:bg-[#00473E]/20 rounded-2xl border-l-4 border-[#00473E]">
-                  <Quote className="w-8 h-8 text-[#00473E]/60 mb-4 dark:text-[#21c1ab]" />
-                  <p className="text-lg font-medium italic text-foreground mb-2">
+                <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-xl border border-gray-200/50 dark:border-slate-700/50 p-6">
+                  <Quote className="w-6 h-6 text-[#00473E]/60 mb-3" />
+                  <p className="text-gray-900 dark:text-white font-medium italic mb-3">
                     "Cada flor que trabajo lleva un pedacito de mi corazón. No es solo un negocio, 
                     es mi forma de compartir amor y belleza con el mundo."
                   </p>
-                  <p className="text-sm text-muted-foreground">— Nadia, Fundadora</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">— Nadia, Fundadora</p>
                 </div>                  <p className="text-lg text-muted-foreground leading-relaxed">
                     Mi servicio abarca ambientaciones para eventos, servicios semanales de flores frescas, 
                     y estética de jardines. Cada proyecto es una nueva oportunidad de crear belleza 
@@ -159,34 +171,34 @@ export default function AboutPage() {
                   </p>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Button size="lg" asChild className="bg-[#00473E] hover:bg-[#00392F] text-white group shadow-lg hover:shadow-xl transition-all duration-300">
-                    <Link href="/productos">
-                      <Flower2 className="w-5 h-5 mr-2 transition-transform group-hover:scale-110 group-hover:rotate-12" />
-                      Ver Mis Servicios
-                    </Link>
-                  </Button>
-                  <Button size="lg" variant="outline" asChild className="border-2 dark:text-white border-[#00473E]/30 hover:border-[#00473E] hover:bg-[#00473E]/10 dark:hover:bg-[#00473E]/20 text-[#00473E] hover:text-[#00473E] dark:border-[#00473E]/80  dark:hover:border-[#00473E]/40 transition-all duration-300">
-                    <Link href="/contacto">
-                      Contactar
-                      <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
-                    </Link>
-                  </Button>
+                <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                  <Link
+                    href="/productos"
+                    className="inline-flex items-center justify-center px-6 py-3 bg-[#00473E] hover:bg-[#00473E]/90 text-white font-medium rounded-lg transition-colors"
+                  >
+                    <Flower2 className="w-4 h-4 mr-2" />
+                    Ver Mis Servicios
+                  </Link>
+                  <Link
+                    href="/contacto"
+                    className="inline-flex items-center justify-center px-6 py-3 border border-gray-200 dark:border-slate-600 hover:bg-gray-50 dark:hover:bg-slate-800 text-gray-900 dark:text-white font-medium rounded-lg transition-colors"
+                  >
+                    Contactar
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Link>
                 </div>
               </div>
               
               {/* Image */}
-              <div className="relative">
-                <div className="relative rounded-2xl overflow-hidden shadow-lg">
+              <div className="relative lg:order-first">
+                <div className="aspect-[4/5] rounded-2xl overflow-hidden bg-white dark:bg-slate-800 shadow-sm border border-gray-200/50 dark:border-slate-700/50">
                   <Image
                     src="/ee.jpg"
                     alt="Nadia en su estudio"
-                    width={600}
-                    height={500}
+                    width={500}
+                    height={600}
                     className="object-cover w-full h-full"
                   />
-                  
-                  
                 </div>
               </div>
             </div>
@@ -195,68 +207,72 @@ export default function AboutPage() {
 
       
 
-        {/* Values Section */}
-        <section className="container mx-auto px-4 py-20">
+        {/* Valores */}
+        <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center space-y-6 mb-16">
-              <SectionTag className="mx-auto">
-                <Heart className="w-4 h-4 mr-2" />
-                Mis Valores
-              </SectionTag>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-                Lo que me <span className="text-[#00473E] dark:text-[#21c1ab]">Define</span>
-              </h2>
-              <div className="w-20 h-0.5 bg-[#00473E] mx-auto"></div>
+            <div className="text-center space-y-6 mb-12">
+              <div className="inline-flex items-center px-3 py-1 rounded-full bg-[#00473E]/5 border border-[#00473E]/10">
+                <Heart className="w-4 h-4 mr-2 text-[#00473E]" />
+                <span className="text-sm font-medium text-[#00473E]">Mis Valores</span>
+              </div>
+              
+              <div className="space-y-3">
+                <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
+                  Lo que me <span className="text-[#00473E]">Define</span>
+                </h2>
+                <div className="w-16 h-0.5 bg-[#00473E] mx-auto"></div>
+              </div>
             </div>
             
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid sm:grid-cols-2 gap-6">
               {values.map((value, index) => {
                 const Icon = value.icon
                 return (
-                  <Card key={index} className="p-6 border-0 shadow-sm hover:shadow-md transition-shadow">
-                    <CardContent className="p-0">
-                      <div className="flex items-start gap-4">
-                        <div className="w-12 h-12 bg-[#00473E]/10 dark:bg-[#00473E]/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                          <Icon className="w-6 h-6 text-[#00473E] dark:text-[#21c1ab]" />
-                        </div>
-                        <div>
-                          <h3 className="text-xl font-semibold mb-2">{value.title}</h3>
-                          <p className="text-muted-foreground">{value.description}</p>
-                        </div>
+                  <div key={index} className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-xl border border-gray-200/50 dark:border-slate-700/50 p-6">
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 bg-[#00473E]/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <Icon className="w-5 h-5 text-[#00473E]" />
                       </div>
-                    </CardContent>
-                  </Card>
+                      <div className="space-y-2">
+                        <h3 className="font-semibold text-gray-900 dark:text-white">{value.title}</h3>
+                        <p className="text-sm text-gray-600 dark:text-gray-300">{value.description}</p>
+                      </div>
+                    </div>
+                  </div>
                 )
               })}
             </div>
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="bg-[#00473E] text-white py-20">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center space-y-8">
-              <Badge className="bg-white/20 text-white border-0">
+        {/* CTA Minimalista */}
+        <section className="bg-[#00473E] text-white py-16">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-3xl mx-auto text-center space-y-6">
+              <div className="inline-flex items-center px-3 py-1 rounded-full bg-white/10 border border-white/20">
                 <Sparkles className="w-4 h-4 mr-2" />
-                ¡Trabajemos Juntos!
-              </Badge>
+                <span className="text-sm font-medium">¡Trabajemos Juntos!</span>
+              </div>
               
-              <h2 className="text-3xl md:text-4xl font-bold">
-                ¿Listo para Crear Algo Hermoso?
-              </h2>
+              <div className="space-y-3">
+                <h2 className="text-2xl sm:text-3xl font-bold">
+                  ¿Listo para Crear Algo Hermoso?
+                </h2>
+                <div className="w-16 h-0.5 bg-white/30 mx-auto"></div>
+              </div>
               
-              <p className="text-xl text-white/90 max-w-2xl mx-auto">
+              <p className="text-white/90 max-w-2xl mx-auto">
                 Permíteme ayudarte a transformar tus espacios con la magia de las flores naturales
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" asChild className="bg-white text-[#00473E] hover:bg-[#E6F3F2] hover:text-[#00473E] font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
-                  <Link href="/productos">
-                    <Flower2 className="w-5 h-5 mr-2" />
-                    Ver Mis Servicios
-                  </Link>
-                </Button>
-                
+              <div className="pt-2">
+                <Link
+                  href="/productos"
+                  className="inline-flex items-center px-6 py-3 bg-white text-[#00473E] hover:bg-gray-100 font-medium rounded-lg transition-colors"
+                >
+                  <Flower2 className="w-4 h-4 mr-2" />
+                  Ver Mis Servicios
+                </Link>
               </div>
             </div>
           </div>

@@ -391,13 +391,13 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
     : 0
 
   return (
-    <div className="min-h-screen bg-white dark:bg-slate-800 relative overflow-hidden">
-      {/* Floating decorative elements - consistent with home */}
+    <div className="min-h-screen bg-gray-50/30 dark:bg-slate-900 relative">
+      {/* Minimal geometric background */}
       <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-32 left-16 w-12 h-12 bg-[#00473E]/8 rounded-full blur-xl animate-pulse delay-1000"></div>
-        <div className="absolute top-64 right-24 w-16 h-16 bg-[#00473E]/10 rounded-full blur-xl animate-pulse delay-2000"></div>
-        <div className="absolute bottom-64 left-24 w-14 h-14 bg-[#00473E]/6 rounded-full blur-xl animate-pulse delay-3000"></div>
-        <div className="absolute bottom-32 right-16 w-10 h-10 bg-[#00473E]/12 rounded-full blur-xl animate-pulse delay-4000"></div>
+        <div className="absolute top-20 left-8 w-2 h-2 bg-[#00473E]/10 rounded-full"></div>
+        <div className="absolute top-40 right-12 w-1 h-1 bg-[#00473E]/15 rounded-full"></div>
+        <div className="absolute bottom-32 left-16 w-1.5 h-1.5 bg-[#00473E]/8 rounded-full"></div>
+        <div className="absolute bottom-64 right-8 w-2 h-2 bg-[#00473E]/12 rounded-full"></div>
       </div>
 
       <Navbar
@@ -406,44 +406,49 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
         cartComponent={<ShoppingCart items={cartItems} onUpdateCart={handleUpdateCart} />}
       />
 
-      <main className="container mx-auto px-4 py-6 pt-28 relative z-10">
-        {/* Back Button */}
-        <Button variant="outline" size="sm" onClick={() => router.back()} className="mb-6 dark:text-[#21c1ab]">
-          <ArrowLeft className="h-4 w-4 mr-2 " />
+      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 pt-24 relative z-10">
+        {/* Back Button Minimalista */}
+        <button 
+          onClick={() => router.back()} 
+          className="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300 hover:text-[#00473E] dark:hover:text-white transition-colors mb-8"
+        >
+          <ArrowLeft className="h-4 w-4" />
           Volver
-        </Button>
+        </button>
 
         {/* Product Details */}
-        <div className="grid lg:grid-cols-2 gap-8 mb-12">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 mb-16">
           {/* Image Gallery */}
-          <div className="space-y-3">
+          <div className="space-y-4">
             {/* Main Image */}
-            <div className="aspect-square rounded-xl overflow-hidden shadow-md">
+            <div className="aspect-square rounded-2xl overflow-hidden bg-white dark:bg-slate-800 shadow-sm border border-gray-200/50 dark:border-slate-700/50">
               <Image
                 src={product.gallery[selectedImage] || product.image}
                 alt={product.name}
-                width={500}
-                height={500}
+                width={600}
+                height={600}
                 className="object-cover w-full h-full"
               />
             </div>
 
             {/* Thumbnail Gallery */}
-            <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-4 gap-3">
               {product.gallery.map((image, index) => (
                 <button
                   key={index}
                   onClick={() => setSelectedImage(index)}
-                  className={`aspect-square rounded-lg overflow-hidden border-2 transition-all ${
-                    selectedImage === index ? "border-[#00473E]" : "border-transparent hover:border-muted-foreground"
+                  className={`aspect-square rounded-lg overflow-hidden transition-all duration-200 ${
+                    selectedImage === index 
+                      ? "ring-2 ring-[#00473E] ring-offset-2 dark:ring-offset-slate-900" 
+                      : "hover:opacity-75"
                   }`}
                 >
                   <Image
                     src={image || "/placeholder.svg"}
                     alt={`${product.name} ${index + 1}`}
-                    width={100}
-                    height={100}
-                    className="object-cover w-full h-full"
+                    width={120}
+                    height={120}
+                    className="object-cover w-full h-full bg-gray-100 dark:bg-slate-700"
                   />
                 </button>
               ))}
@@ -451,44 +456,57 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
           </div>
 
           {/* Product Info */}
-          <div className="space-y-4">
-            <div>
-              <SectionTag className="mb-2">{product.category}</SectionTag>
-              <h1 className="text-2xl md:text-3xl font-bold mb-3">{product.name}</h1>
-              <div className="flex items-center gap-2 mb-3">
-                <div className="flex items-center">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                  ))}
+          <div className="space-y-6">
+            <div className="space-y-4">
+              <div className="inline-flex items-center px-3 py-1 rounded-full bg-[#00473E]/5 border border-[#00473E]/10">
+                <span className="text-xs font-medium text-[#00473E]">{product.category}</span>
+              </div>
+              
+              <div className="space-y-3">
+                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white leading-tight">
+                  {product.name}
+                </h1>
+                
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-1">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  <span className="text-sm text-gray-500">(128 reseñas)</span>
                 </div>
-                <span className="text-xs text-muted-foreground">(128 reseñas)</span>
               </div>
             </div>
 
             {/* Price */}
-            <div className="flex items-center gap-3">
-              <span className="text-2xl font-bold text-[#00473E] dark:text-[#21c1ab]">${product.price.toFixed(2)}</span>
+            <div className="flex items-center gap-3 py-3 border-y border-gray-200 dark:border-slate-700">
+              <span className="text-3xl font-bold text-[#00473E] dark:text-white">
+                ${product.price.toFixed(2)}
+              </span>
               {product.originalPrice && (
                 <>
-                  <span className="text-lg text-muted-foreground line-through">
+                  <span className="text-xl text-gray-400 line-through">
                     ${product.originalPrice.toFixed(2)}
                   </span>
-                  <Badge className="bg-green-600 text-white text-xs">-{discount}%</Badge>
+                  <span className="text-sm font-medium bg-green-100 text-green-700 px-2 py-1 rounded-full">
+                    -{discount}%
+                  </span>
                 </>
               )}
             </div>
 
-            
-
             {/* Description */}
-            <p className="text-muted-foreground leading-relaxed text-sm">{product.description}</p>
+            <div className="space-y-2">
+              <h3 className="font-semibold text-gray-900 dark:text-white">Descripción</h3>
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{product.description}</p>
+            </div>
 
             {/* Color Selection */}
             {product.colors && (
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Color:</label>
+              <div className="space-y-3">
+                <label className="text-sm font-semibold text-gray-900 dark:text-white">Color:</label>
                 <Select value={selectedColor} onValueChange={setSelectedColor}>
-                  <SelectTrigger className="w-full h-9">
+                  <SelectTrigger className="h-10 border-gray-200 dark:border-slate-600 focus:border-[#00473E] dark:focus:border-[#00473E]">
                     <SelectValue placeholder="Selecciona un color" />
                   </SelectTrigger>
                   <SelectContent>
@@ -502,73 +520,82 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
               </div>
             )}
 
-            {/* Quantity (oculto para Ambientaciones) */}
+            {/* Quantity */}
             {product.category === "Ambientaciones" ? (
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Cantidad:</label>
-                <div className="text-muted-foreground text-sm italic">Las ambientaciones se cotizan sin medidas ni cantidades fijas.</div>
+              <div className="space-y-3">
+                <label className="text-sm font-semibold text-gray-900 dark:text-white">Cotización:</label>
+                <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                  <p className="text-sm text-blue-700 dark:text-blue-300">
+                    Las ambientaciones se cotizan según medidas y requerimientos específicos.
+                  </p>
+                </div>
               </div>
             ) : (
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Cantidad:</label>
-                <div className="flex items-center gap-2 w-fit">
-                  <Button
-                    variant="outline"
-                    size="sm"
+              <div className="space-y-3">
+                <label className="text-sm font-semibold text-gray-900 dark:text-white">Cantidad:</label>
+                <div className="flex items-center gap-3 w-fit bg-gray-50 dark:bg-slate-800 rounded-lg p-1">
+                  <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
                     disabled={quantity <= 1}
+                    className="w-8 h-8 rounded-md bg-white dark:bg-slate-700 border border-gray-200 dark:border-slate-600 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-slate-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   >
-                    <Minus className="h-3 w-3 dark:text-[#21c1ab]" />
-                  </Button>
-                  <span className="w-8 text-center font-medium text-sm">{quantity}</span>
-                  <Button
-                    variant="outline"
-                    size="sm"
+                    <Minus className="h-3 w-3 text-gray-600 dark:text-gray-300" />
+                  </button>
+                  <span className="w-8 text-center font-medium text-gray-900 dark:text-white">{quantity}</span>
+                  <button
                     onClick={() => setQuantity(quantity + 1)}
                     disabled={quantity >= 10}
+                    className="w-8 h-8 rounded-md bg-white dark:bg-slate-700 border border-gray-200 dark:border-slate-600 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-slate-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   >
-                    <Plus className="h-3 w-3 dark:text-[#21c1ab]" />
-                  </Button>
+                    <Plus className="h-3 w-3 text-gray-600 dark:text-gray-300" />
+                  </button>
                 </div>
               </div>
             )}
 
-            {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" onClick={handleAddToCart} disabled={!product.inStock} className="flex-1 bg-[#00473E] hover:bg-[#00392F] text-white">
-                <ShoppingCartIcon className="h-5 w-5 mr-2" />
-                Agregar al Carrito
-              </Button>
+            {/* Action Button */}
+            <div className="pt-2">
+              <button
+                onClick={handleAddToCart}
+                disabled={!product.inStock}
+                className="w-full h-12 bg-[#00473E] hover:bg-[#00473E]/90 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
+              >
+                <ShoppingCartIcon className="h-5 w-5" />
+                {product.inStock ? "Agregar al Carrito" : "Agotado"}
+              </button>
             </div>
 
             {/* Specifications */}
-            <Card className="shadow-subtle">
-              <CardContent className="p-4">
-                <h3 className="font-semibold mb-3 text-lg">Especificaciones</h3>
-                <div className="space-y-2">
-                  {Object.entries(product.specifications).map(([key, value]) => (
-                    <div
-                      key={key}
-                      className="flex justify-between items-center py-1 border-b border-border last:border-0"
-                    >
-                      <span className="text-muted-foreground text-sm">{key}:</span>
-                      <span className="font-medium text-sm">{value}</span>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+            <div className="bg-white/80 dark:bg-slate-800/80 rounded-xl border border-gray-200/50 dark:border-slate-700/50 p-5">
+              <h3 className="font-semibold mb-4 text-gray-900 dark:text-white">Especificaciones</h3>
+              <div className="space-y-3">
+                {Object.entries(product.specifications).map(([key, value]) => (
+                  <div
+                    key={key}
+                    className="flex justify-between items-start py-2 border-b border-gray-100 dark:border-slate-700 last:border-0"
+                  >
+                    <span className="text-sm text-gray-600 dark:text-gray-300 font-medium">{key}:</span>
+                    <span className="text-sm text-gray-900 dark:text-white text-right max-w-[180px]">{value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 
         {/* Recommended Products */}
-        <section>
-          <div className="text-center space-y-2 mb-8">
-            <SectionTag>Recomendados</SectionTag>
-            <h2 className="text-2xl font-bold">Servicios Relacionados</h2>
-            <p className="text-muted-foreground text-sm">Otros servicios que podrían interesarte</p>
+        <section className="pt-8 border-t border-gray-200 dark:border-slate-700">
+          <div className="text-center space-y-4 mb-10">
+            <div className="inline-flex items-center px-3 py-1 rounded-full bg-[#00473E]/5 border border-[#00473E]/10">
+              <span className="text-xs font-medium text-[#00473E]">Recomendados</span>
+            </div>
+            <div className="space-y-2">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white">Servicios Relacionados</h2>
+              <p className="text-sm text-gray-600 dark:text-gray-300">Otros servicios que podrían interesarte</p>
+            </div>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {recommendedProducts.map((product) => (
               <ProductCard key={product.id} product={product} onAddToCart={handleAddToCartFromRecommended} />
             ))}
