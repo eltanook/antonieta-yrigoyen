@@ -526,7 +526,9 @@ export default function HomePage() {
 
                     {/* Número */}
                     <div className="text-3xl sm:text-4xl font-bold text-foreground mb-2">
-                      <AnimatedStatCard stat={{...stat, color: "text-[#00473E] dark:text-[#21c1ab]"}} index={index} />
+                      <span className="text-[#00473E] dark:text-[#21c1ab]">
+                        {stat.number}
+                      </span>
                     </div>
 
                     {/* Label */}
