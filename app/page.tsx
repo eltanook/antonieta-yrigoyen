@@ -803,14 +803,14 @@ export default function HomePage() {
               </div>
 
               {/* CTA Minimalista */}
-              <div className="text-center">
+              <div className="flex justify-center">
                 <Button
                   size="lg"
                   className="bg-[#00473E] hover:bg-[#00352A] dark:bg-[#21c1ab] dark:hover:bg-[#1ba897] text-white border-0 rounded-xl px-8 py-4 font-medium shadow-sm hover:shadow-md transition-all duration-300 group"
                   asChild
                 >
                   <Link href="/productos">
-                    <Flower2 className="w-5 h-5 mr-3 group-hover:rotate-6 transition-transform duration-300" />
+                    <Flower2 className="w-5 h-5 mr-3 group-hover:rotate-6 text-white transition-transform duration-300" />
                     Explorar Catálogo Completo
                     <ArrowRight className="w-5 h-5 ml-3 group-hover:translate-x-1 transition-transform duration-300" />
                   </Link>
