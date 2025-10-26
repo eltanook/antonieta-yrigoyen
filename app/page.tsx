@@ -275,43 +275,10 @@ const featuredCategories: Category[] = [
   },
 ];
 
-const featuredProducts: Product[] = [
-  {
-    id: "1",
-    name: "Ramo de Rosas Rojas",
-    price: 45.99,
-    originalPrice: 55.99,
-    image: "/a.jpg",
-    category: "Ramos",
-    inStock: true,
-    featured: true,
-  },
-  {
-    id: "2",
-    name: "Ambientación para Evento",
-    price: 199.99,
-    image: "/b.jpg",
-    category: "Ambientaciones",
-    inStock: true,
-  },
-  {
-    id: "3",
-    name: "Servicio Semanal Premium",
-    price: 89.99,
-    originalPrice: 109.99,
-    image: "/c.jpg",
-    category: "Servicio Semanal",
-    inStock: true,
-  },
-  {
-    id: "4",
-    name: "Diseño de Jardín",
-    price: 299.99,
-    image: "/dd.jpg",
-    category: "Jardines",
-    inStock: true,
-  },
-];
+// Importar productos reales
+import { getFeaturedProducts } from "@/lib/products-data";
+
+const featuredProducts = getFeaturedProducts();
 
 const testimonials: Testimonial[] = [
   {

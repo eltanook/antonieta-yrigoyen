@@ -15,332 +15,9 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { ArrowLeft, ShoppingCartIcon, Star, Minus, Plus } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
+import { productsData, getRecommendedProducts, type ProductDetail } from "@/lib/products-data"
 
-const productData: Record<
-  string,
-  Product & { gallery: string[]; description: string; specifications: Record<string, string>; colors?: string[] }
-> = {
-  "1": {
-    id: "1",
-    name: "Ramo de Rosas Rojas Premium",
-    price: 45.99,
-    originalPrice: 55.99,
-    image: "/a.jpg",
-    category: "Ramos",
-    inStock: true,
-    featured: true,
-    gallery: [
-      "/a.jpg",
-      "/placeholder.svg?height=600&width=600&text=Rosas+Detail",
-      "/placeholder.svg?height=600&width=600&text=Ramo+Envoltorio",
-      "/placeholder.svg?height=600&width=600&text=Rosas+Colores",
-    ],
-    description:
-      "Hermoso ramo de rosas rojas premium, símbolo de amor y pasión. Cada rosa es cuidadosamente seleccionada por su frescura y belleza. Perfecto para declaraciones de amor, aniversarios y momentos especiales que merecen ser recordados para siempre.",
-    specifications: {
-      "Cantidad de rosas": "12 unidades",
-      "Tipo de rosa": "Rosa roja premium",
-      "Envoltorio": "Papel de seda elegante",
-      "Duración": "7-10 días",
-      "Cuidados": "Agua fresca diaria",
-      "Ocasión": "Amor, aniversarios",
-    },
-    colors: ["Rojo", "Rosa", "Blanco", "Amarillo"],
-  },
-  "2": {
-    id: "2",
-    name: "Ambientación Completa para Bodas",
-    price: 299.99,
-    originalPrice: 349.99,
-    image: "/b.jpg",
-    category: "Ambientaciones",
-    inStock: true,
-    featured: true,
-    gallery: [
-      "/b.jpg",
-      "/placeholder.svg?height=600&width=600&text=Decoracion+Altar",
-      "/placeholder.svg?height=600&width=600&text=Centros+Mesa",
-      "/placeholder.svg?height=600&width=600&text=Arco+Flores",
-    ],
-    description:
-      "Servicio completo de ambientación floral para bodas. Incluye decoración del altar, centros de mesa, arco floral y decoración del pasillo. Creamos la atmósfera perfecta para el día más importante de tu vida con flores frescas y diseños únicos.",
-    specifications: {
-      "Decoración altar": "Arreglos laterales",
-      "Centros de mesa": "8-10 mesas",
-      "Arco floral": "2m x 2.5m",
-      "Pasillo": "Pétalos y arreglos",
-      "Duración evento": "8-12 horas",
-      "Montaje": "3 horas antes",
-    },
-  },
-  "3": {
-    id: "3",
-    name: "Servicio Semanal Flores Frescas",
-    price: 89.99,
-    originalPrice: 109.99,
-    image: "/c.jpg",
-    category: "Servicio Semanal",
-    inStock: true,
-    featured: true,
-    gallery: [
-      "/c.jpg",
-      "/placeholder.svg?height=600&width=600&text=Entrega+Semanal",
-      "/placeholder.svg?height=600&width=600&text=Variedad+Flores",
-      "/placeholder.svg?height=600&width=600&text=Arreglos+Hogar",
-    ],
-    description:
-      "Disfruta de flores frescas en tu hogar cada semana. Nuestro servicio de suscripción te permite tener siempre flores hermosas y variadas. Cada entrega incluye un arreglo único con flores de temporada seleccionadas especialmente para ti.",
-    specifications: {
-      "Frecuencia": "Semanal",
-      "Duración servicio": "Mensual renovable",
-      "Variedad": "Flores de temporada",
-      "Entrega": "Día fijo semanal",
-      "Arreglo": "Único cada semana",
-      "Florero": "Incluido primera entrega",
-    },
-  },
-  "4": {
-    id: "4",
-    name: "Diseño y Estética de Jardín",
-    price: 199.99,
-    image: "/dd.jpg",
-    category: "Jardines",
-    inStock: true,
-    gallery: [
-      "/dd.jpg",
-      "/placeholder.svg?height=600&width=600&text=Diseño+Jardin",
-      "/placeholder.svg?height=600&width=600&text=Plantas+Seleccion",
-      "/placeholder.svg?height=600&width=600&text=Jardin+Completo",
-    ],
-    description:
-      "Servicio completo de diseño y creación de jardines. Desde la planificación hasta la implementación, creamos espacios verdes únicos adaptados a tu estilo y necesidades. Incluye selección de plantas, diseño paisajístico y mantenimiento inicial.",
-    specifications: {
-      "Área mínima": "10m²",
-      "Diseño": "Plano personalizado",
-      "Plantas": "Selección experta",
-      "Instalación": "Completa",
-      "Mantenimiento": "3 meses incluido",
-      "Garantía": "6 meses plantas",
-    },
-  },
-  "5": {
-    id: "5",
-    name: "Ramo de Flores de Temporada",
-    price: 35.99,
-    image: "/d.jpg",
-    category: "Ramos",
-    inStock: true,
-    gallery: [
-      "/d.jpg",
-      "/placeholder.svg?height=600&width=600&text=Flores+Temporada",
-      "/placeholder.svg?height=600&width=600&text=Colores+Variados",
-      "/placeholder.svg?height=600&width=600&text=Ramo+Envuelto",
-    ],
-    description: "Hermoso ramo con una selección de las mejores flores de temporada. Cada ramo es único y refleja la belleza natural de la estación actual, combinando colores y texturas para crear una composición armoniosa y fresca.",
-    specifications: {
-      "Flores": "Variedad de temporada",
-      "Cantidad": "8-10 tallos",
-      "Envoltorio": "Papel kraft natural",
-      "Duración": "5-7 días",
-      "Tamaño": "Mediano",
-      "Estilo": "Natural y fresco",
-    },
-  },
-  "6": {
-    id: "6",
-    name: "Exhibidores Florales Corporativos",
-    price: 129.99,
-    image: "/1.jpg",
-    category: "Exhibidores",
-    inStock: true,
-    gallery: [
-      "/1.jpg",
-      "/placeholder.svg?height=600&width=600&text=Oficina+Flores",
-      "/placeholder.svg?height=600&width=600&text=Recepcion+Arreglo",
-      "/placeholder.svg?height=600&width=600&text=Empresa+Decoracion",
-    ],
-    description: "Servicio de exhibidores florales para empresas y oficinas. Creamos ambientes profesionales y acogedores que impresionan a clientes y motivan a empleados. Mantenimiento incluido para asegurar siempre la mejor presentación.",
-    specifications: {
-      "Ubicaciones": "Recepción, oficinas",
-      "Mantenimiento": "Semanal",
-      "Cambio flores": "Cada 10 días",
-      "Diseño": "Corporativo elegante",
-      "Contenedores": "Profesionales",
-      "Servicio": "Mensual renovable",
-    },
-  },
-  "7": {
-    id: "7",
-    name: "Decoración Floral para Hogar",
-    price: 79.99,
-    image: "/2.jpg",
-    category: "Ambientaciones",
-    inStock: true,
-    gallery: [
-      "/2.jpg",
-      "/placeholder.svg?height=600&width=600&text=Sala+Decorada",
-      "/placeholder.svg?height=600&width=600&text=Comedor+Flores",
-      "/placeholder.svg?height=600&width=600&text=Dormitorio+Arreglo",
-    ],
-    description: "Transforma tu hogar con nuestro servicio de decoración floral. Diseñamos arreglos que complementan tu estilo de vida y decoración, creando espacios más acogedores y llenos de vida natural.",
-    specifications: {
-      "Espacios": "Sala, comedor, dormitorio",
-      "Arreglos": "3-4 puntos focales",
-      "Estilo": "Personalizado",
-      "Duración": "Evento o temporal",
-      "Consulta": "Previa en el hogar",
-      "Instalación": "Profesional",
-    },
-  },
-  "8": {
-    id: "8",
-    name: "Arreglo Floral Personalizado",
-    price: 65.99,
-    image: "/3.jpg",
-    category: "Ramos",
-    inStock: true,
-    gallery: [
-      "/3.jpg",
-      "/placeholder.svg?height=600&width=600&text=Diseño+Personal",
-      "/placeholder.svg?height=600&width=600&text=Consulta+Cliente",
-      "/placeholder.svg?height=600&width=600&text=Arreglo+Unico",
-    ],
-    description: "Arreglo floral completamente personalizado según tus gustos y necesidades. Trabajamos contigo para crear una pieza única que refleje tu personalidad y el mensaje que quieres transmitir.",
-    specifications: {
-      "Consulta": "Personal 30 min",
-      "Diseño": "100% personalizado",
-      "Flores": "Según preferencia",
-      "Colores": "A elección",
-      "Tamaño": "Variable",
-      "Entrega": "Fecha específica",
-    },
-  },
-  "9": {
-    id: "9",
-    name: "Servicio Quincenal Premium",
-    price: 149.99,
-    originalPrice: 179.99,
-    image: "/placeholder.svg?height=300&width=300&text=Servicio+Quincenal+VIP",
-    category: "Servicio Semanal",
-    inStock: true,
-    gallery: [
-      "/placeholder.svg?height=600&width=600&text=Quincenal+Premium",
-      "/placeholder.svg?height=600&width=600&text=Flores+Lujo",
-      "/placeholder.svg?height=600&width=600&text=Entrega+VIP",
-    ],
-    description: "Servicio premium quincenal con las flores más exclusivas y arreglos de lujo. Incluye flores importadas, diseños únicos y atención personalizada para clientes que buscan lo mejor en decoración floral.",
-    specifications: {
-      "Frecuencia": "Quincenal",
-      "Flores": "Premium e importadas",
-      "Diseño": "Exclusivo cada entrega",
-      "Consulta": "Personalizada",
-      "Florero": "De lujo incluido",
-      "Servicio": "VIP personalizado",
-    },
-  },
-  "10": {
-    id: "10",
-    name: "Ambientación Eventos Corporativos",
-    price: 399.99,
-    image: "/11.jpg",
-    category: "Ambientaciones",
-    inStock: true,
-    gallery: [
-      "/11.jpg",
-      "/placeholder.svg?height=600&width=600&text=Evento+Corporate",
-      "/placeholder.svg?height=600&width=600&text=Salon+Decorado",
-      "/placeholder.svg?height=600&width=600&text=Mesa+Ejecutiva",
-    ],
-    description: "Ambientación floral completa para eventos corporativos. Creamos atmósferas profesionales y elegantes que impresionan a invitados y refuerzan la imagen de tu empresa en conferencias, lanzamientos y celebraciones corporativas.",
-    specifications: {
-      "Capacidad": "50-200 personas",
-      "Área": "Salón completo",
-      "Elementos": "Centros, pedestales, entradas",
-      "Montaje": "4 horas antes",
-      "Duración": "Todo el evento",
-      "Equipo": "3-4 especialistas",
-    },
-  },
-  "11": {
-    id: "11",
-    name: "Ramo de Novia Exclusivo",
-    price: 120.99,
-    originalPrice: 150.99,
-    image: "/f.jpg",
-    category: "Ramos",
-    inStock: true,
-    featured: true,
-    gallery: [
-      "/f.jpg",
-      "/placeholder.svg?height=600&width=600&text=Ramo+Novia",
-      "/placeholder.svg?height=600&width=600&text=Diseño+Bodas",
-      "/placeholder.svg?height=600&width=600&text=Flores+Blancas",
-    ],
-    description: "Ramo de novia exclusivo diseñado especialmente para el día más importante. Utilizamos las flores más finas y técnicas especiales de conservación para que se mantenga perfecto durante toda la celebración.",
-    specifications: {
-      "Flores": "Premium seleccionadas",
-      "Diseño": "Exclusivo personalizado",
-      "Conservación": "Técnica especial",
-      "Consultas": "3 previas incluidas",
-      "Prueba": "Ramo de ensayo",
-      "Entrega": "Día de la boda",
-    },
-  },
-  "12": {
-    id: "12",
-    name: "Jardín Vertical Interior",
-    price: 249.99,
-    image: "/h.jpg",
-    category: "Jardines",
-    inStock: true,
-    gallery: [
-      "/h.jpg",
-      "/placeholder.svg?height=600&width=600&text=Pared+Verde",
-      "/placeholder.svg?height=600&width=600&text=Plantas+Verticales",
-      "/placeholder.svg?height=600&width=600&text=Jardin+Interior",
-    ],
-    description: "Instalación de jardín vertical interior que transforma cualquier pared en un oasis verde. Sistema de riego automático incluido, perfecto para oficinas y hogares modernos que buscan conexión con la naturaleza.",
-    specifications: {
-      "Dimensiones": "2m x 1.5m",
-      "Plantas": "15-20 variedades",
-      "Sistema": "Riego automático",
-      "Instalación": "Profesional completa",
-      "Mantenimiento": "6 meses incluido",
-      "Garantía": "1 año sistema",
-    },
-  },
-}
 
-// Mock recommended products
-const recommendedProducts: Product[] = [
-  {
-    id: "2",
-    name: "Ambientación Completa para Bodas",
-    price: 299.99,
-    originalPrice: 349.99,
-    image: "/b.jpg",
-    category: "Ambientaciones",
-    inStock: true,
-  },
-  {
-    id: "3",
-    name: "Servicio Semanal Flores Frescas",
-    price: 89.99,
-    originalPrice: 109.99,
-    image: "/c.jpg",
-    category: "Servicio Semanal",
-    inStock: true,
-  },
-  {
-    id: "11",
-    name: "Ramo de Novia Exclusivo",
-    price: 120.99,
-    originalPrice: 150.99,
-    image: "/f.jpg",
-    category: "Ramos",
-    inStock: true,
-  },
-]
 
 interface ProductDetailPageProps {
   params: Promise<{ id: string }>
@@ -355,7 +32,8 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
   const [quantity, setQuantity] = useState(1)
   const { toast } = useToast()
 
-  const product = productData[id]
+  const product = productsData[id]
+  const recommendedProducts = getRecommendedProducts()
 
   if (!product) {
     return (
@@ -385,10 +63,6 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
   const handleAddToCartFromRecommended = (product: Product) => {
     setCartItems((prev) => [...prev, product])
   }
-
-  const discount = product.originalPrice
-    ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
-    : 0
 
   return (
     <div className="min-h-screen bg-gray-50/30 dark:bg-slate-900 relative">
@@ -431,9 +105,10 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
               />
             </div>
 
-            {/* Thumbnail Gallery */}
-            <div className="grid grid-cols-4 gap-3">
-              {product.gallery.map((image, index) => (
+            {/* Thumbnail Gallery - Solo mostrar si hay más de una imagen */}
+            {product.gallery && product.gallery.length > 1 && (
+              <div className="grid grid-cols-4 gap-3">
+                {product.gallery.map((image: string, index: number) => (
                 <button
                   key={index}
                   onClick={() => setSelectedImage(index)}
@@ -452,7 +127,8 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                   />
                 </button>
               ))}
-            </div>
+              </div>
+            )}
           </div>
 
           {/* Product Info */}
@@ -478,21 +154,11 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
               </div>
             </div>
 
-            {/* Price */}
-            <div className="flex items-center gap-3 py-3 border-y border-gray-200 dark:border-slate-700">
-              <span className="text-3xl font-bold text-[#00473E] dark:text-white">
-                ${product.price.toFixed(2)}
-              </span>
-              {product.originalPrice && (
-                <>
-                  <span className="text-xl text-gray-400 line-through">
-                    ${product.originalPrice.toFixed(2)}
-                  </span>
-                  <span className="text-sm font-medium bg-green-100 text-green-700 px-2 py-1 rounded-full">
-                    -{discount}%
-                  </span>
-                </>
-              )}
+            {/* Disponibilidad */}
+            <div className="py-3 border-y border-gray-200 dark:border-slate-700">
+              <div className="inline-flex items-center px-3 py-1 rounded-full bg-green-100 text-green-700 text-sm font-medium">
+                ✓ Disponible bajo pedido
+              </div>
             </div>
 
             {/* Description */}
@@ -510,7 +176,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                     <SelectValue placeholder="Selecciona un color" />
                   </SelectTrigger>
                   <SelectContent>
-                    {product.colors.map((color) => (
+                    {product.colors.map((color: string) => (
                       <SelectItem key={color} value={color}>
                         {color}
                       </SelectItem>
@@ -554,22 +220,26 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
             )}
 
             {/* Action Button */}
-            <div className="pt-2">
+            <div className="pt-2 space-y-3">
               <button
-                onClick={handleAddToCart}
-                disabled={!product.inStock}
-                className="w-full h-12 bg-[#00473E] hover:bg-[#00473E]/90 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
+                onClick={() => window.open('https://wa.me/1234567890?text=Hola%2C%20me%20interesa%20el%20' + encodeURIComponent(product.name), '_blank')}
+                className="w-full h-12 bg-[#00473E] hover:bg-[#00473E]/90 text-white font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
               >
-                <ShoppingCartIcon className="h-5 w-5" />
-                {product.inStock ? "Agregar al Carrito" : "Agotado"}
+                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.087"/>
+                </svg>
+                Consultar por WhatsApp
               </button>
+              <p className="text-sm text-gray-500 text-center">
+                Contactanos para consultar disponibilidad y precios
+              </p>
             </div>
 
             {/* Specifications */}
             <div className="bg-white/80 dark:bg-slate-800/80 rounded-xl border border-gray-200/50 dark:border-slate-700/50 p-5">
               <h3 className="font-semibold mb-4 text-gray-900 dark:text-white">Especificaciones</h3>
               <div className="space-y-3">
-                {Object.entries(product.specifications).map(([key, value]) => (
+                {Object.entries(product.specifications).map(([key, value]: [string, string]) => (
                   <div
                     key={key}
                     className="flex justify-between items-start py-2 border-b border-gray-100 dark:border-slate-700 last:border-0"
@@ -596,7 +266,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
           </div>
           
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {recommendedProducts.map((product) => (
+            {recommendedProducts.map((product: Product) => (
               <ProductCard key={product.id} product={product} onAddToCart={handleAddToCartFromRecommended} />
             ))}
           </div>

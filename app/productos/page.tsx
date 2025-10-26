@@ -16,117 +16,13 @@ import { Search, Filter, ArrowUpDown, Flower2, Heart, MessageCircle, Palette, Aw
 import { useToast } from "@/hooks/use-toast"
 import Link from "next/link"
 
-// Servicios florales premium de Nadia - Data mejorada
-const allProducts: Product[] = [
-  {
-    id: "1",
-    name: "Ramo de Rosas Rojas Premium",
-    price: 45.99,
-    originalPrice: 55.99,
-    image: "/a.jpg",
-    category: "Ramos",
-    inStock: true,
-    featured: true,
-  },
-  {
-    id: "2",
-    name: "Ambientación Completa para Bodas",
-    price: 299.99,
-    originalPrice: 349.99,
-    image: "/b.jpg",
-    category: "Ambientaciones",
-    inStock: true,
-    featured: true,
-  },
-  {
-    id: "3",
-    name: "Servicio Semanal Flores Frescas",
-    price: 89.99,
-    originalPrice: 109.99,
-    image: "/c.jpg",
-    category: "Servicio Semanal",
-    inStock: true,
-    featured: true,
-  },
-  {
-    id: "4",
-    name: "Diseño y Estética de Jardín",
-    price: 199.99,
-    image: "/dd.jpg",
-    category: "Jardines",
-    inStock: true,
-  },
-  {
-    id: "5",
-    name: "Ramo de Flores de Temporada",
-    price: 35.99,
-    image: "/d.jpg",
-    category: "Ramos",
-    inStock: true,
-  },
-  {
-    id: "6",
-    name: "Exhibidores Florales Corporativos",
-    price: 129.99,
-    image: "/1.jpg",
-    category: "Exhibidores",
-    inStock: true,
-  },
-  {
-    id: "7",
-    name: "Decoración Floral para Hogar",
-    price: 79.99,
-    image: "/2.jpg",
-    category: "Ambientaciones",
-    inStock: true,
-  },
-  {
-    id: "8",
-    name: "Arreglo Floral Personalizado",
-    price: 65.99,
-    image: "/3.jpg",
-    category: "Ramos",
-    inStock: true,
-  },
-  {
-    id: "9",
-    name: "Servicio Quincenal Premium",
-    price: 149.99,
-    originalPrice: 179.99,
-    image: "/placeholder.svg?height=300&width=300&text=Servicio+Quincenal+VIP",
-    category: "Servicio Semanal",
-    inStock: true,
-  },
-  {
-    id: "10",
-    name: "Ambientación Eventos Corporativos",
-    price: 399.99,
-    image: "/11.jpg",
-    category: "Ambientaciones",
-    inStock: true,
-  },
-  {
-    id: "11",
-    name: "Ramo de Novia Exclusivo",
-    price: 120.99,
-    originalPrice: 150.99,
-    image: "/f.jpg",
-    category: "Ramos",
-    inStock: true,
-    featured: true,
-  },
-  {
-    id: "12",
-    name: "Jardín Vertical Interior",
-    price: 249.99,
-    image: "/h.jpg",
-    category: "Jardines",
-    inStock: true,
-  },
-  
-]
+// Importar productos reales
+import { getAllProducts } from "@/lib/products-data";
 
-const categories = ["Todos", "Ramos", "Ambientaciones", "Servicio Semanal", "Jardines", "Exhibidores"]
+// Obtener productos reales (se ejecuta una vez al cargar)
+const allProducts = getAllProducts();
+
+const categories = ["Todos", "Arreglos Florales", "Ramos", "Ambientaciones", "Servicio Semanal"]
 const PRODUCTS_PER_PAGE = 9
 
 export default function ProductsPage() {
@@ -322,7 +218,7 @@ export default function ProductsPage() {
       {(currentProducts.length > 0 || filteredAndSortedProducts.length > 0) ? (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-            {(currentProducts.length > 0 ? currentProducts : filteredAndSortedProducts.slice(0, 9)).map((product, index) => (
+            {currentProducts.map((product, index) => (
               <div
                 key={product.id}
                 className="group"
