@@ -22,7 +22,16 @@ import { getAllProducts } from "@/lib/products-data";
 // Obtener productos reales (se ejecuta una vez al cargar)
 const allProducts = getAllProducts();
 
-const categories = ["Todos", "Arreglos Florales", "Ramos", "Ambientaciones", "Servicio Semanal"]
+const categories = [
+  "Todos", 
+  "Arreglos Florales", 
+  "Ramos", 
+  "Ambientaciones", 
+  "Ambientación de Eventos",
+  "Ambientación de Cumpleaños", 
+  "Ambientación de Iglesias",
+  "Servicio Semanal"
+]
 const PRODUCTS_PER_PAGE = 9
 
 export default function ProductsPage() {

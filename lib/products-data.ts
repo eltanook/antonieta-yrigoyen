@@ -2,6 +2,7 @@ import { Product } from "@/components/product-card"
 
 export interface ProductDetail extends Product {
   gallery: string[]
+  videos?: string[]
   description: string
   specifications: Record<string, string>
   colors?: string[]
@@ -35,12 +36,12 @@ export const productsData: Record<string, ProductDetail> = {
     id: "2",
     name: "RAMO LILIUM CLÁSICO",
     price: 0,
-    image: "/FOTOS/PRIMAVERA VERANO/placeholder-lilium-clasico.jpg",
+    image: "/FOTOS/PRIMAVERA VERANO/RAMO-POR-6-LILIUMS-800.jpg",
     category: "Arreglos Florales",
     inStock: true,
     featured: true,
     gallery: [
-      "/FOTOS/PRIMAVERA VERANO/placeholder-lilium-clasico.jpg",
+      "/FOTOS/PRIMAVERA VERANO/RAMO-POR-6-LILIUMS-800.jpg",
     ],
     description:
       "Ramo clásico de lilium, diseñado con la elegancia tradicional que caracteriza a estas magníficas flores. Su belleza atemporal y porte majestuoso lo convierten en una elección perfecta para cualquier ocasión especial.",
@@ -393,12 +394,12 @@ export const productsData: Record<string, ProductDetail> = {
     id: "20",
     name: "RAMO PEONIAS",
     price: 0,
-    image: "/FOTOS/PRIMAVERA VERANO/placeholder-peonias.jpg",
+    image: "/FOTOS/PRIMAVERA VERANO/33.jpg",
     category: "Arreglos Florales",
     inStock: true,
     featured: true,
     gallery: [
-      "/FOTOS/PRIMAVERA VERANO/placeholder-peonias.jpg",
+      "/FOTOS/PRIMAVERA VERANO/33.jpg",
     ],
     description: "Exuberante ramo de peonías, consideradas las reinas de las flores por su volumen y belleza excepcional. Simbolizan la prosperidad, el honor y la riqueza, siendo perfectas para celebraciones importantes.",
     specifications: {
@@ -554,11 +555,105 @@ export const productsData: Record<string, ProductDetail> = {
       "Ocasión": "Celebraciones, alegría",
     },
   },
+  "28": {
+    id: "28",
+    name: "AMBIENTACIÓN DE EVENTOS",
+    price: 0,
+    image: "/videos/eventos/1.mp4",
+    category: "Ambientación de Eventos",
+    inStock: true,
+    gallery: [],
+    videos: [
+      "/videos/eventos/1.mp4",
+      "/videos/eventos/3.mp4",
+      "/videos/eventos/4.mp4",
+      "/videos/eventos/5.mp4",
+      "/videos/eventos/6.mp4",
+      "/videos/eventos/7.mp4",
+      "/videos/eventos/8.mp4",
+    ],
+    description: "Servicio completo de ambientación para eventos especiales. Creamos espacios únicos y memorables con arreglos florales personalizados, decoración temática y un ambiente perfecto para cada ocasión. Nuestro equipo se encarga de todos los detalles para que tu evento sea inolvidable.",
+    specifications: {
+      "Tipo de servicio": "Ambientación completa",
+      "Incluye": "Arreglos florales, decoración, montaje",
+      "Duración del evento": "Día completo",
+      "Personalización": "Completamente adaptable",
+      "Equipo": "Profesional especializado",
+      "Ocasión": "Bodas, celebraciones, corporativos",
+    },
+  },
+  "29": {
+    id: "29",
+    name: "AMBIENTACIÓN DE CUMPLEAÑOS",
+    price: 0,
+    image: "/videos/cumpleanos/1.mp4",
+    category: "Ambientación de Cumpleaños",
+    inStock: true,
+    gallery: [],
+    videos: [
+      "/videos/cumpleanos/1.mp4",
+    ],
+    description: "Ambientación especial para celebraciones de cumpleaños que transforma cualquier espacio en un lugar mágico. Diseños personalizados según la edad, gustos y temática preferida, creando recuerdos inolvidables para el homenajeado y sus invitados.",
+    specifications: {
+      "Tipo de servicio": "Ambientación temática",
+      "Incluye": "Decoración, arreglos, globos, detalles",
+      "Personalización": "Según edad y preferencias",
+      "Montaje": "Profesional",
+      "Duración": "Evento completo",
+      "Ocasión": "Cumpleaños de todas las edades",
+    },
+  },
+  "30": {
+    id: "30",
+    name: "AMBIENTACIÓN DE IGLESIAS",
+    price: 0,
+    image: "/videos/iglesias/1.mp4",
+    category: "Ambientación de Iglesias",
+    inStock: true,
+    gallery: [
+      "/videos/iglesias/foto1.jpg",
+      "/videos/iglesias/foto2.jpg",
+    ],
+    videos: [
+      "/videos/iglesias/1.mp4",
+      "/videos/iglesias/2.mp4",
+    ],
+    description: "Servicio especializado en ambientación para ceremonias religiosas y eventos en iglesias. Respetamos la solemnidad del espacio sagrado mientras creamos una atmósfera hermosa y apropiada con arreglos florales elegantes y decoración respetuosa.",
+    specifications: {
+      "Tipo de servicio": "Ambientación religiosa",
+      "Incluye": "Arreglos de altar, pasillos, entrada",
+      "Estilo": "Elegante y respetuoso",
+      "Flores": "Seleccionadas apropiadamente",
+      "Montaje": "Discreto y profesional",
+      "Ocasión": "Bodas, bautizos, confirmaciones",
+    },
+  },
+  "31": {
+    id: "31",
+    name: "SERVICIO SEMANAL PREMIUM",
+    price: 0,
+    image: "/videos/servicio-semanal/1.mp4",
+    category: "Servicio Semanal",
+    inStock: true,
+    gallery: [],
+    videos: [
+      "/videos/servicio-semanal/1.mp4",
+    ],
+    description: "Servicio semanal de arreglos florales frescos para mantener tus espacios siempre hermosos y renovados. Ideal para oficinas, hoteles, restaurantes o hogares que desean tener flores frescas constantemente sin preocuparse por el mantenimiento.",
+    specifications: {
+      "Frecuencia": "Semanal",
+      "Incluye": "Arreglos frescos, mantenimiento, reemplazo",
+      "Personalización": "Según espacios y preferencias",
+      "Flores": "De temporada, siempre frescas",
+      "Servicio": "Entrega y mantenimiento incluido",
+      "Ideal para": "Oficinas, comercios, hogares",
+    },
+  },
 }
 
 // Función helper para obtener productos como array
 export const getAllProducts = (): Product[] => {
-  return Object.values(productsData).map(({ gallery, description, specifications, colors, ...product }) => product)
+  return Object.values(productsData).map(({ gallery, videos, description, specifications, colors, ...product }) => product)
 }
 
 // Función helper para obtener productos por categoría
@@ -583,28 +678,26 @@ export const getFeaturedProducts = (): Product[] => [
     featured: true,
   },
   {
-    id: "14",
-    name: "MOLUCELLA",
+    id: "28",
+    name: "AMBIENTACIÓN DE EVENTOS",
     price: 0,
-    image: "/FOTOS/PRIMAVERA VERANO/10 (MOLUCELLA).jpg",
-    category: "Ambientaciones",
+    image: "/videos/eventos/1.mp4",
+    category: "Ambientación de Eventos",
     inStock: true,
-    featured: true,
+  },
+  {
+    id: "30",
+    name: "AMBIENTACIÓN DE IGLESIAS",
+    price: 0,
+    image: "/videos/iglesias/1.mp4",
+    category: "Ambientación de Iglesias",
+    inStock: true,
   },
   {
     id: "18",
     name: "RAMO CALAS",
     price: 0,
     image: "/FOTOS/PRIMAVERA VERANO/14 (CALAS).jpg",
-    category: "Ramos",
-    inStock: true,
-    featured: true,
-  },
-  {
-    id: "7",
-    name: "RAMO CLAVELINAS",
-    price: 0,
-    image: "/FOTOS/PRIMAVERA VERANO/4 (CLAVELINAS).jpg",
     category: "Ramos",
     inStock: true,
     featured: true,

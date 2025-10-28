@@ -6,8 +6,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
-import { ShoppingCart, Eye, Expand } from "lucide-react"
+import { ShoppingCart, Eye } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 
 export interface Product {
@@ -28,7 +27,6 @@ interface ProductCardProps {
 
 export function ProductCard({ product, onAddToCart }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false)
-  const [imageError, setImageError] = useState(false)
   const { toast } = useToast()
 
   const handleAddToCart = () => {
@@ -47,10 +45,6 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0
 
-  const handleImageError = () => {
-    setImageError(true)
-  }
-
   return (
     <Card
       className="group overflow-hidden border-0 shadow-subtle hover:shadow-subtle-lg transition-all duration-300 h-full"
@@ -58,44 +52,40 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
       onMouseLeave={() => setIsHovered(false)}
     >
       <CardContent className="p-0 h-full flex flex-col">
-        <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 isolate">
-          <Image
-            src={imageError ? "/placeholder.svg?height=400&width=400&text=Imagen+no+disponible" : (product.image || "/placeholder.svg")}
-            alt={product.name}
-            fill
-            className="object-cover object-center transition-all duration-500 group-hover:scale-110"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            onError={handleImageError}
-            priority={product.featured}
-            quality={90}
-          />
-          
-          {/* Overlay gradient for better text readability */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-100">
+          {product.image.endsWith('.mp4') ? (
+            <video
+              src={product.image}
+              className="w-full h-full object-cover transition-transform group-hover:scale-105"
+              muted
+              loop
+              preload="metadata"
+            />
+          ) : (
+            <Image
+              src={product.image}
+              alt={product.name}
+              fill
+              className="object-cover transition-transform group-hover:scale-105"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+            />
+          )}
 
           {discount > 0 && (
-            <Badge className="absolute top-2 left-2 bg-accent text-accent-foreground z-10">
+            <Badge className="absolute top-2 left-2 bg-accent text-accent-foreground">
               -{discount}%
             </Badge>
           )}
 
-          {product.featured && (
-            <Badge className="absolute top-2 right-2 bg-primary text-primary-foreground z-10">
-              Destacado
-            </Badge>
-          )}
-
           <div
-            className={`absolute top-0 left-0 right-0 bottom-0 bg-black/40 flex items-center justify-center transition-opacity duration-300 z-20 h-full gap-2 ${
+            className={`absolute inset-0 bg-black/40 flex items-center justify-center gap-2 transition-opacity duration-300 ${
               isHovered ? "opacity-100" : "opacity-0"
             }`}
           >
             <Button
-              size="default"
-              variant="elegant"
+              size="sm"
               onClick={product.price > 0 ? handleAddToCart : () => window.open(`https://wa.me/1234567890?text=Hola%2C%20me%20interesa%20el%20${encodeURIComponent(product.name)}`, '_blank')}
               disabled={!product.inStock}
-              className="btn-shine"
             >
               {product.price > 0 ? (
                 <>
@@ -111,12 +101,7 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
                 </>
               )}
             </Button>
-            <Button 
-              size="default" 
-              variant="outline-white" 
-              asChild 
-              className="btn-float"
-            >
+            <Button size="sm" variant="outline" asChild>
               <Link href={`/productos/${product.id}`}>
                 <Eye className="h-4 w-4 mr-1" />
                 Ver
@@ -125,7 +110,7 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
           </div>
 
           {!product.inStock && (
-            <div className="absolute top-0 left-0 right-0 bottom-0 bg-black/60 flex items-center justify-center z-30">
+            <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
               <Badge className="bg-destructive text-destructive-foreground">
                 Agotado
               </Badge>
@@ -133,15 +118,13 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
           )}
         </div>
 
-        <div className="p-3 space-y-2 flex-1 flex flex-col justify-between">
-          <div>
-            <div className="text-xs text-muted-foreground uppercase tracking-wide">{product.category}</div>
-            <h3 className="font-semibold text-sm line-clamp-2">{product.name}</h3>
-          </div>
+        <div className="p-4 space-y-2">
+          <div className="text-xs text-muted-foreground uppercase tracking-wide">{product.category}</div>
+          <h3 className="font-semibold text-sm line-clamp-2">{product.name}</h3>
           <div className="flex items-center gap-2">
             {product.price > 0 ? (
               <>
-                <span className="font-bold text-lg">${product.price.toFixed(2)}</span>
+                <span className="font-bold">${product.price.toFixed(2)}</span>
                 {product.originalPrice && (
                   <span className="text-sm text-muted-foreground line-through">${product.originalPrice.toFixed(2)}</span>
                 )}

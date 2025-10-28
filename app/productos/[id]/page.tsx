@@ -27,13 +27,27 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
   const { id } = React.use(params)
   const router = useRouter()
   const [cartItems, setCartItems] = useState<Product[]>([])
-  const [selectedImage, setSelectedImage] = useState(0)
+  const [selectedMedia, setSelectedMedia] = useState(0)
   const [selectedColor, setSelectedColor] = useState("")
   const [quantity, setQuantity] = useState(1)
   const { toast } = useToast()
 
   const product = productsData[id]
   const recommendedProducts = getRecommendedProducts()
+
+  // Combinar videos y galería de imágenes en un solo array de medios
+  const mediaItems = []
+  if (product?.videos) {
+    product.videos.forEach(video => mediaItems.push({ src: video, type: 'video' }))
+  }
+  if (product?.gallery) {
+    product.gallery.forEach(image => mediaItems.push({ src: image, type: 'image' }))
+  }
+  // Si no hay medios, usar la imagen principal (excepto si es el marcador "video")
+  if (mediaItems.length === 0 && product?.image && product.image !== "video") {
+    const isVideo = product.image.endsWith('.mp4')
+    mediaItems.push({ src: product.image, type: isVideo ? 'video' : 'image' })
+  }
 
   if (!product) {
     return (
@@ -94,37 +108,70 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 mb-16">
           {/* Image Gallery */}
           <div className="space-y-4">
-            {/* Main Image */}
+            {/* Main Media */}
             <div className="aspect-square rounded-2xl overflow-hidden bg-white dark:bg-slate-800 shadow-sm border border-gray-200/50 dark:border-slate-700/50">
-              <Image
-                src={product.gallery[selectedImage] || product.image}
-                alt={product.name}
-                width={600}
-                height={600}
-                className="object-cover w-full h-full"
-              />
+              {mediaItems.length > 0 ? (
+                mediaItems[selectedMedia]?.type === 'video' ? (
+                  <video
+                    src={mediaItems[selectedMedia]?.src}
+                    controls
+                    className="object-cover w-full h-full"
+                    width={600}
+                    height={600}
+                  />
+                ) : (
+                  <Image
+                    src={mediaItems[selectedMedia]?.src || "/placeholder.svg"}
+                    alt={product.name}
+                    width={600}
+                    height={600}
+                    className="object-cover w-full h-full"
+                  />
+                )
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-gray-400">
+                  No hay medios disponibles
+                </div>
+              )}
             </div>
 
-            {/* Thumbnail Gallery - Solo mostrar si hay más de una imagen */}
-            {product.gallery && product.gallery.length > 1 && (
+            {/* Thumbnail Gallery - Solo mostrar si hay más de un medio */}
+            {mediaItems.length > 1 && (
               <div className="grid grid-cols-4 gap-3">
-                {product.gallery.map((image: string, index: number) => (
+                {mediaItems.map((media, index: number) => (
                 <button
                   key={index}
-                  onClick={() => setSelectedImage(index)}
-                  className={`aspect-square rounded-lg overflow-hidden transition-all duration-200 ${
-                    selectedImage === index 
+                  onClick={() => setSelectedMedia(index)}
+                  className={`aspect-square rounded-lg overflow-hidden transition-all duration-200 relative ${
+                    selectedMedia === index 
                       ? "ring-2 ring-[#00473E] ring-offset-2 dark:ring-offset-slate-900" 
                       : "hover:opacity-75"
                   }`}
                 >
-                  <Image
-                    src={image || "/placeholder.svg"}
-                    alt={`${product.name} ${index + 1}`}
-                    width={120}
-                    height={120}
-                    className="object-cover w-full h-full bg-gray-100 dark:bg-slate-700"
-                  />
+                  {media.type === 'video' ? (
+                    <div className="relative w-full h-full">
+                      <video
+                        src={media.src}
+                        className="object-cover w-full h-full bg-gray-100 dark:bg-slate-700"
+                        width={120}
+                        height={120}
+                        muted
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-6 h-6 bg-black/50 rounded-full flex items-center justify-center">
+                          <div className="w-0 h-0 border-l-[6px] border-l-white border-y-[4px] border-y-transparent ml-0.5"></div>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <Image
+                      src={media.src || "/placeholder.svg"}
+                      alt={`${product.name} ${index + 1}`}
+                      width={120}
+                      height={120}
+                      className="object-cover w-full h-full bg-gray-100 dark:bg-slate-700"
+                    />
+                  )}
                 </button>
               ))}
               </div>
